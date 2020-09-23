@@ -26,7 +26,7 @@ if(isset($_GET['page'])) {
 
     $allPost = $list['cnt']; //전체 게시글의 수
 
-	$onePage = 1; // 한 페이지에 보여줄 게시글의 수.
+	$onePage = 5; // 한 페이지에 보여줄 게시글의 수.
     $allPage = ceil($allPost / $onePage); //전체 페이지의 수
     if($page < 1 || ($allPage && $page > $allPage)) {
 ?>
@@ -110,9 +110,6 @@ $list = $stmt->fetchAll();
         <link rel="stylesheet" href="default.css">
         <link rel="stylesheet" href="main.css">
         <link rel="stylesheet" href="board.css">
-        <style>
-           
-        </style>
     </head>
    
     <body>

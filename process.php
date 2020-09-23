@@ -28,7 +28,7 @@ switch($_GET['mode']){
         $idif = $idcheck->fetch();
         if(!empty($idif)){
             echo "<script type=\"text/javascript\">alert('존재하는 아이디입니다!');</script>";
-            echo("<script>location.replace('login.html');</script>");
+            echo("<script>location.replace('makeaccount.php');</script>");
         }
         else{
             $stmt = $dbh->prepare("INSERT INTO USERINFO (id, pw, tel, name) VALUES (:id, :pw, :tel, :name)");
@@ -38,7 +38,7 @@ switch($_GET['mode']){
             $stmt->bindParam(':name',$name);
             $id = $_POST['id'];
             $pw = $_POST['pw'];
-            $tel = $_POST['tel'];
+            $tel = (string)$_POST['tel1']."-".(string)$_POST['tel2']."-".(string)$_POST['tel3'];
             $name = $_POST['name'];
             $stmt->execute();
             header("Location: login.html");
@@ -102,6 +102,13 @@ switch($_GET['mode']){
 
         $stmt->execute();
         header("Location: tool.php?id={$_POST['oid']}&pw={$_POST['opw']}&grade={$_POST['ograde']}");
+        break;
+    case 'delete':
+        $stmt = $dbh->prepare("DELETE FROM USERINFO WHERE id=:cid");
+        $stmt->bindParam(':cid',$cid);
+        $cid = $_GET['cid'];
+        $stmt->execute();
+        header("Location: tool.php?id={$_GET['id']}&pw={$_GET['pw']}&grade={$_GET['grade']}");
         break;
     }
 ?>

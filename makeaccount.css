@@ -1,0 +1,35 @@
+body {
+    padding: 50px;
+}
+
+form {
+    position: absolute;
+    top: 35%;
+    left: 42%;
+    width: 300px;
+    height: 160px;
+    margin-left: -150px;
+    margin-top: -80px;
+}
+
+.tel{
+    position: fixed;
+}
+
+input[type="submit"]{
+    background-color: cornflowerblue;
+    border: 0px;
+    color: white;
+    padding: 2%;
+    margin: 5px 0px;
+    width: 100%;
+    cursor: pointer;
+}
+input[type="submit"]:hover{
+    background-color: turquoise;
+}
+
+h1{
+    font-size: 25px;
+    margin: 25px 0px;
+}

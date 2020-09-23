@@ -20,20 +20,7 @@ if($grade !== 'admin'){
         <title>홈페이지 관리</title>
         <link rel="stylesheet" href="default.css">
         <link rel="stylesheet" href="main.css">
-        <style>
-            .info h2{
-                border: 1px solid cornflowerblue;
-            }
-            .btn{
-                background-color: cornflowerblue;
-                color: white;
-                padding: 10px 30px;
-                display: inline-block;
-            }
-            .btn:hover{
-                background-color: turquoise;
-            }
-        </style>
+        <link rel="stylesheet" href="tool.css">
     </head>
 <body>
     <nav>
@@ -49,13 +36,28 @@ if($grade !== 'admin'){
         </ul>
     </nav>
 
-    <nav class="info">
-        <?php
-            foreach($list as $row) {
-                echo "<h2>[ 이름 ] : ".htmlspecialchars($row['name'])." [ ID ] : ".htmlspecialchars($row['id'])." [ PW ] : ".htmlspecialchars($row['pw'])." [ TEL ] : ".htmlspecialchars($row['tel'])." [ GRADE ] : ".htmlspecialchars($row['grade'])."</h2>";
-                echo "<a class=\"btn\" href=\"change.php?id={$id}&pw={$pw}&grade={$grade}&cid={$row['id']}\">수정</a>";
-            }
-        ?>
+    <nav class="search"> 
+        <form>
+            <input type="radio" id="name" name="option" value="name"><label>이름</label>
+            <input type="radio" id="id" name="option" value="id"><label>ID</label>
+            <input type="radio" id="tel" name="option" value="tel"><label>전화번호</label>
+            <input type="radio" id="grade" name="option" value="grade"><label>등급</label>
+            <input type="text" placeholder="검색하고 싶은 정보 입력">
+            <input type="submit" value="검색">
+        </form>
     </nav>
+    <?php
+        foreach($list as $row) {
+            echo "<nav class=\"info\"><h2>
+            [ 이름 ] : ".htmlspecialchars($row['name']).
+            " [ ID ] : ".htmlspecialchars($row['id']).
+            " [ PW ] : ".htmlspecialchars($row['pw']).
+            " [ 전화번호 ] : ".htmlspecialchars($row['tel']).
+            " [ 등급 ] : ".htmlspecialchars($row['grade']).
+            "<input type='button' onClick=location.href=\"change.php?id={$id}&pw={$pw}&grade={$grade}&cid={$row['id']}\" value='수정'>".
+            "<input type='button' onClick=location.href=\"./process.php?mode=delete&id={$id}&pw={$pw}&grade={$grade}&cid={$row['id']}\" value='탈퇴'>".
+            "</h2></nav>";
+        }
+    ?>
 </body>
 </html>
