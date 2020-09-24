@@ -1,8 +1,16 @@
 <?php
 $dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234',array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-$stmt = $dbh->prepare('SELECT * FROM USERINFO');
-$stmt->execute();
-$list = $stmt->fetchAll();
+if(!empty($_POST['option'])){
+    $querysample = 'SELECT * FROM USERINFO WHERE '.$_POST['option'].'="'.$_POST['value'].'"';
+    $stmt = $dbh->prepare($querysample);
+    $stmt->execute();
+    $list = $stmt->fetchAll();
+}
+else{
+    $stmt = $dbh->prepare('SELECT * FROM USERINFO');
+    $stmt->execute();
+    $list = $stmt->fetchAll();
+}
 
 $id = $_GET['id'];
 $pw = $_GET['pw'];
@@ -37,12 +45,12 @@ if($grade !== 'admin'){
     </nav>
 
     <nav class="search"> 
-        <form>
+        <form action="tool.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>" method="POST">
             <input type="radio" id="name" name="option" value="name"><label>이름</label>
             <input type="radio" id="id" name="option" value="id"><label>ID</label>
             <input type="radio" id="tel" name="option" value="tel"><label>전화번호</label>
             <input type="radio" id="grade" name="option" value="grade"><label>등급</label>
-            <input type="text" placeholder="검색하고 싶은 정보 입력">
+            <input type="text" name="value" placeholder="검색하고 싶은 정보 입력">
             <input type="submit" value="검색">
         </form>
     </nav>
@@ -58,6 +66,8 @@ if($grade !== 'admin'){
             "<input type='button' onClick=location.href=\"./process.php?mode=delete&id={$id}&pw={$pw}&grade={$grade}&cid={$row['id']}\" value='탈퇴'>".
             "</h2></nav>";
         }
+        echo $option;
+        echo $value;
     ?>
 </body>
 </html>
