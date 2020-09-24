@@ -16,7 +16,7 @@
             <li class="btn"><input type="submit" value="로그인">
             </ul>
             <ul class="btm">
-            <li>회원가입은 이곳에서<a href="makeaccount.php">회원가입</a></li>
+            <li>회원가입은 이곳에서<a href="makeaccount.html">회원가입</a></li>
             </ul>
         </div>
 	</form>
