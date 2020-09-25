@@ -6,34 +6,21 @@
     $stmt->execute();
     $list = $stmt->fetch();
 
-    $id = $_GET['id'];
-    $pw = $_GET['pw'];
-    $grade = $_GET['grade'];
+    //세션
+    session_start();
+    $id = $_SESSION['id'];
+    $pw = $_SESSION['pw'];
+    $grade = $_SESSION['grade'];
 ?>
+
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>정보수정</title>
-<link rel="stylesheet" href="default.css">
-<link rel="stylesheet" href="main.css">
-    <style>
-        .forminfo{
-            padding: 10% 40% 0% 40%;
-            display: grid;
-        }
-        input[type="submit"]{
-            background-color: cornflowerblue;
-            color: white;
-            border: 0px;
-            padding: 2% 5%;
-            margin: 10%
-        }
-        input[type="submit"]:hover{
-            background-color: turquoise;
-            cursor: pointer;
-        }
-    </style>
+    <meta charset="utf-8">
+    <title>정보수정</title>
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/change.css">
 </head>
 <body>
     <nav>
@@ -42,18 +29,14 @@
             <li><a class="logout" href="login.php">로그아웃</a></li>
         </ul>
         <ul class="top_menu">
-            <li class="top_menu_item"><a href="main.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">홈페이지 정보</a></li>
-            <li class="top_menu_item"><a href="upload.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">파일 저장소</a></li>
-            <li class="top_menu_item"><a href="board.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">게시판 정보</a></li>
-            <li class="top_menu_item"><a href="tool.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">홈페이지 관리</a></li>
+            <li class="top_menu_item" onclick="location.href='upload.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>'"><a>파일 저장소</a></li>
+            <li class="top_menu_item" onclick="location.href='board.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>'"><a>게시판 정보</a></li>
+            <li class="top_menu_item" onclick="location.href='tool.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>'"><a>홈페이지 관리</a></li>
         </ul>
     </nav>
 
     <form action="./process.php?mode=change" method="POST" class="forminfo">
         <input type="hidden" name="cid" value="<?=$_GET['cid']?>">
-        <input type="hidden" name="oid" value="<?=$id?>">
-        <input type="hidden" name="opw" value="<?=$pw?>">
-        <input type="hidden" name="ograde" value="<?=$grade?>">
         <h2>이름 : </h2>
         <input name="name" type="text" value="<?=$list['name']?>">
         <h2>ID : </h2>

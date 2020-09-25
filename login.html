@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <title>로그인</title>
-<link rel="stylesheet" href="default.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/default.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<form action="./process.php?mode=login" method="POST">
         <div class="login">
-            <h2>클라우드 스토리지 프로젝트</h2>
+            <h2>CLOUD SORAGE</h2>
             <ul class="top">
             <li><label for="txt1">아이디</label><input type="text" name="id" id="id" placeholder="ID" required></li>
             <li><label for="txt2">비밀번호</label><input type="password" name="pw" id="pw" placeholder="PASSWORD" required></li>

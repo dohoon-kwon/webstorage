@@ -1,51 +1,52 @@
 <?php
-$dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234',array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-if(!empty($_POST['option'])){
-    $querysample = 'SELECT * FROM USERINFO WHERE '.$_POST['option'].'="'.$_POST['value'].'"';
-    $stmt = $dbh->prepare($querysample);
-    $stmt->execute();
-    $list = $stmt->fetchAll();
-}
-else{
-    $stmt = $dbh->prepare('SELECT * FROM USERINFO');
-    $stmt->execute();
-    $list = $stmt->fetchAll();
-}
-
-$id = $_GET['id'];
-$pw = $_GET['pw'];
-$grade = $_GET['grade'];
-
-if($grade !== 'admin'){
-    echo "<script type=\"text/javascript\">alert('사용할 수 없는 기능입니다!');</script>";
-    echo("<script>location.replace('main.php?id={$id}&pw={$pw}&grade={$grade}');</script>");	
-}
+    //정보불러오기
+    $dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234',array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+    if(!empty($_POST['option'])){
+        $querysample = 'SELECT * FROM USERINFO WHERE '.$_POST['option'].'="'.$_POST['value'].'"';
+        $stmt = $dbh->prepare($querysample);
+        $stmt->execute();
+        $list = $stmt->fetchAll();
+    }
+    else{
+        $stmt = $dbh->prepare('SELECT * FROM USERINFO');
+        $stmt->execute();
+        $list = $stmt->fetchAll();
+    }
+    //세션
+    session_start();
+    $id = $_SESSION['id'];
+    $pw = $_SESSION['pw'];
+    $grade = $_SESSION['grade'];
+    //기능제한
+    if($grade !== 'admin'){
+        echo "<script type=\"text/javascript\">alert('사용할 수 없는 기능입니다!');</script>";
+        echo("<script>location.replace('upload.php');</script>");	
+    }
 ?>
 <!doctype html>
 <html>
     <head>
         <meta charset="utf-8">
         <title>홈페이지 관리</title>
-        <link rel="stylesheet" href="default.css">
-        <link rel="stylesheet" href="main.css">
-        <link rel="stylesheet" href="tool.css">
+        <link rel="stylesheet" href="css/default.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/tool.css">
     </head>
 <body>
     <nav>
         <ul>
-            <li><a class="idinfo"><?=$_GET['id']?>님 환영합니다.</a></li>
+            <li><a class="idinfo"><?=$id?>님 환영합니다.</a></li>
             <li><a class="logout" href="login.php">로그아웃</a></li>
         </ul>
         <ul class="top_menu">
-            <li class="top_menu_item"><a href="main.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">홈페이지 정보</a></li>
-            <li class="top_menu_item"><a href="upload.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">파일 저장소</a></li>
-            <li class="top_menu_item"><a href="board.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">게시판 정보</a></li>
-            <li class="top_menu_item"><a href="tool.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">홈페이지 관리</a></li>
+            <li class="top_menu_item" onclick="location.href='upload.php'"><a>파일 저장소</a></li>
+            <li class="top_menu_item" onclick="location.href='board.php'"><a>게시판 정보</a></li>
+            <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
         </ul>
     </nav>
 
     <nav class="search"> 
-        <form action="tool.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>" method="POST">
+        <form action="tool.php" method="POST">
             <input type="radio" id="name" name="option" value="name"><label>이름</label>
             <input type="radio" id="id" name="option" value="id"><label>ID</label>
             <input type="radio" id="tel" name="option" value="tel"><label>전화번호</label>
@@ -62,8 +63,8 @@ if($grade !== 'admin'){
             " [ PW ] : ".htmlspecialchars($row['pw']).
             " [ 전화번호 ] : ".htmlspecialchars($row['tel']).
             " [ 등급 ] : ".htmlspecialchars($row['grade']).
-            "<input type='button' onClick=location.href=\"change.php?id={$id}&pw={$pw}&grade={$grade}&cid={$row['id']}\" value='수정'>".
-            "<input type='button' onClick=location.href=\"./process.php?mode=delete&id={$id}&pw={$pw}&grade={$grade}&cid={$row['id']}\" value='탈퇴'>".
+            "<input type='button' onClick=location.href=\"change.php?cid={$row['id']}\" value='수정'>".
+            "<input type='button' onClick=location.href=\"./process.php?mode=delete&cid={$row['id']}\" value='탈퇴'>".
             "</h2></nav>";
         }
         echo $option;
