@@ -6,9 +6,11 @@
     $stmt->execute();
     $list = $stmt->fetch();
 
-    $id = $_GET['id'];
-    $pw = $_GET['pw'];
-    $grade = $_GET['grade'];
+    //세션
+    session_start();
+    $id = $_SESSION['id'];
+    $pw = $_SESSION['pw'];
+    $grade = $_SESSION['grade'];
 ?>
 
 <!doctype html>
@@ -35,9 +37,6 @@
 
     <form action="./process.php?mode=change" method="POST" class="forminfo">
         <input type="hidden" name="cid" value="<?=$_GET['cid']?>">
-        <input type="hidden" name="oid" value="<?=$id?>">
-        <input type="hidden" name="opw" value="<?=$pw?>">
-        <input type="hidden" name="ograde" value="<?=$grade?>">
         <h2>이름 : </h2>
         <input name="name" type="text" value="<?=$list['name']?>">
         <h2>ID : </h2>

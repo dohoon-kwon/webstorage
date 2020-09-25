@@ -16,7 +16,9 @@
     background-color: turquoise;
 }
 
-.search{
+.search {
+    border: 1px solid cornflowerblue;
+    border-top: none;
     display: flow-root;
 }
 .search form{

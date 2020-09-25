@@ -1,6 +1,7 @@
 <?php
     session_start();
     $id=$_SESSION['id'];
+
 ?>
 
 <!doctype html>
@@ -21,12 +22,12 @@
             <li><a class="logout" href="login.php">로그아웃</a></li>
         </ul>
         <ul class="top_menu">
-          <li class="top_menu_item" onclick="location.href='upload.php'"><a>파일 저장소</a></li>
+            <li class="top_menu_item" onclick="location.href='upload.php'"><a>파일 저장소</a></li>
             <li class="top_menu_item" onclick="location.href='board.php'"><a>게시판 정보</a></li>
             <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
         </ul>
     </nav>
-    <div class="rightmenu">
+    <div class="leftmenu">
         <ul>
             <li><input type="button" value="개인저장소"></li>
             <li><input type="button" value="공유저장소"></li>
@@ -34,16 +35,20 @@
             <li><h1>저장소 용량표시도 만들어야할까</h1></li>
         </ul>
     </div>
-    <div id="content">
-      <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
-          <div id="drag_upload_file">
-            <p>Drop file here</p>
-            <p>or</p>            
-            <p><input type="button" value="Select File" onclick="file_explorer();"></p>
-            <input type="file" id="selectfile" name="userfile">
-          </div>
-      </div>
-  </div>
-
+    
+      <div id="content">
+        <div id="list_div">
+          <ul id="file_list">
+          </ul>
+        </div>
+        <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
+            <div id="drag_upload_file"> 
+              <p><input type="button" value="혹시 나중에쓸까봐 일단냅둠" onclick="file_explorer();"></p>
+              <input type="file" id="selectfile" name="userfile">
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+
+

@@ -1,105 +1,107 @@
 <?php
-$dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-session_start();
-switch($_GET['mode']){
-    case 'login':
-        $stmt = $dbh->prepare("SELECT * from USERINFO WHERE id = :id and pw = :pw");
-        $stmt->bindParam(':id',$id);
-        $stmt->bindParam(':pw',$pw);
-        $id = $_POST['id'];
-        $pw = $_POST['pw'];
-        $stmt->execute();
-        $check = $stmt->fetch();
-        if(empty($check)){
-            echo "<script type=\"text/javascript\">alert('아이디 혹은 비밀번호를 확인해주세요!');</script>";
-            echo("<script>location.replace('login.html');</script>");
-            }
-        else{
-            $_SESSION['id']=$check['id'];
-            $_SESSION['pw']=$check['pw'];
-            $_SESSION['grade']=$check['grade'];
-            header("Location: main.php"); 
-        }
-        break;
-
-    case 'create':
-        $idcheck = $dbh->prepare("SELECT * FROM USERINFO WHERE id=:id");
-        $idcheck->bindParam(':id', $id);
+    $dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+    session_start();
     
-        $id = $_POST['id'];
-        $idcheck->execute();
-    
-        $idif = $idcheck->fetch();
-        if(!empty($idif)){
-            echo "<script type=\"text/javascript\">alert('존재하는 아이디입니다!');</script>";
-            echo("<script>location.replace('makeaccount.php');</script>");
-        }
-        else{
-            $stmt = $dbh->prepare("INSERT INTO USERINFO (id, pw, tel, name) VALUES (:id, :pw, :tel, :name)");
+    switch($_GET['mode']){
+        case 'login':
+            $stmt = $dbh->prepare("SELECT * from USERINFO WHERE id = :id and pw = :pw");
             $stmt->bindParam(':id',$id);
             $stmt->bindParam(':pw',$pw);
-            $stmt->bindParam(':tel',$tel);
-            $stmt->bindParam(':name',$name);
             $id = $_POST['id'];
             $pw = $_POST['pw'];
-            $tel = (string)$_POST['tel1']."-".(string)$_POST['tel2']."-".(string)$_POST['tel3'];
-            $name = $_POST['name'];
             $stmt->execute();
-            mkdir("/home/samba/userfile/".$id);
-            header("Location: login.html");
+            $check = $stmt->fetch();
+            if(empty($check)){
+                echo "<script type=\"text/javascript\">alert('아이디 혹은 비밀번호를 확인해주세요!');</script>";
+                echo("<script>location.replace('login.html');</script>");
+                }
+            else{
+                $_SESSION['id']=$check['id'];
+                $_SESSION['pw']=$check['pw'];
+                $_SESSION['grade']=$check['grade'];
+                header("Location: upload.php"); 
+            }
+            break;
+        case 'create':
+            $idcheck = $dbh->prepare("SELECT * FROM USERINFO WHERE id=:id");
+            $idcheck->bindParam(':id', $id);
+        
+            $id = $_POST['id'];
+            $idcheck->execute();
+        
+            $idif = $idcheck->fetch();
+            if(!empty($idif)){
+                echo "<script type=\"text/javascript\">alert('존재하는 아이디입니다!');</script>";
+                echo("<script>location.replace('makeaccount.php');</script>");
+            }
+            else{
+                $stmt = $dbh->prepare("INSERT INTO USERINFO (id, pw, tel, name) VALUES (:id, :pw, :tel, :name)");
+                $stmt->bindParam(':id',$id);
+                $stmt->bindParam(':pw',$pw);
+                $stmt->bindParam(':tel',$tel);
+                $stmt->bindParam(':name',$name);
+                $id = $_POST['id'];
+                $pw = $_POST['pw'];
+                $tel = (string)$_POST['tel1']."-".(string)$_POST['tel2']."-".(string)$_POST['tel3'];
+                $name = $_POST['name'];
+                $stmt->execute();
+                mkdir("/home/samba/userfile/".$id);
+                mkdir("/home/samba/userfile/".$id."_trash");
+                header("Location: login.html");
+            }
+            break;
+        
+
+        case 'insert':
+            $stmt = $dbh->prepare("INSERT INTO BOARD_TOPIC (title, name, description, created) VALUES (:title, :name, :description, now())");
+            $stmt->bindParam(':title',$title);
+            $stmt->bindParam(':description',$description);
+            $stmt->bindParam(':name',$name);
+        
+            $title = $_POST['title'];
+            $description = $_POST['description'];
+            $name = $_SESSION['id'];
+            $stmt->execute();
+            header("Location: board.php");
+            break;
+        case 'comment':
+            $stmt = $dbh->prepare("INSERT INTO BOARD_COMMENT (boardnum, name, description, created) VALUES (:topic_id, :name, :description, now())");
+            $stmt->bindParam(':topic_id',$topic_id);
+            $stmt->bindParam(':name',$name);
+            $stmt->bindParam(':description',$description);
+
+            $topic_id = $_POST['topic_id'];
+            $name = $_SESSION['id'];
+            $description = $_POST['commenttext'];
+            $stmt->execute();
+            header("Location: board_read.php?topic_id=$topic_id");
+            break;
+
+        case 'change':
+            $stmt = $dbh->prepare("UPDATE USERINFO SET id=:id, pw =:pw, tel=:tel, name=:name, grade=:grade WHERE id=:cid");
+            $stmt->bindParam(':cid',$cid);
+            $stmt->bindParam(':id',$oid);
+            $stmt->bindParam(':pw',$cpw);
+            $stmt->bindParam(':tel',$ctel);
+            $stmt->bindParam(':name',$cname);
+            $stmt->bindParam(':grade',$cgrade);
+
+            $cid = $_POST['cid'];
+            $oid = $_POST['id'];
+            $cpw = $_POST['pw'];
+            $ctel = $_POST['tel'];
+            $cname = $_POST['name'];
+            $cgrade = $_POST['grade'];
+
+            $stmt->execute();
+            header("Location: tool.php");
+            break;
+        case 'delete':
+            $stmt = $dbh->prepare("DELETE FROM USERINFO WHERE id=:cid");
+            $stmt->bindParam(':cid',$cid);
+            $cid = $_GET['cid'];
+            $stmt->execute();
+            header("Location: tool.php");
+            break;
         }
-        break;
-    
-    case 'insert':
-        $stmt = $dbh->prepare("INSERT INTO BOARD_TOPIC (title, name, description, created) VALUES (:title, :name, :description, now())");
-        $stmt->bindParam(':title',$title);
-        $stmt->bindParam(':description',$description);
-        $stmt->bindParam(':name',$name);
-    
-        $title = $_POST['title'];
-        $description = $_POST['description'];
-        $name = $_POST['id'];
-        $stmt->execute();
-        header("Location: board.php?id={$_POST['id']}&pw={$_POST['pw']}&grade={$_POST['grade']}");
-        break;
-    case 'comment':
-        $stmt = $dbh->prepare("INSERT INTO BOARD_COMMENT (boardnum, name, description, created) VALUES (:topic_id, :name, :description, now())");
-        $stmt->bindParam(':topic_id',$topic_id);
-        $stmt->bindParam(':name',$name);
-        $stmt->bindParam(':description',$description);
-
-        $topic_id = $_POST['topic_id'];
-        $name = $_POST['id'];
-        $description = $_POST['commenttext'];
-        $stmt->execute();
-        header("Location: board_read.php?topic_id={$_POST['topic_id']}&id={$_POST['id']}&pw={$_POST['pw']}&grade={$_POST['grade']}");
-        break;
-
-    case 'change':
-        $stmt = $dbh->prepare("UPDATE USERINFO SET id=:id, pw =:pw, tel=:tel, name=:name, grade=:grade WHERE id=:cid");
-        $stmt->bindParam(':cid',$cid);
-        $stmt->bindParam(':id',$id);
-        $stmt->bindParam(':pw',$pw);
-        $stmt->bindParam(':tel',$tel);
-        $stmt->bindParam(':name',$name);
-        $stmt->bindParam(':grade',$grade);
-
-        $cid = $_POST['cid'];
-        $id = $_POST['id'];
-        $pw = $_POST['pw'];
-        $tel = $_POST['tel'];
-        $name = $_POST['name'];
-        $grade = $_POST['grade'];
-
-        $stmt->execute();
-        header("Location: tool.php?id={$_POST['oid']}&pw={$_POST['opw']}&grade={$_POST['ograde']}");
-        break;
-    case 'delete':
-        $stmt = $dbh->prepare("DELETE FROM USERINFO WHERE id=:cid");
-        $stmt->bindParam(':cid',$cid);
-        $cid = $_GET['cid'];
-        $stmt->execute();
-        header("Location: tool.php?id={$_GET['id']}&pw={$_GET['pw']}&grade={$_GET['grade']}");
-        break;
-    }
 ?>

@@ -1,3 +1,10 @@
+<?php
+    //세션
+    session_start();
+    $id = $_SESSION['id'];
+    $pw = $_SESSION['pw'];
+    $grade = $_SESSION['grade'];
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +15,7 @@
     session_start();
 
     ini_set("display_errors", "1");
-    $uploaddir = "/home/samba/userfile/";
+    $uploaddir = "/home/samba/userfile/".$_SESSION['id']."/";
     $uploadfile = $uploaddir.($_FILES['file']['name']);
     echo '<pre>';
     if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
