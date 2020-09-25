@@ -7,10 +7,10 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>파일 저장소</title>
+  <title>공유 저장소</title>
   <link rel="stylesheet" href="css/default.css">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/upload.css">
+  <link rel="stylesheet" href="css/upload.css?ver=1">
 </head>
 <body>
     <nav>
@@ -24,14 +24,11 @@
             <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
         </ul>
     </nav>
-    
+
     <div class="leftmenu">
         <ul>
             <li><h1>드라이브</h1></li>
-            <li><a onclick="storage()">모든 파일</a></li>
-            <li><a>사진</a></li>
-            <li><a>동영상</a></li>
-            <li><a>문서</a></li>
+            <li><a onclick="storage()">공유 파일</a></li>
             <li><a onclick="trash()">휴지통</a></li>
             <li><h1>저장소 용량표시할 예정</h1></li>
         </ul>
@@ -59,7 +56,7 @@
       <nav class="trash">
         <?php
           // 폴더명 지정
-          $dir = "/home/samba/userfile/$id"."trash";
+          $dir = "/home/samba/userfile/$id/";
           // 핸들 획득
           $handle  = opendir($dir);
           $files = array();

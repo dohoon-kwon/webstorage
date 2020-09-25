@@ -9,19 +9,32 @@
 #drag_upload_file #selectfile {
   display: none;
 } 
+
 .leftmenu{
   position: absolute;
   z-index: 20;
   top: 82px;
   bottom: 30px;
-  width: 250px;
+  width: 165px;
   padding-bottom: 67px;
-  border-right: 1px solid #c4c3c3;
+  border-right: 1px solid cornflowerblue;
   background-color: #fff;
   line-height: normal;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+.leftmenu ul li{
+  display: flex;
+}
+.leftmenu ul li a{
+  display: inline;
+  margin: 6px;
+  cursor: pointer;
+}
+.leftmenu ul li a:hover{
+  color: turquoise;
+}
+
 .rightmenu{
   display: flex;
   -moz-flex-direction: column;
@@ -31,9 +44,16 @@
   flex-direction: column;
   position: absolute;
   top: 82px;
-  left: 250px;
+  left: 167px;
   right: 0;
   bottom: 0;
   z-index: 20;
   padding: 0px 0 30px 0;
+}
+
+.share{
+  display: none;
+}
+.trash{
+  display: none;
 }

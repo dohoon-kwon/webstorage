@@ -46,36 +46,10 @@
                 $name = $_POST['name'];
                 $stmt->execute();
                 mkdir("/home/samba/userfile/".$id);
+                mkdir("/home/samba/userfile/".$id."trash");
                 header("Location: login.html");
             }
             break;
-        
-
-        case 'insert':
-            $stmt = $dbh->prepare("INSERT INTO BOARD_TOPIC (title, name, description, created) VALUES (:title, :name, :description, now())");
-            $stmt->bindParam(':title',$title);
-            $stmt->bindParam(':description',$description);
-            $stmt->bindParam(':name',$name);
-        
-            $title = $_POST['title'];
-            $description = $_POST['description'];
-            $name = $_SESSION['id'];
-            $stmt->execute();
-            header("Location: board.php");
-            break;
-        case 'comment':
-            $stmt = $dbh->prepare("INSERT INTO BOARD_COMMENT (boardnum, name, description, created) VALUES (:topic_id, :name, :description, now())");
-            $stmt->bindParam(':topic_id',$topic_id);
-            $stmt->bindParam(':name',$name);
-            $stmt->bindParam(':description',$description);
-
-            $topic_id = $_POST['topic_id'];
-            $name = $_SESSION['id'];
-            $description = $_POST['commenttext'];
-            $stmt->execute();
-            header("Location: board_read.php?topic_id=$topic_id");
-            break;
-
         case 'change':
             $stmt = $dbh->prepare("UPDATE USERINFO SET id=:id, pw =:pw, tel=:tel, name=:name, grade=:grade WHERE id=:cid");
             $stmt->bindParam(':cid',$cid);
