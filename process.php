@@ -1,5 +1,6 @@
 <?php
 $dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+session_start();
 switch($_GET['mode']){
     case 'login':
         $stmt = $dbh->prepare("SELECT * from USERINFO WHERE id = :id and pw = :pw");
@@ -14,7 +15,10 @@ switch($_GET['mode']){
             echo("<script>location.replace('login.html');</script>");
             }
         else{
-            header("Location: main.php?id={$check['id']}&pw={$check['pw']}&grade={$check['grade']}"); 
+            $_SESSION['id']=$check['id'];
+            $_SESSION['pw']=$check['pw'];
+            $_SESSION['grade']=$check['grade'];
+            header("Location: main.php"); 
         }
         break;
 
@@ -41,6 +45,7 @@ switch($_GET['mode']){
             $tel = $_POST['tel'];
             $name = $_POST['name'];
             $stmt->execute();
+            mkdir("/home/samba/userfile/".$id);
             header("Location: login.html");
         }
         break;
