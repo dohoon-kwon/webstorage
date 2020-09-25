@@ -1,0 +1,15 @@
+.forminfo{
+    padding: 10% 40% 0% 40%;
+    display: grid;
+}
+input[type="submit"]{
+    background-color: cornflowerblue;
+    color: white;
+    border: 0px;
+    padding: 2% 5%;
+    margin: 10%
+}
+input[type="submit"]:hover{
+    background-color: turquoise;
+    cursor: pointer;
+}

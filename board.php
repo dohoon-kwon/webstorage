@@ -26,7 +26,7 @@ if(isset($_GET['page'])) {
 
     $allPost = $list['cnt']; //전체 게시글의 수
 
-	$onePage = 15; // 한 페이지에 보여줄 게시글의 수.
+	$onePage = 30; // 한 페이지에 보여줄 게시글의 수.
     $allPage = ceil($allPost / $onePage); //전체 페이지의 수
     if($page < 1 || ($allPage && $page > $allPage)) {
 ?>
@@ -41,13 +41,10 @@ history.back();
 <?php
 exit;
 }
-
 $oneSection = 10; //한번에 보여줄 총 페이지 개수(1 ~ 10, 11 ~ 20 ...)
 $currentSection = ceil($page / $oneSection); //현재 섹션
 $allSection = ceil($allPage / $oneSection); //전체 섹션의 수
-
 $firstPage = ($currentSection * $oneSection) - ($oneSection - 1); //현재 섹션의 처음 페이지
-
 if($currentSection == $allSection) {
 $lastPage = $allPage; //현재 섹션이 마지막 섹션이라면 $allPage가 마지막 페이지가 된다.
 } else {
@@ -102,17 +99,15 @@ $stmt = $dbh->prepare('select * from BOARD_TOPIC' . $sqlLimit);
 $stmt->execute();
 $list = $stmt->fetchAll();
 ?>
+
 <!doctype html>
 <html>
     <head>
         <meta charset="utf-8">
         <title>게시판</title>
-        <link rel="stylesheet" href="default.css">
-        <link rel="stylesheet" href="main.css">
-        <link rel="stylesheet" href="board.css">
-        <style>
-           
-        </style>
+        <link rel="stylesheet" href="css/default.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/board.css">
     </head>
    
     <body>
@@ -122,10 +117,9 @@ $list = $stmt->fetchAll();
                 <li><a class="logout" href="login.php">로그아웃</a></li>
             </ul>
             <ul class="top_menu">
-                <li class="top_menu_item"><a href="main.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">홈페이지 정보</a></li>
-                <li class="top_menu_item"><a href="upload.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">파일 저장소</a></li>
-                <li class="top_menu_item"><a href="board.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">게시판 정보</a></li>
-                <li class="top_menu_item"><a href="tool.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">홈페이지 관리</a></li>
+                <li class="top_menu_item" onclick="location.href='upload.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>'"><a>파일 저장소</a></li>
+                <li class="top_menu_item" onclick="location.href='board.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>'"><a>게시판 정보</a></li>
+                <li class="top_menu_item" onclick="location.href='tool.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>'"><a>홈페이지 관리</a></li>
             </ul>
         </nav>
 

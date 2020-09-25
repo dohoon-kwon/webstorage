@@ -46,7 +46,7 @@
 }
 
 .paging{
-	width: 50%;
+	width: auto;
     margin: 0% 25%;
     top: 0;
     padding: 0;
@@ -55,8 +55,10 @@
 }
 
 .paging ul{
-    list-style:none;
-	display:inline;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
 }
 
 .page{

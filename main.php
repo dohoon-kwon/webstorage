@@ -7,8 +7,8 @@
 <head>
 <meta charset="utf-8">
 <title>메인페이지</title>
-<link rel="stylesheet" href="default.css">
-<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="css/default.css">
+<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <nav>
@@ -23,6 +23,6 @@
             <li class="top_menu_item"><a href="tool.php">홈페이지 관리</a></li>
         </ul>
     </nav>
-    <h3>메인페이지</h3>
+    <h5>경섭이가 해줄거야 난 경섭이를 믿어</h5>
 </body>
 </html>

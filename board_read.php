@@ -27,72 +27,9 @@ $grade = $_GET['grade'];
     <head>
         <meta charset="utf-8">
         <title>게시판</title>
-        <link rel="stylesheet" href="default.css">
-        <link rel="stylesheet" href="main.css">
-        <style>
-            .btm_menu{
-                width: 100%;
-                margin: 0;
-                padding: 0;
-                list-style-type: none;
-                border: 1px solid black;
-            }
-
-            .btm_list_item_title{
-                text-align: center;
-                text-decoration: none;
-                color: black;
-                font-size: 24px;
-                font-weight: bold;
-            }
-
-            .btm_list_item_name{
-                text-align: center;
-                text-decoration: none;
-                color: black;
-                font-size: 16px;
-                font-weight: bold;
-                border: 1px solid cornflowerblue;
-                border-left: none;
-                border-right: none;
-                border-bottom: none;
-            }
-
-            .btm_list_item{
-                text-decoration: none;
-                height: 500px;
-                border: 1px solid cornflowerblue;
-                border-left: none;
-                border-right: none;
-            }
-
-            .btm_list_item a{
-                color: black;
-                font-size: 16px;
-            }
-
-            .comment{
-                display: flex;
-            }
-            .comment input[type='submit']{
-                background: cornflowerblue;
-                color: white;
-                border: 0px;
-                padding: 0px 1%;
-                cursor: pointer;
-            }
-            .comment input[type='submit']:hover{
-                background-color: turquoise;
-            }
-
-            .comment_board h1{
-                border: 1px solid cornflowerblue;
-                border-top: none;
-            }
-            .comment input[type="text"]{
-                width: 100%;
-            }
-        </style>
+        <link rel="stylesheet" href="css/default.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/board_read.css">
     </head>
 <body>
     <nav>
@@ -101,10 +38,9 @@ $grade = $_GET['grade'];
             <li><a class="logout" href="login.php">로그아웃</a></li>
         </ul>
         <ul class="top_menu">
-            <li class="top_menu_item"><a href="main.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">홈페이지 정보</a></li>
-            <li class="top_menu_item"><a href="upload.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">파일 저장소</a></li>
-            <li class="top_menu_item"><a href="board.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">게시판 정보</a></li>
-            <li class="top_menu_item"><a href="tool.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>">홈페이지 관리</a></li>
+            <li class="top_menu_item" onclick="location.href='upload.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>'"><a>파일 저장소</a></li>
+            <li class="top_menu_item" onclick="location.href='board.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>'"><a>게시판 정보</a></li>
+            <li class="top_menu_item" onclick="location.href='tool.php?id=<?=$_GET['id']?>&pw=<?=$_GET['pw']?>&grade=<?=$_GET['grade']?>'"><a>홈페이지 관리</a></li>
         </ul>
     </nav>
     

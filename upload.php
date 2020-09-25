@@ -5,23 +5,11 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>파일 저장소</title>
-<link rel="stylesheet" href="default.css">
-<link rel="stylesheet" href="main.css">
-<style>
-        #drop_file_zone {
-            background-color: #EEE; 
-            border: #999 5px dashed;
-            width: 290px; 
-            height: 200px;
-            padding: 8px;
-            font-size: 18px;
-        }        
-        #drag_upload_file #selectfile {
-          display: none;
-        } 
-</style>
+  <meta charset="utf-8">
+  <title>파일 저장소</title>
+  <link rel="stylesheet" href="css/default.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/upload.css">
 </head>
 <body>
     <nav>
@@ -36,7 +24,15 @@
             <li class="top_menu_item"><a href="tool.php">홈페이지 관리</a></li>
         </ul>
     </nav>
-    <form enctype="multipart/form-data" action="uploadprocess.php" method="POST">
+    <div class="rightmenu">
+        <ul>
+            <li><input type="button" value="개인저장소"></li>
+            <li><input type="button" value="공유저장소"></li>
+            <li><input type="button" value="휴지통"></li>
+            <li><h1>저장소 용량표시도 만들어야할까</h1></li>
+        </ul>
+    </div>
+    <form enctype="multipart/form-data" action="uploadprocess.php" method="POST" class="leftmenu">
         <input type="hidden" name="MAX_FILE_SIZE" value="99999999999999999" />
         <input type="hidden" name="id" value="<?=$_GET['id']?>"/>
         <input name="userfile" type="file" />
