@@ -27,20 +27,64 @@
         </ul>
     </nav>
 
+
     <div class="leftmenu">
         <ul>
             <li><h1>드라이브</h1></li>
             <li><a onclick="storage()">모든 파일</a></li>
             <li><a onclick="photo()">사진</a></li>
-            <li><a>동영상</a></li>
+            <li><a onclick="video()">동영상</a></li>
             <li><a onclick="document1()">문서</a></li>
             <li><a onclick="trash()">휴지통</a></li>
-            <li><h1>저장소 용량표시할 예정</h1></li>
+            <?php
+               // 폴더 전체용량
+              function dirsize($dir){
+                static $size, $cnt;
+                $fp = opendir($dir);
+                while(false !== ($entry = readdir($fp))){
+                      if(($entry != ".") && ($entry != "..")){
+                          if(is_dir($dir.'/'.$entry)){
+                                clearstatcache();
+                                dirsize($dir.'/'.$entry);
+                          } else if(is_file($dir.'/'.$entry)){
+                                $size += filesize($dir.'/'.$entry);
+                                clearstatcache();
+                                $cnt++;
+                          }
+                      }
+                }
+                closedir($fp);
+
+                $stat = array(
+                          'size' => $size,
+                          'cnt' => $cnt
+                );
+                return $stat;
+                } // end func
+
+                function attach($size) {
+                if($size < 1024){
+                      return number_format($size*1.024).'B';
+                } else if(($size > 1024) && ($size < 1024000)){
+                      return number_format($size*0.001024).'KB';
+                } else if($size > 1024000){
+                      return number_format($size*0.000001024,2).'MB';
+                }
+                return 0;
+                }
+
+                // 사용법: $arr = dirsize(폴더 경로);
+                // $arr['cnt'] <- 총 파일 수, $arr['size'] <- 총 용량 수
+                $stat = dirsize('/home/samba/userfile/'.$id);
+
+                echo "<h1>총 파일 용량</br>".attach($stat['size'])."</h1>";
+            ?>
         </ul>
     </div>
 
-    <div class="rightmenu">
 
+    <div class="rightmenu">
+      
       <nav class="storage">
         <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
             <div id="drag_upload_file">
@@ -68,6 +112,7 @@
         </div>
       </nav>
 
+
       <nav class="photo">
         <?php
           $dir = "/home/samba/userfile/$id";
@@ -94,6 +139,34 @@
         ?>
       </nav>
 
+
+      <nav class="video">
+        <?php
+          $dir = "/home/samba/userfile/$id";
+          $handle  = opendir($dir);
+          $files = array();
+          while (false !== ($filename = readdir($handle))) {
+              if($filename == "." || $filename == ".."){
+                  continue;
+              }
+              if(is_file($dir . "/" . $filename)){
+                $arr = explode(".",$filename);
+                $filter = array("ASF", "AVI", "BIK", "FLV", "MKV", "MOV", "MP4", "MPEG", "Ogg", "SKM", "TS", "WebM", "WMV", "asf", "avi", "bik", "flv", "mkv", "mov", "mp4", "mpeg", "ogg", "skm", "ts", "webm", "wmv");
+                if(in_array($arr[1], $filter)){
+                  $files[] = $arr[0].".".$arr[1];
+                }
+              }
+          }
+          closedir($handle);
+          sort($files);
+          foreach ($files as $f) {
+              echo "<p>".$f."</p>";
+              echo "<br />";
+          } 
+        ?>
+      </nav>
+
+
       <nav class="document">
         <?php
           $dir = "/home/samba/userfile/$id";
@@ -105,7 +178,7 @@
               }
               if(is_file($dir . "/" . $filename)){
                 $arr = explode(".",$filename);
-                $filter = array("ppt", "doc", "xls", "pptx", "docx", "pdf", "ai","psd", "txt", "hwp");
+                $filter = array("ppt", "doc", "xls", "pptx", "docx", "pdf", "ai","psd", "txt", "hwp", "PPT", "DOC", "XLS", "PPTX", "DOCX", "PDF", "AI", "PSD", "TXT", "HWP");
                 if(in_array($arr[1], $filter)){
                   $files[] = $arr[0].".".$arr[1];
                 }
@@ -120,6 +193,7 @@
         ?>
       </nav>
     
+
       <nav class="trash">
         <?php
           // 폴더명 지정
@@ -151,27 +225,43 @@
     </div>
 
     <script type="text/javascript">
+
       function storage(){
         $('.trash').hide();
         $('.photo').hide();
+        $('.video').hide();
         $('.document').hide();
         $('.storage').show();
       }
+
       function photo(){
         $('.trash').hide();
         $('.photo').show();
+        $('.video').hide();
         $('.document').hide();
         $('.storage').hide();
       }
+
+      function video(){
+        $('.trash').hide();
+        $('.photo').hide();
+        $('.video').show();
+        $('.document').hide();
+        $('.storage').hide();
+      }
+
       function document1(){
         $('.trash').hide();
         $('.photo').hide();
+        $('.video').hide();
         $('.document').show();
         $('.storage').hide();
       }
+
       function trash(){
         $('.trash').show();
         $('.photo').hide();
+        $('.video').hide();
         $('.document').hide();
         $('.storage').hide();
       }

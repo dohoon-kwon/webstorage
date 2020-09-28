@@ -17,7 +17,7 @@
 .leftmenu{
   position: absolute;
   z-index: 20;
-  top: 82px;
+  top: 86px;
   bottom: 30px;
   width: 165px;
   padding-bottom: 67px;
@@ -99,5 +99,17 @@
   cursor: pointer;
 }
 .document p:hover{
+  color: turquoise;
+}
+
+.video{
+  display: none;
+  height: 100%;
+  padding: 8px;
+}
+.video p{
+  cursor: pointer;
+}
+.video p:hover{
   color: turquoise;
 }

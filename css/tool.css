@@ -1,6 +1,5 @@
 .info {
-    border: 1px solid cornflowerblue;
-    border-top: none;
+    border-bottom: 1px solid cornflowerblue;
     display: flow-root;
 }
 .info input[type="button"]{
@@ -17,8 +16,7 @@
 }
 
 .search {
-    border: 1px solid cornflowerblue;
-    border-top: none;
+    border-bottom: 1px solid cornflowerblue;
     display: flow-root;
 }
 .search form{
