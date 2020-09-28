@@ -10,7 +10,7 @@
   <title>파일 저장소</title>
   <link rel="stylesheet" href="css/default.css">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/upload.css">
+  <link rel="stylesheet" href="css/upload.css?ver=1">
 </head>
 <body>
     <nav>
@@ -24,7 +24,7 @@
             <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
         </ul>
     </nav>
-    
+
     <div class="leftmenu">
         <ul>
             <li><h1>드라이브</h1></li>
