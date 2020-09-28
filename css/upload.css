@@ -77,3 +77,27 @@
 .trash p:hover{
   color: turquoise;
 }
+
+.photo{
+  display: none;
+  height: 100%;
+  padding: 8px;
+}
+.photo p{
+  cursor: pointer;
+}
+.photo p:hover{
+  color: turquoise;
+}
+
+.document{
+  display: none;
+  height: 100%;
+  padding: 8px;
+}
+.document p{
+  cursor: pointer;
+}
+.document p:hover{
+  color: turquoise;
+}

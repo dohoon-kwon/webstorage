@@ -31,9 +31,9 @@
         <ul>
             <li><h1>드라이브</h1></li>
             <li><a onclick="storage()">모든 파일</a></li>
-            <li><a>사진</a></li>
+            <li><a onclick="photo()">사진</a></li>
             <li><a>동영상</a></li>
-            <li><a>문서</a></li>
+            <li><a onclick="document1()">문서</a></li>
             <li><a onclick="trash()">휴지통</a></li>
             <li><h1>저장소 용량표시할 예정</h1></li>
         </ul>
@@ -66,6 +66,58 @@
               ?>
             </div>
         </div>
+      </nav>
+
+      <nav class="photo">
+        <?php
+          $dir = "/home/samba/userfile/$id";
+          $handle  = opendir($dir);
+          $files = array();
+          while (false !== ($filename = readdir($handle))) {
+              if($filename == "." || $filename == ".."){
+                  continue;
+              }
+              if(is_file($dir . "/" . $filename)){
+                $arr = explode(".",$filename);
+                $filter = array("gif", "png", "jpg", "jpeg", "bmp", "GIF", "PNG", "JPG", "JPEG", "BMP");
+                if(in_array($arr[1], $filter)){
+                  $files[] = $arr[0].".".$arr[1];
+                }
+              }
+          }
+          closedir($handle);
+          sort($files);
+          foreach ($files as $f) {
+              echo "<p>".$f."</p>";
+              echo "<br />";
+          } 
+        ?>
+      </nav>
+
+      <nav class="document">
+        <?php
+          $dir = "/home/samba/userfile/$id";
+          $handle  = opendir($dir);
+          $files = array();
+          while (false !== ($filename = readdir($handle))) {
+              if($filename == "." || $filename == ".."){
+                  continue;
+              }
+              if(is_file($dir . "/" . $filename)){
+                $arr = explode(".",$filename);
+                $filter = array("ppt", "doc", "xls", "pptx", "docx", "pdf", "ai","psd", "txt", "hwp");
+                if(in_array($arr[1], $filter)){
+                  $files[] = $arr[0].".".$arr[1];
+                }
+              }
+          }
+          closedir($handle);
+          sort($files);
+          foreach ($files as $f) {
+              echo "<p>".$f."</p>";
+              echo "<br />";
+          } 
+        ?>
       </nav>
     
       <nav class="trash">
@@ -101,10 +153,26 @@
     <script type="text/javascript">
       function storage(){
         $('.trash').hide();
+        $('.photo').hide();
+        $('.document').hide();
         $('.storage').show();
+      }
+      function photo(){
+        $('.trash').hide();
+        $('.photo').show();
+        $('.document').hide();
+        $('.storage').hide();
+      }
+      function document1(){
+        $('.trash').hide();
+        $('.photo').hide();
+        $('.document').show();
+        $('.storage').hide();
       }
       function trash(){
         $('.trash').show();
+        $('.photo').hide();
+        $('.document').hide();
         $('.storage').hide();
       }
     </script>
