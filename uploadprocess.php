@@ -26,7 +26,7 @@
     </nav>
     <?php
         ini_set("display_errors", "1");
-        $uploaddir = "/home/samba/userfile/";
+        $uploaddir = "/home/samba/userfile/$id/";
         $uploadfile = $uploaddir.($_FILES['file']['name']);
         echo '<pre>';
         if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {

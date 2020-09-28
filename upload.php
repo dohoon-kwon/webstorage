@@ -10,7 +10,9 @@
   <title>파일 저장소</title>
   <link rel="stylesheet" href="css/default.css">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/upload.css?ver=1">
+  <link rel="stylesheet" href="css/upload.css">
+  <script src="js/upload.js?ver=1"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     <nav>
@@ -38,24 +40,34 @@
     </div>
 
     <div class="rightmenu">
-      <nav class="storage">
-        <form enctype="multipart/form-data" action="uploadprocess.php" method="POST">
-            <input type="hidden" name="MAX_FILE_SIZE" value="99999999999999999" />
-            <input type="hidden" name="id" value="<?=$_GET['id']?>"/>
-            <input name="userfile" type="file" />
-            <input type="submit" value="업로드" />
-        </form>
 
+      <nav class="storage">
         <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
-          <div id="drag_upload_file">
-            <p>Drop file here</p>
-            <p>or</p>            
-            <p><input type="button" value="Select File" onclick="file_explorer();"></p>
-            <input type="file" id="selectfile" name="userfile">
-          </div>
+            <div id="drag_upload_file">
+              <ul id="file_list"></ul>
+              <?php
+                $dir = "/home/samba/userfile/$id";
+                $handle  = opendir($dir);
+                $files = array();
+                while (false !== ($filename = readdir($handle))) {
+                    if($filename == "." || $filename == ".."){
+                        continue;
+                    }
+                    if(is_file($dir . "/" . $filename)){
+                        $files[] = $filename;
+                    }
+                }
+                closedir($handle);
+                sort($files);
+                foreach ($files as $f) {
+                    echo "<p>".$f."</p>";
+                    echo "<br />";
+                } 
+              ?>
+            </div>
         </div>
       </nav>
-
+    
       <nav class="trash">
         <?php
           // 폴더명 지정
@@ -79,50 +91,14 @@
           sort($files);
           // 파일명을 출력한다.
           foreach ($files as $f) {
-              echo $f;
+              echo "<p>".$f."</p>";
               echo "<br />";
           } 
         ?>
       </nav>      
     </div>
-    
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-      var fileobj;
-      function upload_file(e) {
-        e.preventDefault();
-        fileobj = e.dataTransfer.files[0];
-        ajax_file_upload(fileobj);
-      }
-
-      function file_explorer() {
-        document.getElementById('selectfile').click();
-        document.getElementById('selectfile').onchange = function() {
-            fileobj = document.getElementById('selectfile').files[0];
-          ajax_file_upload(fileobj);
-        };
-      }
-
-      function ajax_file_upload(file_obj) {
-        if(file_obj != undefined) {
-            var form_data = new FormData();                  
-            form_data.append('file', file_obj);
-          $.ajax({
-            type: 'POST',
-            url: 'uploadprocess.php',
-            contentType: false,
-            processData: false,
-            data: form_data,
-            success:function(response) {
-              alert(response);
-              $('#selectfile').val('');
-            }
-          });
-        }
-      }
-
       function storage(){
         $('.trash').hide();
         $('.storage').show();
@@ -132,6 +108,5 @@
         $('.storage').hide();
       }
     </script>
-
 </body>
 </html>
