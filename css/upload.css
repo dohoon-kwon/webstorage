@@ -18,6 +18,7 @@
   padding: 20px;
   margin: 10px;
   cursor: pointer;
+  width: 105px;
 }
 #drop_file_zone ul li:hover{
   background-color: lightgray;
@@ -47,7 +48,7 @@
 .leftmenu{
   position: absolute;
   z-index: 20;
-  top: 86px;
+  top: 99px;
   bottom: 30px;
   width: 165px;
   padding-bottom: 67px;
@@ -80,12 +81,13 @@
   -webkit-box-direction: normal;
   flex-direction: column;
   position: absolute;
-  top: 82px;
+  top: 99px;
   left: 167px;
   right: 0;
   bottom: 0;
   z-index: 20;
   padding: 0px 0 30px 0;
+
 }
 
 .storage{
@@ -107,7 +109,7 @@
 }
 .searchform ul{
   display: flex;
-  padding: 20px 0px 0px 10px;
+  padding: 18px 0px 0px 17px;
 }
 .searchform ul li input[type="submit"]{
   background-color: cornflowerblue;
@@ -131,4 +133,9 @@
 }
 .searchform ul li input[type="button"]:hover{
   background-color: turquoise;
+}
+
+.img img{
+  max-width: 100%; 
+  height: auto;
 }

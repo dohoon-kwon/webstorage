@@ -1,7 +1,4 @@
 <?php
-    session_start();
-    $id=$_SESSION['id'];
-
     if($_GET['type'] !== 'trash'){
         $dir = "/home/samba/userfile/$id";
         $handle  = opendir($dir);
@@ -40,34 +37,34 @@
         switch($_GET['type']){
             case '':   
                 foreach ($dirs as $f) {
-                    echo "<li class='dir'>".$f."</li>";
+                    echo "<li class='dir'><img src='img/directory.png'></img><p>".$f."</p></li>";
                 } 
                 foreach ($files['doc'] as $f) {   
-                    echo "<li class='doc'>".$f."</li>";
+                    echo "<li class='doc'><img src='img/directory.png'></img><p>".$f."</p></li>";
                     }
                 foreach ($files['video'] as $f) {   
-                    echo "<li class='video'>".$f."</li>";
+                    echo "<li class='video'><img src='img/directory.png'></img><p>".$f."</p></li>";
                     } 
                 foreach ($files['img'] as $f) {   
-                    echo "<li class='img'>".$f."</li>";
+                    echo "<li class='img'><img src='userfile/$id/$f'></img><p>".$f."</p></li>";
                     } 
               break;
 
             case 'photo':
                 foreach ($files['img'] as $f) {   
-                    echo "<li class='img'>".$f."</li>";
+                    echo "<li class='img'><img src='img/directory.png'></img><p>".$f."</p></li>";
               } 
               break;
 
             case 'video':
                 foreach ($files['video'] as $f) {   
-                    echo "<li class='video'>".$f."</li>";
+                    echo "<li class='video'><img src='img/directory.png'></img><p>".$f."</p></li>";
                   } 
               break;
 
             case 'document':
               foreach ($files['doc'] as $f) {   
-                echo "<li class='doc'>".$f."</li>";
+                echo "<li class='doc'><img src='img/directory.png'></img><p>".$f."</p></li>";
                 }
             break;
           }
@@ -103,18 +100,15 @@
         }
         // 파일명을 출력한다.
         foreach ($files['doc'] as $f) {   
-            echo "<li class='doc'>".$f."</li>";
+            echo "<li class='doc'><img src='img/directory.png'></img><p>".$f."</p></li>";
             }
         foreach ($files['video'] as $f) {   
-            echo "<li class='video'>".$f."</li>";
+            echo "<li class='video'><img src='img/directory.png'></img><p>".$f."</p></li>";
             } 
         foreach ($files['img'] as $f) {   
-            echo "<li class='img'>".$f."</li>";
+            echo "<li class='img'><img src='img/directory.png'></img><p>".$f."</p></li>";
             } 
       }
-
-
-
 
 
 ?>
