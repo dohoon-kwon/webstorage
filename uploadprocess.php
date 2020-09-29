@@ -2,10 +2,8 @@
     //세션
     session_start();
     $id = $_SESSION['id'];
-    $pw = $_SESSION['pw'];
-    $grade = $_SESSION['grade'];
 ?>
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -13,11 +11,10 @@
 <body>
     <?php
     session_start();
-
     ini_set("display_errors", "1");
-    $uploaddir = "/home/samba/userfile/".$_SESSION['id']."/";
+    $uploaddir = "/home/samba/userfile/".$id."/";
     $uploadfile = $uploaddir.($_FILES['file']['name']);
-    echo '<pre>';
+
     if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
         echo "파일이 유효하고, 성공적으로 업로드 되었습니다.\n";
     } else {

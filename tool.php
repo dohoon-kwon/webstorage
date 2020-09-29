@@ -40,7 +40,7 @@
         </ul>
         <ul class="top_menu">
             <li class="top_menu_item" onclick="location.href='upload.php'"><a>파일 저장소</a></li>
-            <li class="top_menu_item" onclick="location.href='board.php'"><a>게시판 정보</a></li>
+            <li class="top_menu_item" onclick="location.href='share.php'"><a>공유 저장소</a></li>
             <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
         </ul>
     </nav>

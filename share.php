@@ -1,16 +1,17 @@
 <?php
-    include 'filelist.php';
+    //세션
+    session_start();
+    $id = $_SESSION['id'];
 ?>
-
 <!doctype html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>파일 저장소</title>
+  <title>공유 저장소</title>
   <link rel="stylesheet" href="css/default.css">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/upload.css?=ver3">
-  <script src="js/upload.js?ver=1"></script>
+  <link rel="stylesheet" href="css/upload.css">
+  <script src="js/upload.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
@@ -30,9 +31,6 @@
         <ul>
             <li><h1>드라이브</h1></li>
             <li><a onclick="storage()">모든 파일</a></li>
-            <li><a onclick="photo()">사진</a></li>
-            <li><a>동영상</a></li>
-            <li><a onclick="document1()">문서</a></li>
             <li><a onclick="trash()">휴지통</a></li>
             <li><h1>저장소 용량표시할 예정</h1></li>
         </ul>
@@ -43,46 +41,26 @@
       <nav class="storage">
         <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
             <div id="drag_upload_file">
-              <ul id="file_list">
+              <ul id="file_list"></ul>
               <?php
-                foreach ($dirs as $f) {
-                  echo "<li class='dir'>".$f."</li>";
-                } 
-                foreach ($files as $f) {   
-                  foreach($f as $ff)
-                    echo "<li class='file'>".$ff."</li>";
-                  } 
-              ?>
-              </ul>
-             
-            </div>
-        </div>
-      </nav>
-
-      <nav class="photo">
-      <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
-            <div id="drag_upload_file">
-              <ul id="file_list">
-                <?php
-                  foreach ($files['img'] as $f) {   
-                      echo "<li class='img'>".$f."</li>";
-                    } 
-                ?>
-              </ul>
-            </div>
-        </div>
-      </nav>
-
-      <nav class="document">
-      <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
-            <div id="drag_upload_file">
-              <ul id="file_list">
-              <?php
-                foreach ($files['doc'] as $f) {   
-                    echo "<li class='doc'>".$f."</li>";
+                $dir = "/home/samba/userfile/";
+                $handle  = opendir($dir);
+                $files = array();
+                while (false !== ($filename = readdir($handle))) {
+                    if($filename == "." || $filename == ".."){
+                        continue;
+                    }
+                    if(is_file($dir . "/" . $filename)){
+                        $files[] = $filename;
+                    }
                 }
-               ?>
-              </ul>
+                closedir($handle);
+                sort($files);
+                foreach ($files as $f) {
+                    echo $f;
+                    echo "<br />";
+                } 
+              ?>
             </div>
         </div>
       </nav>
@@ -90,7 +68,7 @@
       <nav class="trash">
         <?php
           // 폴더명 지정
-          $dir = "/home/samba/userfile/$id"."trash";
+          $dir = "/home/samba/userfile/";
           // 핸들 획득
           $handle  = opendir($dir);
           $files = array();
@@ -110,7 +88,7 @@
           sort($files);
           // 파일명을 출력한다.
           foreach ($files as $f) {
-              echo "<p>".$f."</p>";
+              echo $f;
               echo "<br />";
           } 
         ?>
@@ -120,26 +98,10 @@
     <script type="text/javascript">
       function storage(){
         $('.trash').hide();
-        $('.photo').hide();
-        $('.document').hide();
         $('.storage').show();
-      }
-      function photo(){
-        $('.trash').hide();
-        $('.photo').show();
-        $('.document').hide();
-        $('.storage').hide();
-      }
-      function document1(){
-        $('.trash').hide();
-        $('.photo').hide();
-        $('.document').show();
-        $('.storage').hide();
       }
       function trash(){
         $('.trash').show();
-        $('.photo').hide();
-        $('.document').hide();
         $('.storage').hide();
       }
     </script>

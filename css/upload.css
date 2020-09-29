@@ -1,6 +1,4 @@
 #drop_file_zone {
-  background-color: #EEE; 
-  border: #999 5px dashed; 
   padding: 8px;
   font-size: 18px;
   flex : 1 1 auto;
@@ -10,31 +8,99 @@
 
 #drag_upload_file #selectfile {
   display: none;
-} 
+}
+
+#drop_file_zone{
+  height: 100%;
+  width: 100%;
+}
 .leftmenu{
   position: absolute;
   z-index: 20;
   top: 82px;
   bottom: 30px;
-  width: 250px;
+  width: 165px;
   padding-bottom: 67px;
-  border-right: 1px solid #c4c3c3;
+  border-right: 1px solid cornflowerblue;
   background-color: #fff;
   line-height: normal;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
-#content {
-    display: flex;
-    position: absolute;
-    top: 82px;
-    left: 250px;
-    right: 0;
-    bottom: 0;
-    z-index: 20;
+.leftmenu ul li{
+  display: flex;
+}
+.leftmenu ul li a{
+  display: inline;
+  margin: 6px;
+  cursor: pointer;
+}
+.leftmenu ul li a:hover{
+  color: turquoise;
 }
 
+.rightmenu{
+  display: flex;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  position: absolute;
+  top: 82px;
+  left: 167px;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  padding: 0px 0 30px 0;
+}
+
+.storage{
+  height: 100%;
+}
+.storage li{
+  cursor: pointer;
+}
+.storage li:hover{
+  color: turquoise;
+}
+
+.trash{
+  display: none;
+  height: 100%;
+  padding: 8px;
+}
+.trash p{
+  cursor: pointer;
+}
+.trash p:hover{
+  color: turquoise;
+}
+
+.photo{
+  display: none;
+  height: 100%;
+  padding: 8px;
+}
+.photo p{
+  cursor: pointer;
+}
+.photo p:hover{
+  color: turquoise;
+}
+
+.document{
+  display: none;
+  height: 100%;
+  padding: 8px;
+}
+.document p{
+  cursor: pointer;
+}
+.document p:hover{
+  color: turquoise;
+}
 
 #file_list li{
   float: left;
@@ -44,7 +110,7 @@
   margin: 16px 16px 35px 0;
 }
 
+.dir {
+  background-image: img/folder_image;
 
-
-
-
+}
