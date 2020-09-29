@@ -73,13 +73,13 @@
 
             <li><h1>드라이브</h1></li>
 
-            <li><a onclick="storage()">모든 파일</a></li>
+            <li><a onclick="location.href='?type='">모든 파일</a></li>
 
-            <li><a onclick="photo()">사진</a></li>
+            <li><a onclick="location.href='?type=photo'">사진</a></li>
 
-            <li><a onclick="video()">동영상</a></li>
+            <li><a onclick="location.href='?type=video'">동영상</a></li>
 
-            <li><a onclick="document1()">문서</a></li>
+            <li><a onclick="location.href='?type=document'">문서</a></li>
 
             <li><a onclick="trash()">휴지통</a></li>
         </ul>
@@ -87,7 +87,6 @@
 
 
     <div class="rightmenu">
-      
       <form class="searchform" method="POST" action="">
         <ul>
           <li><input type="text" placeholder="검색어" name="value"></li>
@@ -113,8 +112,39 @@
                       if($filename == "." || $filename == ".."){
                           continue;
                       }
-                      if(is_file($dir . "/" . $filename)){
-                          $files[] = $filename;
+                      switch($_GET['type']){
+                        case '':
+                          if(is_file($dir . "/" . $filename)){
+                            $files[] = $filename;
+                          }
+                          break;
+                        case 'photo':
+                          if(is_file($dir . "/" . $filename)){
+                            $arr = explode(".",$filename);
+                            $filter = array("gif", "png", "jpg", "jpeg", "bmp", "GIF", "PNG", "JPG", "JPEG", "BMP");
+                            if(in_array($arr[1], $filter)){
+                              $files[] = $arr[0].".".$arr[1];
+                            }
+                          }
+                          break;
+                        case 'video':
+                          if(is_file($dir . "/" . $filename)){
+                            $arr = explode(".",$filename);
+                            $filter = array("ASF", "AVI", "BIK", "FLV", "MKV", "MOV", "MP4", "MPEG", "Ogg", "SKM", "TS", "WebM", "WMV", "asf", "avi", "bik", "flv", "mkv", "mov", "mp4", "mpeg", "ogg", "skm", "ts", "webm", "wmv");
+                            if(in_array($arr[1], $filter)){
+                              $files[] = $arr[0].".".$arr[1];
+                            }
+                          }
+                          break;
+                        case 'document':
+                          if(is_file($dir . "/" . $filename)){
+                            $arr = explode(".",$filename);
+                            $filter = array("ppt", "doc", "xls", "pptx", "docx", "pdf", "ai","psd", "txt", "hwp", "PPT", "DOC", "XLS", "PPTX", "DOCX", "PDF", "AI", "PSD", "TXT", "HWP");
+                            if(in_array($arr[1], $filter)){
+                              $files[] = $arr[0].".".$arr[1];
+                            }
+                          }
+                        break;
                       }
                   }
                   closedir($handle);
@@ -127,88 +157,6 @@
             </div>
         </div>
       </nav>
-
-
-      <nav class="photo">
-        <?php
-          $dir = "/home/samba/userfile/$id";
-          $handle  = opendir($dir);
-          $files = array();
-          while (false !== ($filename = readdir($handle))) {
-              if($filename == "." || $filename == ".."){
-                  continue;
-              }
-              if(is_file($dir . "/" . $filename)){
-                $arr = explode(".",$filename);
-                $filter = array("gif", "png", "jpg", "jpeg", "bmp", "GIF", "PNG", "JPG", "JPEG", "BMP");
-                if(in_array($arr[1], $filter)){
-                  $files[] = $arr[0].".".$arr[1];
-                }
-              }
-          }
-          closedir($handle);
-          sort($files);
-          foreach ($files as $f) {
-              echo "<p>".$f."</p>";
-              echo "<br />";
-          } 
-        ?>
-      </nav>
-
-
-      <nav class="video">
-        <?php
-          $dir = "/home/samba/userfile/$id";
-          $handle  = opendir($dir);
-          $files = array();
-          while (false !== ($filename = readdir($handle))) {
-              if($filename == "." || $filename == ".."){
-                  continue;
-              }
-              if(is_file($dir . "/" . $filename)){
-                $arr = explode(".",$filename);
-                $filter = array("ASF", "AVI", "BIK", "FLV", "MKV", "MOV", "MP4", "MPEG", "Ogg", "SKM", "TS", "WebM", "WMV", "asf", "avi", "bik", "flv", "mkv", "mov", "mp4", "mpeg", "ogg", "skm", "ts", "webm", "wmv");
-                if(in_array($arr[1], $filter)){
-                  $files[] = $arr[0].".".$arr[1];
-                }
-              }
-          }
-          closedir($handle);
-          sort($files);
-          foreach ($files as $f) {
-              echo "<p>".$f."</p>";
-              echo "<br />";
-          } 
-        ?>
-      </nav>
-
-
-      <nav class="document">
-        <?php
-          $dir = "/home/samba/userfile/$id";
-          $handle  = opendir($dir);
-          $files = array();
-          while (false !== ($filename = readdir($handle))) {
-              if($filename == "." || $filename == ".."){
-                  continue;
-              }
-              if(is_file($dir . "/" . $filename)){
-                $arr = explode(".",$filename);
-                $filter = array("ppt", "doc", "xls", "pptx", "docx", "pdf", "ai","psd", "txt", "hwp", "PPT", "DOC", "XLS", "PPTX", "DOCX", "PDF", "AI", "PSD", "TXT", "HWP");
-                if(in_array($arr[1], $filter)){
-                  $files[] = $arr[0].".".$arr[1];
-                }
-              }
-          }
-          closedir($handle);
-          sort($files);
-          foreach ($files as $f) {
-              echo "<p>".$f."</p>";
-              echo "<br />";
-          } 
-        ?>
-      </nav>
-    
 
       <nav class="trash">
         <?php
@@ -245,41 +193,11 @@
 
       function storage(){
         $('.trash').hide();
-        $('.photo').hide();
-        $('.video').hide();
-        $('.document').hide();
         $('.storage').show();
-      }
-
-      function photo(){
-        $('.trash').hide();
-        $('.photo').show();
-        $('.video').hide();
-        $('.document').hide();
-        $('.storage').hide();
-      }
-
-      function video(){
-        $('.trash').hide();
-        $('.photo').hide();
-        $('.video').show();
-        $('.document').hide();
-        $('.storage').hide();
-      }
-
-      function document1(){
-        $('.trash').hide();
-        $('.photo').hide();
-        $('.video').hide();
-        $('.document').show();
-        $('.storage').hide();
       }
 
       function trash(){
         $('.trash').show();
-        $('.photo').hide();
-        $('.video').hide();
-        $('.document').hide();
         $('.storage').hide();
       }
     </script>
