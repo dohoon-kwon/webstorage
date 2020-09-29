@@ -81,7 +81,7 @@
 
             <li><a onclick="location.href='?type=document'">문서</a></li>
 
-            <li><a onclick="trash()">휴지통</a></li>
+            <li><a onclick="location.href='?type=trash'">휴지통</a></li>
         </ul>
     </div>
 
@@ -105,101 +105,89 @@
             <div id="drag_upload_file">
               <ul id="file_list">
                 <?php
-                  $dir = "/home/samba/userfile/$id";
-                  $handle  = opendir($dir);
-                  $files = array();
-                  while (false !== ($filename = readdir($handle))) {
-                      if($filename == "." || $filename == ".."){
-                          continue;
-                      }
-                      switch($_GET['type']){
-                        case '':
-                          if(is_file($dir . "/" . $filename)){
-                            $files[] = $filename;
-                          }
-                          break;
-                        case 'photo':
-                          if(is_file($dir . "/" . $filename)){
-                            $arr = explode(".",$filename);
-                            $filter = array("gif", "png", "jpg", "jpeg", "bmp", "GIF", "PNG", "JPG", "JPEG", "BMP");
-                            if(in_array($arr[1], $filter)){
-                              $files[] = $arr[0].".".$arr[1];
+                  if($_GET['type'] !== 'trash'){
+                    $dir = "/home/samba/userfile/$id";
+                    $handle  = opendir($dir);
+                    $files = array();
+                    while (false !== ($filename = readdir($handle))) {
+                        if($filename == "." || $filename == ".."){
+                            continue;
+                        }
+                        switch($_GET['type']){
+                          case '':
+                            if(is_file($dir . "/" . $filename)){
+                              $files[] = $filename;
                             }
-                          }
-                          break;
-                        case 'video':
-                          if(is_file($dir . "/" . $filename)){
-                            $arr = explode(".",$filename);
-                            $filter = array("ASF", "AVI", "BIK", "FLV", "MKV", "MOV", "MP4", "MPEG", "Ogg", "SKM", "TS", "WebM", "WMV", "asf", "avi", "bik", "flv", "mkv", "mov", "mp4", "mpeg", "ogg", "skm", "ts", "webm", "wmv");
-                            if(in_array($arr[1], $filter)){
-                              $files[] = $arr[0].".".$arr[1];
+                            break;
+
+                          case 'photo':
+                            if(is_file($dir . "/" . $filename)){
+                              $arr = explode(".",$filename);
+                              $filter = array("gif", "png", "jpg", "jpeg", "bmp", "GIF", "PNG", "JPG", "JPEG", "BMP");
+                              if(in_array($arr[1], $filter)){
+                                $files[] = $arr[0].".".$arr[1];
+                              }
                             }
-                          }
-                          break;
-                        case 'document':
-                          if(is_file($dir . "/" . $filename)){
-                            $arr = explode(".",$filename);
-                            $filter = array("ppt", "doc", "xls", "pptx", "docx", "pdf", "ai","psd", "txt", "hwp", "PPT", "DOC", "XLS", "PPTX", "DOCX", "PDF", "AI", "PSD", "TXT", "HWP");
-                            if(in_array($arr[1], $filter)){
-                              $files[] = $arr[0].".".$arr[1];
+                            break;
+
+                          case 'video':
+                            if(is_file($dir . "/" . $filename)){
+                              $arr = explode(".",$filename);
+                              $filter = array("ASF", "AVI", "BIK", "FLV", "MKV", "MOV", "MP4", "MPEG", "Ogg", "SKM", "TS", "WebM", "WMV", "asf", "avi", "bik", "flv", "mkv", "mov", "mp4", "mpeg", "ogg", "skm", "ts", "webm", "wmv");
+                              if(in_array($arr[1], $filter)){
+                                $files[] = $arr[0].".".$arr[1];
+                              }
                             }
-                          }
-                        break;
-                      }
+                            break;
+
+                          case 'document':
+                            if(is_file($dir . "/" . $filename)){
+                              $arr = explode(".",$filename);
+                              $filter = array("ppt", "doc", "xls", "pptx", "docx", "pdf", "ai","psd", "txt", "hwp", "PPT", "DOC", "XLS", "PPTX", "DOCX", "PDF", "AI", "PSD", "TXT", "HWP");
+                              if(in_array($arr[1], $filter)){
+                                $files[] = $arr[0].".".$arr[1];
+                              }
+                            }
+                          break;
+                        }
+                    }
+                    closedir($handle);
+                    sort($files);
+                    foreach ($files as $f) {
+                        echo "<li><img src='img/directory.png'></img><p >".$f."</p></li>";
+                    } 
                   }
-                  closedir($handle);
-                  sort($files);
-                  foreach ($files as $f) {
+                  else{
+                    // 폴더명 지정
+                    $dir = "/home/samba/userfile/$id"."trash";
+                    // 핸들 획득
+                    $handle  = opendir($dir);
+                    $files = array();
+                    // 디렉터리에 포함된 파일을 저장한다.
+                    while (false !== ($filename = readdir($handle))) {
+                        if($filename == "." || $filename == ".."){
+                            continue;
+                        }
+                        // 파일인 경우만 목록에 추가한다.
+                        if(is_file($dir . "/" . $filename)){
+                            $files[] = $filename;
+                        }
+                    }
+                    // 핸들 해제 
+                    closedir($handle);
+                    // 정렬, 역순으로 정렬하려면 rsort 사용
+                    sort($files);
+                    // 파일명을 출력한다.
+                    foreach ($files as $f) {
                       echo "<li><img src='img/directory.png'></img><p >".$f."</p></li>";
-                  } 
+                    } 
+                  }
                 ?>
               </ul>
             </div>
         </div>
       </nav>
-
-      <nav class="trash">
-        <?php
-          // 폴더명 지정
-          $dir = "/home/samba/userfile/$id"."trash";
-          // 핸들 획득
-          $handle  = opendir($dir);
-          $files = array();
-          // 디렉터리에 포함된 파일을 저장한다.
-          while (false !== ($filename = readdir($handle))) {
-              if($filename == "." || $filename == ".."){
-                  continue;
-              }
-              // 파일인 경우만 목록에 추가한다.
-              if(is_file($dir . "/" . $filename)){
-                  $files[] = $filename;
-              }
-          }
-          // 핸들 해제 
-          closedir($handle);
-          // 정렬, 역순으로 정렬하려면 rsort 사용
-          sort($files);
-          // 파일명을 출력한다.
-          foreach ($files as $f) {
-              echo "<p>".$f."</p>";
-              echo "<br />";
-          } 
-        ?>
-      </nav>      
+ 
     </div>
-
-
-    <script type="text/javascript">
-
-      function storage(){
-        $('.trash').hide();
-        $('.storage').show();
-      }
-
-      function trash(){
-        $('.trash').show();
-        $('.storage').hide();
-      }
-    </script>
 </body>
 </html>

@@ -95,18 +95,6 @@
   cursor: pointer;
 }
 
-.trash{
-  display: none;
-  height: 100%;
-  padding: 8px;
-}
-.trash p{
-  cursor: pointer;
-}
-.trash p:hover{
-  color: turquoise;
-}
-
 .progessbar{
   border-bottom: 1px solid lightgrey;
   padding: 12px 0px;
