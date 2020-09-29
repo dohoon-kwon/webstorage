@@ -30,7 +30,7 @@
         <title>홈페이지 관리</title>
         <link rel="stylesheet" href="css/default.css">
         <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/tool.css">
+        <link rel="stylesheet" href="css/tool.css?ver=1">
     </head>
 <body>
     <nav>
@@ -51,7 +51,7 @@
             <input type="radio" id="id" name="option" value="id"><label>ID</label>
             <input type="radio" id="tel" name="option" value="tel"><label>전화번호</label>
             <input type="radio" id="grade" name="option" value="grade"><label>등급</label>
-            <input type="text" name="value" placeholder="검색하고 싶은 정보 입력">
+            <input type="text" name="value" placeholder="검색어">
             <input type="submit" value="검색">
         </form>
     </nav>

@@ -1,7 +1,3 @@
-<?php
-    include 'filelist.php';
-?>
-
 <!doctype html>
 <html>
 <head>
@@ -26,122 +22,91 @@
         </ul>
     </nav>
 
+
     <div class="leftmenu">
         <ul>
+          <?php
+               // 폴더 전체용량
+              function dirsize($dir){
+                static $size;
+                $fp = opendir($dir);
+                while(false !== ($entry = readdir($fp))){
+                      if(($entry != ".") && ($entry != "..")){
+                          if(is_dir($dir.'/'.$entry)){
+                                clearstatcache();
+                                dirsize($dir.'/'.$entry);
+                          } else if(is_file($dir.'/'.$entry)){
+                                $size += filesize($dir.'/'.$entry);
+                                clearstatcache();
+                          }
+                      }
+                }
+                closedir($fp);
+
+                $stat = array(
+                          'size' => $size,
+                );
+                return $stat;
+                } // end func
+
+                function attach($size) {
+                if($size < 1024){
+                      return number_format($size*1.024).'B';
+                } else if(($size > 1024) && ($size < 1024000)){
+                      return number_format($size*0.001024).'KB';
+                } else if($size > 1024000){
+                      return number_format($size*0.000001024,2).'MB';
+                }
+                return 0;
+                }
+                $stat = dirsize('/home/samba/userfile/'.$id);
+                echo "<li><h1>총 파일 용량</br>".attach($stat['size'])."</h1></li>";
+                echo "<li><h1>남은 용량</br>계산해줘</h1></li>";
+            ?>
+
+            <li class="progessbar"><progress value="22" max="100"></progress></li>
+
             <li><h1>드라이브</h1></li>
-            <li><a onclick="storage()">모든 파일</a></li>
-            <li><a onclick="photo()">사진</a></li>
-            <li><a>동영상</a></li>
-            <li><a onclick="document1()">문서</a></li>
-            <li><a onclick="trash()">휴지통</a></li>
-            <li><h1>저장소 용량표시할 예정</h1></li>
+
+            <li><a onclick="location.href='?type='">모든 파일</a></li>
+
+            <li><a onclick="location.href='?type=photo'">사진</a></li>
+
+            <li><a onclick="location.href='?type=video'">동영상</a></li>
+
+            <li><a onclick="location.href='?type=document'">문서</a></li>
+
+            <li><a onclick="location.href='?type=trash'">휴지통</a></li>
         </ul>
     </div>
 
+
     <div class="rightmenu">
+      <form class="searchform" method="POST" action="">
+        <ul>
+          <li><input type="text" placeholder="검색어" name="value"></li>
+          <li><input type="submit" value="검색"></li>
+          <li><h1>미리보기 만들어줘 경섭에몽...</h1></li>
+        </ul>
+        <ul>
+          <li><input type="button" value="파일업로드"></li>
+          <li><input type="button" value="새 폴더"></li>
+        </ul>
+      </form>
+      
 
       <nav class="storage">
         <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
             <div id="drag_upload_file">
               <ul id="file_list">
-              <?php
-                foreach ($dirs as $f) {
-                  echo "<li class='dir'>".$f."</li>";
-                } 
-                foreach ($files as $f) {   
-                  foreach($f as $ff)
-                    echo "<li class='file'>".$ff."</li>";
-                  } 
-              ?>
-              </ul>
-             
-            </div>
-        </div>
-      </nav>
-
-      <nav class="photo">
-      <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
-            <div id="drag_upload_file">
-              <ul id="file_list">
                 <?php
-                  foreach ($files['img'] as $f) {   
-                      echo "<li class='img'>".$f."</li>";
-                    } 
+                  include 'filelist.php';
                 ?>
               </ul>
             </div>
         </div>
       </nav>
-
-      <nav class="document">
-      <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
-            <div id="drag_upload_file">
-              <ul id="file_list">
-              <?php
-                foreach ($files['doc'] as $f) {   
-                    echo "<li class='doc'>".$f."</li>";
-                }
-               ?>
-              </ul>
-            </div>
-        </div>
-      </nav>
-    
-      <nav class="trash">
-        <?php
-          // 폴더명 지정
-          $dir = "/home/samba/userfile/$id"."trash";
-          // 핸들 획득
-          $handle  = opendir($dir);
-          $files = array();
-          // 디렉터리에 포함된 파일을 저장한다.
-          while (false !== ($filename = readdir($handle))) {
-              if($filename == "." || $filename == ".."){
-                  continue;
-              }
-              // 파일인 경우만 목록에 추가한다.
-              if(is_file($dir . "/" . $filename)){
-                  $files[] = $filename;
-              }
-          }
-          // 핸들 해제 
-          closedir($handle);
-          // 정렬, 역순으로 정렬하려면 rsort 사용
-          sort($files);
-          // 파일명을 출력한다.
-          foreach ($files as $f) {
-              echo "<p>".$f."</p>";
-              echo "<br />";
-          } 
-        ?>
-      </nav>      
+ 
     </div>
-
-    <script type="text/javascript">
-      function storage(){
-        $('.trash').hide();
-        $('.photo').hide();
-        $('.document').hide();
-        $('.storage').show();
-      }
-      function photo(){
-        $('.trash').hide();
-        $('.photo').show();
-        $('.document').hide();
-        $('.storage').hide();
-      }
-      function document1(){
-        $('.trash').hide();
-        $('.photo').hide();
-        $('.document').show();
-        $('.storage').hide();
-      }
-      function trash(){
-        $('.trash').show();
-        $('.photo').hide();
-        $('.document').hide();
-        $('.storage').hide();
-      }
-    </script>
 </body>
 </html>
