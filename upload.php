@@ -92,6 +92,7 @@
         <ul>
           <li><input type="text" placeholder="검색어" name="value"></li>
           <li><input type="submit" value="검색"></li>
+          <li><h1>미리보기 만들어줘 경섭에몽...</h1></li>
         </ul>
         <ul>
           <li><input type="button" value="파일업로드"></li>
@@ -103,25 +104,26 @@
       <nav class="storage">
         <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
             <div id="drag_upload_file">
-              <ul id="file_list"></ul>
-              <?php
-                $dir = "/home/samba/userfile/$id";
-                $handle  = opendir($dir);
-                $files = array();
-                while (false !== ($filename = readdir($handle))) {
-                    if($filename == "." || $filename == ".."){
-                        continue;
-                    }
-                    if(is_file($dir . "/" . $filename)){
-                        $files[] = $filename;
-                    }
-                }
-                closedir($handle);
-                sort($files);
-                foreach ($files as $f) {
-                    echo "<ul><li><img src='img/directory.png'></img><p>".$f."</p></li></ul>";
-                } 
-              ?>
+              <ul id="file_list">
+                <?php
+                  $dir = "/home/samba/userfile/$id";
+                  $handle  = opendir($dir);
+                  $files = array();
+                  while (false !== ($filename = readdir($handle))) {
+                      if($filename == "." || $filename == ".."){
+                          continue;
+                      }
+                      if(is_file($dir . "/" . $filename)){
+                          $files[] = $filename;
+                      }
+                  }
+                  closedir($handle);
+                  sort($files);
+                  foreach ($files as $f) {
+                      echo "<li><img src='img/directory.png'></img><p >".$f."</p></li>";
+                  } 
+                ?>
+              </ul>
             </div>
         </div>
       </nav>

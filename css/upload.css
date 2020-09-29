@@ -6,12 +6,24 @@
   overflow-x: hidden;
 }
 
-
-
-
 #drop_file_zone ul{
   width: fit-content;
   margin: 15px 0px;
+  display: flex;
+  flex-wrap: wrap;
+}
+#drop_file_zone ul li{
+  border: 1px solid lightgray;
+  padding: 20px;
+  margin: 10px;
+  cursor: pointer;
+}
+#drop_file_zone ul li:hover{
+  background-color: lightgray;
+}
+#drop_file_zone ul img{
+  display: block;
+  margin: 0px auto;
 }      
 #drop_file_zone ul li p{
   text-align: center;
@@ -19,17 +31,8 @@
   width: 90px;
   overflow: hidden;
   white-space: nowrap;
+  user-select: none;
 }
-#drag_upload_file{
-  display: flex;
-  flex-wrap: wrap;
-}
-
-
-
-
-
-
 
 #drag_upload_file #selectfile {
   display: none;
@@ -89,9 +92,6 @@
 }
 .storage p{
   cursor: pointer;
-}
-.storage p:hover{
-  color: turquoise;
 }
 
 .trash{
@@ -164,7 +164,6 @@
   padding: 0px 10px;
   cursor: pointer;
 }
-
 .searchform ul li input[type="button"]{
   background-color: cornflowerblue;
   color: white;
@@ -174,7 +173,6 @@
   margin: 0px 5px 10px 0px;
   cursor: pointer;
 }
-
 .searchform ul li input[type="submit"]:hover{
   background-color: turquoise;
 }
