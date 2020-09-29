@@ -1,5 +1,4 @@
 var fileobj;
-
 function upload_file(e) {
   e.preventDefault();
   fileobj = e.dataTransfer.files[0];
@@ -8,6 +7,7 @@ function upload_file(e) {
 
 function ajax_file_upload(file_obj) {
   if(file_obj != undefined) {
+      console.log(file_obj);
       var form_data = new FormData();                  
       form_data.append('file', file_obj);
     $.ajax({
@@ -17,9 +17,9 @@ function ajax_file_upload(file_obj) {
       processData: false,
       data: form_data,
       success:function(response) {
+        alert(response);
         $('#selectfile').val('');
       }
     });
   }
 }
-
