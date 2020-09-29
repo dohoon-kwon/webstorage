@@ -10,7 +10,7 @@
   <title>파일 저장소</title>
   <link rel="stylesheet" href="css/default.css">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/upload.css">
+  <link rel="stylesheet" href="css/upload.css?ver=1">
   <script src="js/upload.js?ver=1"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
@@ -30,16 +30,10 @@
 
     <div class="leftmenu">
         <ul>
-            <li><h1>드라이브</h1></li>
-            <li><a onclick="storage()">모든 파일</a></li>
-            <li><a onclick="photo()">사진</a></li>
-            <li><a onclick="video()">동영상</a></li>
-            <li><a onclick="document1()">문서</a></li>
-            <li><a onclick="trash()">휴지통</a></li>
-            <?php
+          <?php
                // 폴더 전체용량
               function dirsize($dir){
-                static $size, $cnt;
+                static $size;
                 $fp = opendir($dir);
                 while(false !== ($entry = readdir($fp))){
                       if(($entry != ".") && ($entry != "..")){
@@ -49,7 +43,6 @@
                           } else if(is_file($dir.'/'.$entry)){
                                 $size += filesize($dir.'/'.$entry);
                                 clearstatcache();
-                                $cnt++;
                           }
                       }
                 }
@@ -57,7 +50,6 @@
 
                 $stat = array(
                           'size' => $size,
-                          'cnt' => $cnt
                 );
                 return $stat;
                 } // end func
@@ -72,19 +64,42 @@
                 }
                 return 0;
                 }
-
-                // 사용법: $arr = dirsize(폴더 경로);
-                // $arr['cnt'] <- 총 파일 수, $arr['size'] <- 총 용량 수
                 $stat = dirsize('/home/samba/userfile/'.$id);
-
-                echo "<h1>총 파일 용량</br>".attach($stat['size'])."</h1>";
+                echo "<li><h1>총 파일 용량</br>".attach($stat['size'])."</h1></li>";
+                echo "<li><h1>남은 용량</br>계산해줘</h1></li>";
             ?>
+
+            <li class="progessbar"><progress value="22" max="100"></progress></li>
+
+            <li><h1>드라이브</h1></li>
+
+            <li><a onclick="storage()">모든 파일</a></li>
+
+            <li><a onclick="photo()">사진</a></li>
+
+            <li><a onclick="video()">동영상</a></li>
+
+            <li><a onclick="document1()">문서</a></li>
+
+            <li><a onclick="trash()">휴지통</a></li>
         </ul>
     </div>
 
 
     <div class="rightmenu">
       
+      <form class="searchform" method="POST" action="">
+        <ul>
+          <li><input type="text" placeholder="검색어" name="value"></li>
+          <li><input type="submit" value="검색"></li>
+        </ul>
+        <ul>
+          <li><input type="button" value="파일업로드"></li>
+          <li><input type="button" value="새 폴더"></li>
+        </ul>
+      </form>
+      
+
       <nav class="storage">
         <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
             <div id="drag_upload_file">
@@ -104,8 +119,7 @@
                 closedir($handle);
                 sort($files);
                 foreach ($files as $f) {
-                    echo "<p>".$f."</p>";
-                    echo "<br />";
+                    echo "<ul><li><img src='img/directory.png'></img><p>".$f."</p></li></ul>";
                 } 
               ?>
             </div>
@@ -223,6 +237,7 @@
         ?>
       </nav>      
     </div>
+
 
     <script type="text/javascript">
 
