@@ -20,10 +20,6 @@
     } else {
         print "파일 업로드 공격의 가능성이 있습니다!\n";
     }
-    echo $uploaddir;
-    echo '자세한 디버깅 정보입니다:';
-    print_r($_FILES);
-    print "</pre>";
     ?>
 </body>
 </html>

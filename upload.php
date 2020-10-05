@@ -10,8 +10,8 @@
   <title>파일 저장소</title>
   <link rel="stylesheet" href="css/default.css">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/upload.css?=ver3">
-  <script src="js/upload.js?ver=1"></script>
+  <link rel="stylesheet" href="css/upload.css">
+  <script src="js/upload.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
@@ -62,7 +62,6 @@
           <li><input type="button" value="새 폴더"></li>
         </ul>
       </form>
-      
 
       <nav class="storage">
         <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">

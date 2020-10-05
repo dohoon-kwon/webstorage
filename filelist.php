@@ -43,31 +43,31 @@
                     echo "<li class='dir'><img src='img/directory.png'></img><p>".$f."</p></li>";
                 } 
                 foreach ($files['doc'] as $f) {   
-                    echo "<li class='doc'><img src='img/directory.png'></img><p>".$f."</p></li>";
+                    echo "<li class='doc'><img src='img/doc.png'></img><p>".$f."</p></li>";
                     }
                 foreach ($files['video'] as $f) {   
-                    echo "<li class='video'><img src='img/directory.png'></img><p>".$f."</p></li>";
+                    echo "<li class='video'><img src='img/video.png'></img><p>".$f."</p></li>";
                     } 
                 foreach ($files['img'] as $f) {   
-                    echo "<li class='img'><img src='img/directory.png'></img><p>".$f."</p></li>";
+                    echo "<li class='img' onclick=\"location.href='pop.php?file=userfile/$id/$f'\"><img src='userfile/$id/$f'></img><p>".$f."</p></li>";
                     } 
               break;
 
             case 'photo':
                 foreach ($files['img'] as $f) {   
-                    echo "<li class='img'><img src='img/directory.png'></img><p>".$f."</p></li>";
+                    echo "<li class='img'><img src='img/img.png'></img><p>".$f."</p></li>";
               } 
               break;
 
             case 'video':
                 foreach ($files['video'] as $f) {   
-                    echo "<li class='video'><img src='img/directory.png'></img><p>".$f."</p></li>";
+                    echo "<li class='video'><img src='img/video.png'></img><p>".$f."</p></li>";
                   } 
               break;
 
             case 'document':
               foreach ($files['doc'] as $f) {   
-                echo "<li class='doc'><img src='img/directory.png'></img><p>".$f."</p></li>";
+                echo "<li class='doc'><img src='img/doc.png'></img><p>".$f."</p></li>";
                 }
             break;
           }
@@ -103,13 +103,13 @@
         }
         // 파일명을 출력한다.
         foreach ($files['doc'] as $f) {   
-            echo "<li class='doc'><img src='img/directory.png'></img><p>".$f."</p></li>";
+            echo "<li class='doc'><img src='img/doc.png'></img><p>".$f."</p></li>";
             }
         foreach ($files['video'] as $f) {   
-            echo "<li class='video'><img src='img/directory.png'></img><p>".$f."</p></li>";
+            echo "<li class='video'><img src='img/video.png'></img><p>".$f."</p></li>";
             } 
         foreach ($files['img'] as $f) {   
-            echo "<li class='img'><img src='img/directory.png'></img><p>".$f."</p></li>";
+            echo "<li class='img'><img src='img/img.png'></img><p>".$f."</p></li>";
             } 
       }
 

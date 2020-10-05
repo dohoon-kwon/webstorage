@@ -18,6 +18,8 @@
   padding: 20px;
   margin: 10px;
   cursor: pointer;
+  width: 105px;
+  height: 105px;
 }
 #drop_file_zone ul li:hover{
   background-color: lightgray;
@@ -91,6 +93,9 @@
 
 .storage{
   height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+  
 }
 .storage li{
   cursor: pointer;
@@ -132,4 +137,10 @@
 }
 .searchform ul li input[type="button"]:hover{
   background-color: turquoise;
+}
+
+.img img{
+  max-width: 100%; 
+  max-height: 100%;
+
 }
