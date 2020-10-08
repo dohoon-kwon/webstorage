@@ -135,6 +135,7 @@
             });
           $.drop({ multi: true });	
         });
+        
       </script>
 
   </body>
