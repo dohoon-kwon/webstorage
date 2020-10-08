@@ -1,0 +1,49 @@
+body{
+    margin: 0;
+}
+.top_menu{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: cornflowerblue;
+    list-style-type: none;
+}
+.top_menu_item{
+    padding: 15px;
+    cursor: pointer;
+}
+.top_menu_item a{
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+.top_menu_item:hover{
+    background-color: turquoise;
+}
+
+.logout{
+    color: white;
+    padding: 10px 15px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    float: right;
+    background-color: cornflowerblue;
+    margin: 3px;
+}
+.logout:hover{
+    background-color: turquoise;
+}
+.idinfo{
+    display: flex;
+    position: absolute;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    padding: 4px 15px;
+    margin: 10px;
+    
+}
