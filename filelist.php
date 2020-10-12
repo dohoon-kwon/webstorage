@@ -48,29 +48,29 @@
             case '':   
                 foreach ($dirs as $f) {
                     if($link === ''){
-                        echo "<li class='dir drop' onclick=\"location.href='?link=$f'\"><img src='img/directory.png'></img><p>".$f."</p></li>";
+                        echo "<li class='dir drop' onclick=\"location.href='?link=$f'\" id='$f'><img src='img/directory.png'></img><p>".$f."</p></li>";
                     }
                     else{
-                        echo "<li class='dir drop' onclick=\"location.href='?link=$link/$f'\"><img src='img/directory.png'></img><p>".$f."</p></li>";
+                        echo "<li class='dir drop' onclick=\"location.href='?link=$link/$f'\" id='$f'><img src='img/directory.png'></img><p>".$f."</p></li>";
                     }
                 }
                 foreach ($files['doc'] as $f) {
                     if($link === ''){
-                        echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=&name=$f'\"><img src='img/doc.png'></img><p>".$f."</p></li>";
+                        echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=&name=$f'\" id='$f'><img src='img/doc.png'></img><p>".$f."</p></li>";
                     }
                     else{
-                        echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=$link&name=$f'\"><img src='img/doc.png'></img><p>".$f."</p></li>";
+                        echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=$link&name=$f'\" id='$f'><img src='img/doc.png'></img><p>".$f."</p></li>";
                     }
                 }
                 foreach ($files['video'] as $f) {   
-                    echo "<li class='video drop'><img src='img/video.png'></img><p>".$f."</p></li>";
+                    echo "<li class='video drop' id='$f'><img src='img/video.png'></img><p>".$f."</p></li>";
                     } 
                 foreach ($files['img'] as $f) {   
                     if($link === ''){
-                        echo "<li class='img drop' onclick=\"location.href='pop.php?file=userfile/$id/$f'\"><img src='userfile/$id/$f'></img><p>".$f."</p></li>";
+                        echo "<li class='img drop' onclick=\"location.href='pop.php?file=userfile/$id/$f'\" id='$f'><img src='userfile/$id/$f'></img><p>".$f."</p></li>";
                     }
                     else{
-                        echo "<li class='img drop' onclick=\"location.href='pop.php?file=userfile/$id/$link/$f'\"><img src='userfile/$id/$link/$f'></img><p>".$f."</p></li>";
+                        echo "<li class='img drop' onclick=\"location.href='pop.php?file=userfile/$id/$link/$f'\" id='$f'><img src='userfile/$id/$link/$f'></img><p>".$f."</p></li>";
                     }
                 } 
               break;
