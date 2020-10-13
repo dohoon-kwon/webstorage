@@ -34,6 +34,7 @@
             <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
         </ul>
     </nav>
+    
 
     <form action="./process.php?mode=change" method="POST" class="forminfo">
         <input type="hidden" name="cid" value="<?=$_GET['cid']?>">

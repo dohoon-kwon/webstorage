@@ -1,4 +1,5 @@
 <?php
+    //PDF파일 뷰어
     session_start();
     $id = $_SESSION['id'];
     $name = $_GET['name'];

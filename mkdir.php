@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/default.css">
   </head>
   <body>
+      <!--디렉토리 생성-->
       <div>
         <form action="./process.php?mode=mkdir" method="POST">
             <input type="text" id="dirname" name="dirname">

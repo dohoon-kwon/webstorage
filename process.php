@@ -3,6 +3,7 @@
     session_start();
     
     switch($_GET['mode']){
+
         case 'login':
             $stmt = $dbh->prepare("SELECT * from USERINFO WHERE id = :id and pw = :pw");
             $stmt->bindParam(':id',$id);
@@ -22,6 +23,8 @@
                 header("Location: upload.php"); 
             }
             break;
+
+
         case 'create':
             $idcheck = $dbh->prepare("SELECT * FROM USERINFO WHERE id=:id");
             $idcheck->bindParam(':id', $id);
@@ -50,6 +53,8 @@
                 header("Location: login.html");
             }
             break;
+
+            
         case 'change':
             $stmt = $dbh->prepare("UPDATE USERINFO SET id=:id, pw =:pw, tel=:tel, name=:name, grade=:grade WHERE id=:cid");
             $stmt->bindParam(':cid',$cid);
@@ -69,6 +74,8 @@
             $stmt->execute();
             header("Location: tool.php");
             break;
+
+
         case 'delete':
             $stmt = $dbh->prepare("DELETE FROM USERINFO WHERE id=:cid");
             $stmt->bindParam(':cid',$cid);
@@ -94,5 +101,7 @@
             echo "window.close();";
             echo "</script>";
             break;
+
+            
         }
 ?>
