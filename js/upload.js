@@ -34,3 +34,4 @@ function popup_open(){
   var popupY= (window.screen.height / 2) - (popupHeight / 2);
   window.open('mkdir.php', '새 폴더 만들기', 'status=no, height='+popupHeight+',width='+popupWidth+',left='+popupX+',top='+ popupY);
 }
+

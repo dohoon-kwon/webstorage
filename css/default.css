@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,p,button,table,th,td,pre{margin:0;padding:0;}
 body,div,dl,dt,dd,h1,h2,h3,h4,h5,h6,form,fieldset,p,th,td,input,textarea,select,button,pre,a{font-family:'Nanum Gothic', sans-serif; font-size:16px; color:#222;}

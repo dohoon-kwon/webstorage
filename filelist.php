@@ -22,35 +22,23 @@
             if($filename == "." || $filename == ".."){
                 continue;
             }
-
             if(is_file($dir . "/" . $filename)){
-                $files['file'][] = $filename;
-                $arr = explode(".",$filename);
-
                 $img_filter = array("gif", "png", "jpg", "jpeg", "bmp", "GIF", "PNG", "JPG", "JPEG", "BMP");
                 $doc_filter = array("ppt", "doc", "xls", "pptx", "docx", "pdf", "ai","psd", "txt", "hwp");
                 $video_filter = array("ASF", "AVI", "BIK", "FLV", "MKV", "MOV", "MP4", "MPEG", "Ogg", "SKM", "TS", "WebM", "WMV", "asf", "avi", "bik", "flv", "mkv", "mov", "mp4", "mpeg", "ogg", "skm", "ts", "webm", "wmv");
-
-                if(in_array($arr[1], $img_filter)){
-                    $files['img'][] = $arr[0].".".$arr[1];
-                }
                 
-                else if(in_array($arr[1], $doc_filter)){
-                    $files['doc'][] = $arr[0].".".$arr[1];
+                if(in_array(pathinfo($filename, PATHINFO_EXTENSION), $img_filter)){
+                    $files['img'][] = $filename;
+                }else if(in_array(pathinfo($filename, PATHINFO_EXTENSION), $doc_filter)){
+                    $files['doc'][] = $filename;
+                }else if(in_array(pathinfo($filename, PATHINFO_EXTENSION), $video_filter)){
+                  $files['video'][] = $filename;
                 }
-                
-                else if(in_array($arr[1], $video_filter)){
-                  $files['video'][] = $arr[0].".".$arr[1];
-                }
-
-            }
-            
-            else
+            }else
             {
-                $dirs[] = $filename;
+                $dirs[] = $filename;  
             }
         }
-
         closedir($handle);
         sort($files['doc']);
         sort($files['video']);
@@ -77,15 +65,15 @@
                 }
 
                 foreach ($files['video'] as $f) {   
-                    echo "<li class='video drop' id='$f'><img src='img/video.png'></img><p>".$f."</p></li>";
+                    echo "<li class='video drop' id='$f'><img src='userfile/thumbnail/$id/$f.jpg'></img><p>".$f."</p></li>";
                 } 
 
                 foreach ($files['img'] as $f) {   
                     if($link === ''){
-                        echo "<li class='img drop' onclick=\"location.href='pop.php?file=userfile/$id/$f'\" id='$f'><img src='userfile/$id/$f'></img><p>".$f."</p></li>";
+                        echo "<li class='img drop' onclick=\"location.href='pop.php?file=userfile/$id/$f'\" id='$f'><img src='userfile/thumbnail/$id/$f'></img><p>".$f."</p></li>";
                     }
                     else{
-                        echo "<li class='img drop' onclick=\"location.href='pop.php?file=userfile/$id/$link/$f'\" id='$f'><img src='userfile/$id/$link/$f'></img><p>".$f."</p></li>";
+                        echo "<li class='img drop' onclick=\"location.href='pop.php?file=userfile/$id/$link/$f'\" id='$f'><img src='userfile/thumbnail/$id/$f'></img><p>".$f."</p></li>";
                     }
                 } 
 
@@ -144,10 +132,12 @@
                 $dirs[] = $filename;
             }
         }
+        
         closedir($handle);
         sort($files['doc']);
         sort($files['video']);
         sort($files['img']);
+
         foreach ($dirs as $f) {
             echo "<li class='dir'><img src='img/directory.png'></img><p>".$f."</p></li>";
         }

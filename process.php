@@ -50,6 +50,7 @@
                 $stmt->execute();
                 mkdir("/home/samba/userfile/".$id);
                 mkdir("/home/samba/userfile/".$id."trash");
+                mkdir("/home/samba/userfile/thumbnail/".$id);
                 header("Location: login.html");
             }
             break;
