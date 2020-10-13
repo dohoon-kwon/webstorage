@@ -13,5 +13,3 @@ php-gd
 jquery
 
 ffmpeg = https://toshi15shkim.github.io/articles/2019-09/etc-ffmpeg-install
-
-느금
