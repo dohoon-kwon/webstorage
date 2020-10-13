@@ -16,9 +16,10 @@ function ajax_file_upload(file_obj) {
       contentType: false,
       processData: false,
       data: form_data,
-      success:function(response) {
-        alert(response);
+      success:function(value) {
+        alert(value);
         $('#selectfile').val('');
+        window.location.reload();
       }
     });
   }

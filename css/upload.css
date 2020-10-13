@@ -19,6 +19,7 @@
   margin: 10px;
   cursor: pointer;
   width: 105px;
+  height: 105px;
 }
 #drop_file_zone ul li:hover{
   background-color: lightgray;
@@ -92,6 +93,9 @@
 
 .storage{
   height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+  
 }
 .storage li{
   cursor: pointer;
@@ -135,7 +139,9 @@
   background-color: turquoise;
 }
 
-.img img{
+#file_list img{
   max-width: 100%; 
-  height: auto;
+  max-height: auto;
+  overflow: hidden;
 }
+

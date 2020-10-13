@@ -46,6 +46,7 @@
                 $name = $_POST['name'];
                 $stmt->execute();
                 mkdir("/home/samba/userfile/".$id);
+                mkdir("/home/samba/userfile/thumbnail/".$id);
                 mkdir("/home/samba/userfile/".$id."trash");
                 header("Location: login.html");
             }

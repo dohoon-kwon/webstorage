@@ -10,61 +10,58 @@
                 continue;
             }
             if(is_file($dir . "/" . $filename)){
-                $files['file'][] = $filename;
-                $arr = explode(".",$filename);
                 $img_filter = array("gif", "png", "jpg", "jpeg", "bmp", "GIF", "PNG", "JPG", "JPEG", "BMP");
                 $doc_filter = array("ppt", "doc", "xls", "pptx", "docx", "pdf", "ai","psd", "txt", "hwp");
                 $video_filter = array("ASF", "AVI", "BIK", "FLV", "MKV", "MOV", "MP4", "MPEG", "Ogg", "SKM", "TS", "WebM", "WMV", "asf", "avi", "bik", "flv", "mkv", "mov", "mp4", "mpeg", "ogg", "skm", "ts", "webm", "wmv");
-
-                if(in_array($arr[1], $img_filter)){
-                    $files['img'][] = $arr[0].".".$arr[1];
-                }else if(in_array($arr[1], $doc_filter)){
-                    $files['doc'][] = $arr[0].".".$arr[1];
-                }else if(in_array($arr[1], $video_filter)){
-                  $files['video'][] = $arr[0].".".$arr[1];
+                
+                if(in_array(pathinfo($filename, PATHINFO_EXTENSION), $img_filter)){
+                    $files['img'][] = $filename;
+                }else if(in_array(pathinfo($filename, PATHINFO_EXTENSION), $doc_filter)){
+                    $files['doc'][] = $filename;
+                }else if(in_array(pathinfo($filename, PATHINFO_EXTENSION), $video_filter)){
+                  $files['video'][] = $filename;
                 }
-
             }else
             {
-                $dirs[] = $filename;
+                $dirs[] = $filename;  
             }
         }
-
         closedir($handle);
         sort($files['doc']);
         sort($files['video']);
         sort($files['img']);
+        
         switch($_GET['type']){
             case '':   
                 foreach ($dirs as $f) {
                     echo "<li class='dir'><img src='img/directory.png'></img><p>".$f."</p></li>";
                 } 
                 foreach ($files['doc'] as $f) {   
-                    echo "<li class='doc'><img src='img/directory.png'></img><p>".$f."</p></li>";
+                    echo "<li class='doc'><img src='img/doc.png'></img><p>".$f."</p></li>";
                     }
                 foreach ($files['video'] as $f) {   
-                    echo "<li class='video'><img src='img/directory.png'></img><p>".$f."</p></li>";
+                    echo "<li class='video'><img src='userfile/thumbnail/$id/$f.jpg'></img><p>".$f."</p></li>";
                     } 
                 foreach ($files['img'] as $f) {   
-                    echo "<li class='img'><img src='userfile/$id/$f'></img><p>".$f."</p></li>";
+                    echo "<li class='img' onclick=\"location.href='pop.php?file=userfile/$id/$f'\"><img src='userfile/thumbnail/$id/$f'></img><p>".$f."</p></li>";
                     } 
               break;
 
             case 'photo':
                 foreach ($files['img'] as $f) {   
-                    echo "<li class='img'><img src='img/directory.png'></img><p>".$f."</p></li>";
+                    echo "<li class='img'><img src='img/img.png'></img><p>".$f."</p></li>";
               } 
               break;
 
             case 'video':
                 foreach ($files['video'] as $f) {   
-                    echo "<li class='video'><img src='img/directory.png'></img><p>".$f."</p></li>";
+                    echo "<li class='video'><img src='img/video.png'></img><p>".$f."</p></li>";
                   } 
               break;
 
             case 'document':
               foreach ($files['doc'] as $f) {   
-                echo "<li class='doc'><img src='img/directory.png'></img><p>".$f."</p></li>";
+                echo "<li class='doc'><img src='img/doc.png'></img><p>".$f."</p></li>";
                 }
             break;
           }
@@ -100,13 +97,13 @@
         }
         // 파일명을 출력한다.
         foreach ($files['doc'] as $f) {   
-            echo "<li class='doc'><img src='img/directory.png'></img><p>".$f."</p></li>";
+            echo "<li class='doc'><img src='img/doc.png'></img><p>".$f."</p></li>";
             }
         foreach ($files['video'] as $f) {   
-            echo "<li class='video'><img src='img/directory.png'></img><p>".$f."</p></li>";
+            echo "<li class='video'><img src='img/video.png'></img><p>".$f."</p></li>";
             } 
         foreach ($files['img'] as $f) {   
-            echo "<li class='img'><img src='img/directory.png'></img><p>".$f."</p></li>";
+            echo "<li class='img'><img src='img/img.png'></img><p>".$f."</p></li>";
             } 
       }
 
