@@ -22,10 +22,10 @@
     <!--CSS-->
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/upload.css?ver1">
+    <link rel="stylesheet" href="css/upload.css">
 
     <!--기본 자바스크립트-->
-    <script src="js/upload.js?ver=1"></script>
+    <script src="js/upload.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!--드래그관련 자바스크립트-->
@@ -111,6 +111,7 @@
       </nav>
 
       
+      <!--사진 뷰어-->
       <ul class="imgview" id="imgview">
         <li><a onclick="img_hide()">닫기</a></li>
       </ul>

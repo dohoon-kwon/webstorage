@@ -66,7 +66,6 @@ function img_open(file){
       }
     }
 
-
     var move_width = (div_width / 2) - (this.width / 2);
     var move_height = (div_height / 2) - (this.height / 2);
 
@@ -76,7 +75,6 @@ function img_open(file){
     });
   };
 
-  
   imgview.appendChild(img);
   $('.imgview').show();
 }
@@ -84,6 +82,7 @@ function img_open(file){
 function img_close(){
   var imgview = document.getElementById('imgview');
   var img = document.getElementById('img_tag');
+
   if(img !== null){
     imgview.removeChild(img);
   }
