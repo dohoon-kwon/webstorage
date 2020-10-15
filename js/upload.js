@@ -35,3 +35,61 @@ function popup_open(){
   window.open('mkdir.php', '새 폴더 만들기', 'status=no, height='+popupHeight+',width='+popupWidth+',left='+popupX+',top='+ popupY);
 }
 
+//이미지 뷰어
+function img_open(file){
+  img_close();
+
+  var imgview = document.getElementById('imgview');
+  var img = document.createElement('img');
+
+  img.id = "img_tag";
+  img.src = file;
+
+  img.onload = function(){
+    var MAX_WIDTH = 1000;
+    var MAX_HEIGHT = 700;
+    var div_width = $('.storage').width();
+    var div_height = $('.storage').height();
+
+    if(this.width > div_width){
+      this.width = div_width / 2;
+    }
+    else if(this.height > div_height){
+      this.height = div_height /2;
+    }
+    else{
+      if(this.width > MAX_WIDTH){
+        this.width = MAX_WIDTH;
+      }
+      else if(this.height > MAX_HEIGHT){
+        this.height = MAX_HEIGHT;
+      }
+    }
+
+
+    var move_width = (div_width / 2) - (this.width / 2);
+    var move_height = (div_height / 2) - (this.height / 2);
+
+    $('#img_tag').css({
+      left : move_width,
+      top : move_height
+    });
+  };
+
+  
+  imgview.appendChild(img);
+  $('.imgview').show();
+}
+
+function img_close(){
+  var imgview = document.getElementById('imgview');
+  var img = document.getElementById('img_tag');
+  if(img !== null){
+    imgview.removeChild(img);
+  }
+}
+
+function img_hide(){
+  img_close();
+  $('.imgview').hide();
+}

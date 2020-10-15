@@ -32,43 +32,44 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/tool.css?ver=1">
     </head>
-<body>
-    <nav>
-        <ul>
-            <li><a class="idinfo"><?=$id?>님 환영합니다.</a></li>
-            <li><a class="logout" href="login.php">로그아웃</a></li>
-        </ul>
-        <ul class="top_menu">
-            <li class="top_menu_item" onclick="location.href='upload.php'"><a>파일 저장소</a></li>
-            <li class="top_menu_item" onclick="location.href='share.php'"><a>공유 저장소</a></li>
-            <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
-        </ul>
-    </nav>
+    
+    <body>
+        <nav>
+            <ul>
+                <li><a class="idinfo"><?=$id?>님 환영합니다.</a></li>
+                <li><a class="logout" href="login.php">로그아웃</a></li>
+            </ul>
+            <ul class="top_menu">
+                <li class="top_menu_item" onclick="location.href='upload.php'"><a>파일 저장소</a></li>
+                <li class="top_menu_item" onclick="location.href='share.php'"><a>공유 저장소</a></li>
+                <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
+            </ul>
+        </nav>
 
-    <nav class="search"> 
-        <form action="tool.php" method="POST">
-            <input type="radio" id="name" name="option" value="name"><label>이름</label>
-            <input type="radio" id="id" name="option" value="id"><label>ID</label>
-            <input type="radio" id="tel" name="option" value="tel"><label>전화번호</label>
-            <input type="radio" id="grade" name="option" value="grade"><label>등급</label>
-            <input type="text" name="value" placeholder="검색어">
-            <input type="submit" value="검색">
-        </form>
-    </nav>
-    <?php
-        foreach($list as $row) {
-            echo "<nav class=\"info\"><h2>
-            [ 이름 ] : ".htmlspecialchars($row['name']).
-            " [ ID ] : ".htmlspecialchars($row['id']).
-            " [ PW ] : ".htmlspecialchars($row['pw']).
-            " [ 전화번호 ] : ".htmlspecialchars($row['tel']).
-            " [ 등급 ] : ".htmlspecialchars($row['grade']).
-            "<input type='button' onClick=location.href=\"change.php?cid={$row['id']}\" value='수정'>".
-            "<input type='button' onClick=location.href=\"./process.php?mode=delete&cid={$row['id']}\" value='탈퇴'>".
-            "</h2></nav>";
-        }
-        echo $option;
-        echo $value;
-    ?>
-</body>
+        <nav class="search"> 
+            <form action="tool.php" method="POST">
+                <input type="radio" id="name" name="option" value="name"><label>이름</label>
+                <input type="radio" id="id" name="option" value="id"><label>ID</label>
+                <input type="radio" id="tel" name="option" value="tel"><label>전화번호</label>
+                <input type="radio" id="grade" name="option" value="grade"><label>등급</label>
+                <input type="text" name="value" placeholder="검색어">
+                <input type="submit" value="검색">
+            </form>
+        </nav>
+        <?php
+            foreach($list as $row) {
+                echo "<nav class=\"info\"><h2>
+                [ 이름 ] : ".htmlspecialchars($row['name']).
+                " [ ID ] : ".htmlspecialchars($row['id']).
+                " [ PW ] : ".htmlspecialchars($row['pw']).
+                " [ 전화번호 ] : ".htmlspecialchars($row['tel']).
+                " [ 등급 ] : ".htmlspecialchars($row['grade']).
+                "<input type='button' onClick=location.href=\"change.php?cid={$row['id']}\" value='수정'>".
+                "<input type='button' onClick=location.href=\"./process.php?mode=delete&cid={$row['id']}\" value='탈퇴'>".
+                "</h2></nav>";
+            }
+            echo $option;
+            echo $value;
+        ?>
+    </body>
 </html>
