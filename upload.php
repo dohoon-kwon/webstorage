@@ -22,11 +22,7 @@
     <!--CSS-->
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/upload.css">
-
-    <!--기본 자바스크립트-->
-    <script src="js/upload.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/upload.css?ver1">
 
     <!--드래그관련 자바스크립트-->
     <script src="//threedubmedia.com/inc/js/jquery-1.7.2.js"></script>
@@ -34,6 +30,10 @@
     <script src="//threedubmedia.com/inc/js/jquery.event.drag.live-2.2.js"></script>
     <script src="//threedubmedia.com/inc/js/jquery.event.drop-2.2.js"></script>
     <script src="//threedubmedia.com/inc/js/jquery.event.drop.live-2.2.js"></script>
+
+    <!--기본 자바스크립트-->
+    <script type="text/javascript" src="js/upload.js?ver=3"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
   <body>
@@ -121,121 +121,10 @@
     
     <!--우클릭 메뉴창-->
     <ul class="contextmenu">
+      <li><a onclick="download_file()">다운로드</a></li>
       <li><a onclick="remove_file()">삭제</a></li>
       <li><a href="#">공유하기</a></li>
     </ul>
-
-
-    <script type="text/javascript">
-      //우클릭 파일 삭제 이벤트
-      function remove_file(){
-        var i;
-        var element = document.getElementsByClassName('selected');
-
-        //php파일로 데이터 전송
-        for(i = 0; i <element.length; i++){
-          $.ajax({
-            type: 'POST',
-            url: 'remove_file.php',
-            data: {'element' : element[i].id}
-          }).done(function(){
-            window.location.reload();
-          });
-        }
-      }
-
-
-      //드래그
-      jQuery(function($){
-        $(".storage")
-          .drag("start",function( ev, dd ){
-            $( '.drop' ).removeClass("dropped");
-            return $('<li class="selection" />')
-              .css('opacity', .60 )
-              .appendTo( document.body );
-          })
-          .drag(function( ev, dd ){
-            $( dd.proxy ).css({
-              top: Math.min( ev.pageY, dd.startY ),
-              left: Math.min( ev.pageX, dd.startX ),
-              height: Math.abs( ev.pageY - dd.startY ),
-              width: Math.abs( ev.pageX - dd.startX )
-            });
-          })
-          .drag("end",function( ev, dd ){
-            $( dd.proxy ).remove();
-          });
-
-        //드래그 된 파일 클래스 변경
-        $('.drop')
-          .drop("start",function(){
-            $( this ).addClass("active");
-          })
-          .drop(function( ev, dd ){
-            $( this ).toggleClass("dropped");
-          })
-          .drop("end",function(){
-            $( this ).removeClass("active");
-          });
-
-          $.drop({ multi: true });	
-      });
-
-      //우클릭 메뉴
-      $(document).ready(function(){
-        $(".storage li").contextmenu(function(e){
-          $(this).addClass("selected");
-
-          //윈도우 사이즈 계산
-          var winWidth = $(document).width();
-          var winHeight = $(document).height();
-
-          //포인터 위치
-          var posX = e.pageX;
-          var posY = e.pageY;
-
-          //메뉴창 크기 계산
-          var menuWidth = $(".contextmenu").width();
-          var menuHeight = $(".contextmenu").height();
-
-          var secMargin = 10;
-
-          if(posX + menuWidth + secMargin >= winWidth && posY + menuHeight + secMargin >= winHeight){
-            posLeft = posX - menuWidth - secMargin + "px";
-            posTop = posY - menuHeight - secMargin + "px";
-          }
-
-          else if(posX + menuWidth + secMargin >= winWidth){
-            posLeft = posX - menuWidth - secMargin + "px";
-            posTop = posY + secMargin + "px";
-          }
-
-          else if(posY + menuHeight + secMargin >= winHeight){
-            posLeft = posX + secMargin + "px";
-            posTop = posY - menuHeight - secMargin + "px";
-          }
-
-          else {
-            posLeft = posX + secMargin + "px";
-            posTop = posY + secMargin + "px";
-          };
-
-          //메뉴창 CSS
-          $(".contextmenu").css({
-            "left": posLeft,
-            "top": posTop
-          }).show();
-
-          return false;
-        });
-
-        //메뉴창 숨기기
-        $(document).click(function(){
-          $(".storage li").removeClass("selected");
-          $(".contextmenu").hide();
-        });
-      });
-    </script>
 
   </body>
 </html>
