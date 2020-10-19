@@ -2,12 +2,13 @@
     //세션
     session_start();
     $id = $_SESSION['id'];
+    $link=$_SESSION['link'];
 
     ini_set("display_errors", "1");
     $img_filter = array("gif", "png", "jpg", "jpeg", "bmp", "GIF", "PNG", "JPG", "JPEG", "BMP");
     $video_filter = array("ASF", "AVI", "BIK", "FLV", "MKV", "MOV", "MP4", "MPEG", "Ogg", "SKM", "TS", "WebM", "WMV", "asf", "avi", "bik", "flv", "mkv", "mov", "mp4", "mpeg", "ogg", "skm", "ts", "webm", "wmv");
 
-    $uploaddir = "/home/samba/userfile/".$id."/";
+    $uploaddir = "/home/samba/userfile/".$id."/".$link."/";
     $uploadfile = $uploaddir.($_FILES['file']['name']);
     $thumbdir="userfile/thumbnail/".$id."/".$_FILES['file']['name'];
 
