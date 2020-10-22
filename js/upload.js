@@ -19,8 +19,7 @@ function ajax_file_upload(file_obj) {
       contentType: false,
       processData: false,
       data: form_data,
-      success:function(value) {
-        alert(value);
+      success:function() {
         $('#selectfile').val('');
         window.location.reload();
       }
@@ -110,6 +109,7 @@ function remove_file(){
       window.location.reload();
     });
   }
+
 }
 
 
@@ -214,9 +214,10 @@ function download_file(){
   for(i = 0; i <element.length; i++){
     multiple_donwload(element[i].id);
   }
+  
 }
 
 function multiple_donwload(i)
 {
-  location.href="download.php?file_name=" + i;
+  location.href="./download.php?file_name=" + i;
 }

@@ -32,7 +32,7 @@
     <script src="//threedubmedia.com/inc/js/jquery.event.drop.live-2.2.js"></script>
 
     <!--기본 자바스크립트-->
-    <script type="text/javascript" src="js/upload.js?ver=3"></script>
+    <script type="text/javascript" src="js/upload.js?ver1"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
