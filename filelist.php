@@ -45,9 +45,15 @@
             }
             else if($type === 'doc')
             {
+                $PDF_filter = array("pdf", "PDF");
                 if(in_array(pathinfo($file_item, PATHINFO_EXTENSION), $doc_filter))
                 {
-                    echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=$doc_link&name=$file_item'\" id='$file_item'><img src='img/doc.png'></img><p>".$file_item."</p></li>";
+                    if(in_array(pathinfo($file_item, PATHINFO_EXTENSION), $PDF_filter)){
+                        echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=$doc_link&name=$file_item'\" id='$file_item'><img src='img/doc_pdf.png'></img><p>".$file_item."</p></li>";
+                    }
+                    else{
+                        echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=$doc_link&name=$file_item'\" id='$file_item'><img src='img/doc_word.png'></img><p>".$file_item."</p></li>";
+                    }
                 }
             }
             
