@@ -239,3 +239,9 @@
 .imgview li{
   padding: 20px 0px 50px 0px;
 }
+
+#trash_empty{
+  color: lightgray;
+  right: 0;
+  position: absolute;
+}

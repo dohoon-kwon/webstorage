@@ -18,6 +18,7 @@
         $file_list = scandir($dir);
         $link = str_replace("/home/samba/",'',$dir);
         $doc_link = str_replace('userfile/'.$id,'',$link);
+        $PDF_filter = array("pdf", "PDF");
 
 
         unset($file_list[array_search('.', $file_list, true)]);
@@ -45,14 +46,15 @@
             }
             else if($type === 'doc')
             {
-                $PDF_filter = array("pdf", "PDF");
                 if(in_array(pathinfo($file_item, PATHINFO_EXTENSION), $doc_filter))
                 {
-                    if(in_array(pathinfo($file_item, PATHINFO_EXTENSION), $PDF_filter)){
+                    if(in_array(pathinfo($file_item, PATHINFO_EXTENSION), $PDF_filter))
+                    {
                         echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=$doc_link&name=$file_item'\" id='$file_item'><img src='img/doc_pdf.png'></img><p>".$file_item."</p></li>";
                     }
-                    else{
-                        echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=$doc_link&name=$file_item'\" id='$file_item'><img src='img/doc_word.png'></img><p>".$file_item."</p></li>";
+                    else
+                    {
+                        echo "<li class='doc drop' id='$file_item'><img src='img/doc_word.png'></img><p>".$file_item."</p></li>";
                     }
                 }
             }
@@ -132,10 +134,10 @@
                 foreach ($files['doc'] as $f)
                 {
                     if($link === ''){
-                        echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=&name=$f'\" id='$f'><img src='img/doc.png'></img><p>".$f."</p></li>";
+                        echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=&name=$f'\" id='$f'><img src='img/doc_word.png'></img><p>".$f."</p></li>";
                     }
                     else{
-                        echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=$link&name=$f'\" id='$f'><img src='img/doc.png'></img><p>".$f."</p></li>";
+                        echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=$link&name=$f'\" id='$f'><img src='img/doc_word.png'></img><p>".$f."</p></li>";
                     }
                 }
 
@@ -227,7 +229,7 @@
 
         foreach ($files['doc'] as $f)
         {
-            echo "<li class='doc'><img src='img/doc.png'></img><p>".$f."</p></li>";
+            echo "<li class='doc'><img src='img/doc_word.png'></img><p>".$f."</p></li>";
         }
 
         foreach ($files['video'] as $f)

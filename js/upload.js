@@ -117,7 +117,9 @@ function remove_file(){
 jQuery(function($){
   $(".storage")
     .drag("start",function( ev, dd ){
+      $( '.drop' ).removeClass("selected");
       $( '.drop' ).removeClass("dropped");
+
       return $('<li class="selection" />')
         .css('opacity', .60 )
         .appendTo( document.body );
@@ -140,7 +142,7 @@ jQuery(function($){
       $( this ).addClass("active");
     })
     .drop(function( ev, dd ){
-      $( this ).toggleClass("dropped");
+      $( this ).toggleClass("dropped selected");
     })
     .drop("end",function(){
       $( this ).removeClass("active");
@@ -152,8 +154,11 @@ jQuery(function($){
 //우클릭 메뉴
 $(document).ready(function(){
   $(".storage li").contextmenu(function(e){
-    $(this).addClass("selected");
-
+    if($(".selected").length == 1 || $(".selected").length == 0){
+      $(".drop").removeClass("selected");
+      $(this).addClass("selected");
+    }
+    
     //윈도우 사이즈 계산
     var winWidth = $(document).width();
     var winHeight = $(document).height();
@@ -199,8 +204,13 @@ $(document).ready(function(){
 
   //메뉴창 숨기기
   $(document).click(function(){
-    $(".storage li").removeClass("selected");
-    $(".contextmenu").hide();
+    $(".storage").mousedown(function(e){
+      if(e.which == 1){
+        $(".drop").removeClass("dropped");
+        $(".drop").removeClass("selected");
+        $(".contextmenu").hide();
+      }
+    })
   });
 });
 
