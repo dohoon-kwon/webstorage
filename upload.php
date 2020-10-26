@@ -32,7 +32,7 @@
     <script src="//threedubmedia.com/inc/js/jquery.event.drop.live-2.2.js"></script>
 
     <!--기본 자바스크립트-->
-    <script type="text/javascript" src="js/upload.js?a"></script>
+    <script type="text/javascript" src="js/upload.js?b"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
@@ -69,7 +69,7 @@
 
             <li><a onclick="location.href='?type=document'">문서</a></li>
 
-            <li><a onclick="location.href='?type=trash'">휴지통</a><a id="trash_empty" onclick="alert('휴지통을 비우시겠습니까?')">비우기</a></li>
+            <li><a onclick="location.href='?type=trash'">휴지통</a><a id="trash_empty" onclick="trash_clear()">비우기</a></li>
         </ul>
     </div>
 

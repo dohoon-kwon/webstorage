@@ -103,7 +103,7 @@ function remove_file(){
   for(i = 0; i <element.length; i++){
     $.ajax({
       type: 'POST',
-      url: 'remove_file.php',
+      url: 'remove_file.php?mode=remove',
       data: {'element' : element[i].id}
     }).done(function(){
       window.location.reload();
@@ -246,4 +246,18 @@ function download_file()
 function multiple_donwload(i)
 {
   location.href="./download.php?file_name=" + i;
+}
+
+function trash_clear()
+{
+  var confirm_value = confirm("휴지통을 비우시겠습니까?");
+
+  if( confirm_value == true )
+  {
+    $.ajax({
+      url: 'remove_file.php?mode=clear'
+    }).done(function(){
+      window.location.reload();
+    });
+  }
 }
