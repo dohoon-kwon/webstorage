@@ -21,8 +21,7 @@ function ajax_file_upload(file_obj) {
       contentType: false,
       processData: false,
       data: form_data,
-      success:function(value) {
-        alert(value);
+      success:function() {
         $('#selectfile').val('');
       window.location.reload();
       }
@@ -112,14 +111,17 @@ function remove_file(){
       window.location.reload();
     });
   }
+
 }
 
 
 //드래그
 jQuery(function($){
   $(".storage")
-    .drag("start",function( ev, dd ){
+    .drag("start",function(){
+      $( '.drop' ).removeClass("selected");
       $( '.drop' ).removeClass("dropped");
+
       return $('<li class="selection" />')
         .css('opacity', .60 )
         .appendTo( document.body );
@@ -141,8 +143,8 @@ jQuery(function($){
     .drop("start",function(){
       $( this ).addClass("active");
     })
-    .drop(function( ev, dd ){
-      $( this ).toggleClass("dropped");
+    .drop(function(){
+      $( this ).toggleClass("dropped selected");
     })
     .drop("end",function(){
       $( this ).removeClass("active");
@@ -153,8 +155,22 @@ jQuery(function($){
 
 //우클릭 메뉴
 $(document).ready(function(){
-  $(".storage li").contextmenu(function(e){
-    $(this).addClass("dropped");
+  $(".drop").contextmenu(function(e)
+  {
+    if (!$(this).hasClass("selected")) {
+      $(".drop").removeClass("dropped");
+      $(".drop").removeClass("selected");
+      $(this).addClass("selected");
+    }
+    
+
+    if($(".selected").length < 2)
+    {
+      $(".drop").removeClass("selected");
+      $(this).addClass("dropped");
+      $(this).addClass("selected");
+    }
+
 
     //윈도우 사이즈 계산
     var winWidth = $(document).width();
@@ -199,16 +215,26 @@ $(document).ready(function(){
     return false;
   });
 
+
   //메뉴창 숨기기
-  $(document).click(function(){
-    $(".storage li").removeClass("dropped");
-    $(".contextmenu").hide();
+  $(document).click(function()
+  {
+    $(".storage").mousedown(function(e)
+    {
+      if(e.which == 1){
+        $(".drop").removeClass("dropped");
+        $(".drop").removeClass("selected");
+        $(".contextmenu").hide();
+      }
+    })
   });
+
 });
 
 
 //우클릭으로 파일 다운로드
-function download_file(){
+function download_file()
+{
   var i;
   var elementlist = document.getElementsByClassName('dropped');
 
@@ -232,20 +258,22 @@ function download_file(){
   }
 
 
-
   var frame=document.getElementsByTagName('iframe');
-    var timer = setInterval(function () {
-      for (i=0;i<frame.length;i++)
-      {
-        var iframeDoc = frame[i].contentDocument || frame[i].contentWindow.document;
-        // Check if loading is complete
-        if (iframeDoc.readyState == 'complete' || iframeDoc.readyState == 'interactive') {
-          document.body.removeChild(frame[i]);
+  var timer = setInterval(function () {
+    for (i=0;i<frame.length;)
+    {
+      var iframeDoc = frame[i].contentDocument || frame[i].contentWindow.document;
+      // Check if loading is complete
+      if (iframeDoc.readyState == 'complete' || iframeDoc.readyState == 'interactive') {
+        document.body.removeChild(frame[i]);
+        if(!frame)
+        {
           clearInterval(timer);
           return;
         }
       }
-    }, 4000); 
-
+    }
+  }, 4000); 
+  
 }
 

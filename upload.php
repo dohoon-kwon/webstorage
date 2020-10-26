@@ -22,7 +22,7 @@
     <!--CSS-->
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/upload.css?ver1">
+    <link rel="stylesheet" href="css/upload.css?re1">
 
     <!--드래그관련 자바스크립트-->
     <script src="//threedubmedia.com/inc/js/jquery-1.7.2.js"></script>
@@ -69,7 +69,7 @@
 
             <li><a onclick="location.href='?type=document'">문서</a></li>
 
-            <li><a onclick="location.href='?type=trash'">휴지통</a></li>
+            <li><a onclick="location.href='?type=trash'">휴지통</a><a id="trash_empty" onclick="alert('휴지통을 비우시겠습니까?')">비우기</a></li>
         </ul>
     </div>
 
