@@ -70,10 +70,10 @@
 
                 foreach ($files['img'] as $f) {   
                     if($link === ''){
-                        echo "<li class='img drop' onclick=\"img_open('userfile/$id/$f')\" id='userfile/$id/$f'><img src='userfile/thumbnail/$id/$f'></img><p>".$f."</p></li>";
+                        echo "<li class='img drop' onclick=\"img_open('userfile/$id/$f')\" id='$f'><img src='userfile/thumbnail/$id/$f'></img><p>".$f."</p></li>";
                     }
                     else{
-                        echo "<li class='img drop' onclick=\"img_open('userfile/$id/$link/$f')\" id='userfile/$id/$link/$f'><img src='userfile/thumbnail/$id/$f'></img><p>".$f."</p></li>";
+                        echo "<li class='img drop' onclick=\"img_open('userfile/$id/$link/$f')\" id='$f'><img src='userfile/thumbnail/$id/$f'></img><p>".$f."</p></li>";
                     }
                 } 
 

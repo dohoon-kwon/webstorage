@@ -1,7 +1,7 @@
 <?php
     session_start();
     $filename = $_GET['file_name'];
-    $file = "/home/samba/".$filename;
+    $file = "/home/samba/userfile/".$_SESSION['id']."/".$_SESSION['link']."/". $filename;
     $file_size = filesize($file);
 
     // 접근경로 확인 (외부 링크를 막고 싶다면 포함해주세요)
