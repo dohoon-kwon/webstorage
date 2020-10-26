@@ -1,18 +1,20 @@
 //파일 드래그&드롭
 var fileobj;
 function upload_file(e) {
-  console.log("upload");
   e.preventDefault();
-  fileobj = e.dataTransfer.files[0];
+  fileobj = e.dataTransfer.files;
   ajax_file_upload(fileobj);
-  console.log("upload2");
 }
 
 function ajax_file_upload(file_obj) {
   if(file_obj != undefined) {
-      console.log(file_obj);
-      var form_data = new FormData();                  
-      form_data.append('file', file_obj);
+    var form_data = new FormData(); 
+    
+    for (var i=0;i<file_obj.length;i++)
+    {
+      form_data.append('file', file_obj[i]);
+    }                 
+
     $.ajax({
       type: 'POST',
       url: 'uploadprocess.php',
@@ -21,7 +23,7 @@ function ajax_file_upload(file_obj) {
       data: form_data,
       success:function() {
         $('#selectfile').val('');
-        window.location.reload();
+      window.location.reload();
       }
     });
   }
@@ -234,18 +236,45 @@ $(document).ready(function(){
 function download_file()
 {
   var i;
-  var element = document.getElementsByClassName('selected');
+  var elementlist = document.getElementsByClassName('dropped');
 
-  //php파일로 데이터 전송
-  for(i = 0; i <element.length; i++){
-    multiple_donwload(element[i].id);
+  if(elementlist.length<6)
+  {
+    //php파일로 데이터 전송
+    for(i = 0; i <elementlist.length; i++){
+      var element= elementlist[i].id;
+
+      var aIframe = document.createElement("iframe");
+      aIframe.style.display='none';
+      aIframe.src = "download.php?file_name="+element;
+
+      document.body.appendChild(aIframe);
+    }
+
   }
-}
+  else  //선택파일이 5개가넘으면 압축해서 다운
+  {
+
+  }
 
 
-function multiple_donwload(i)
-{
-  location.href="./download.php?file_name=" + i;
+  var frame=document.getElementsByTagName('iframe');
+  var timer = setInterval(function () {
+    for (i=0;i<frame.length;)
+    {
+      var iframeDoc = frame[i].contentDocument || frame[i].contentWindow.document;
+      // Check if loading is complete
+      if (iframeDoc.readyState == 'complete' || iframeDoc.readyState == 'interactive') {
+        document.body.removeChild(frame[i]);
+        if(!frame)
+        {
+          clearInterval(timer);
+          return;
+        }
+      }
+    }
+  }, 4000); 
+  
 }
 
 function trash_clear()

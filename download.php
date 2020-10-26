@@ -1,9 +1,13 @@
 <?php
     session_start();
     $filename = $_GET['file_name'];
+<<<<<<< HEAD
     $id = $_SESSION['id'];
     $link = $_SESSION['link'];
     $file = "/home/samba/userfile/$id/$link".$filename;
+=======
+    $file = "/home/samba/userfile/".$_SESSION['id']."/".$_SESSION['link']."/". $filename;
+>>>>>>> origin/yks
     $file_size = filesize($file);
 
 
