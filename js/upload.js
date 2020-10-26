@@ -116,7 +116,7 @@ function remove_file(){
 //드래그
 jQuery(function($){
   $(".storage")
-    .drag("start",function( ev, dd ){
+    .drag("start",function(){
       $( '.drop' ).removeClass("selected");
       $( '.drop' ).removeClass("dropped");
 
@@ -141,7 +141,7 @@ jQuery(function($){
     .drop("start",function(){
       $( this ).addClass("active");
     })
-    .drop(function( ev, dd ){
+    .drop(function(){
       $( this ).toggleClass("dropped selected");
     })
     .drop("end",function(){
@@ -153,12 +153,23 @@ jQuery(function($){
 
 //우클릭 메뉴
 $(document).ready(function(){
-  $(".storage li").contextmenu(function(e){
-    if($(".selected").length == 1 || $(".selected").length == 0){
+  $(".drop").contextmenu(function(e)
+  {
+    if (!$(this).hasClass("selected")) {
+      $(".drop").removeClass("dropped");
       $(".drop").removeClass("selected");
       $(this).addClass("selected");
     }
     
+
+    if($(".selected").length < 2)
+    {
+      $(".drop").removeClass("selected");
+      $(this).addClass("dropped");
+      $(this).addClass("selected");
+    }
+
+
     //윈도우 사이즈 계산
     var winWidth = $(document).width();
     var winHeight = $(document).height();
@@ -202,9 +213,12 @@ $(document).ready(function(){
     return false;
   });
 
+
   //메뉴창 숨기기
-  $(document).click(function(){
-    $(".storage").mousedown(function(e){
+  $(document).click(function()
+  {
+    $(".storage").mousedown(function(e)
+    {
       if(e.which == 1){
         $(".drop").removeClass("dropped");
         $(".drop").removeClass("selected");
@@ -212,11 +226,13 @@ $(document).ready(function(){
       }
     })
   });
+
 });
 
 
 //우클릭으로 파일 다운로드
-function download_file(){
+function download_file()
+{
   var i;
   var element = document.getElementsByClassName('selected');
 
@@ -224,8 +240,8 @@ function download_file(){
   for(i = 0; i <element.length; i++){
     multiple_donwload(element[i].id);
   }
-  
 }
+
 
 function multiple_donwload(i)
 {
