@@ -51,8 +51,7 @@
                 } 
               }
             }
-                
-            header("Location: upload.php"); 
+            
         break;
     }
     

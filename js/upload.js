@@ -236,7 +236,7 @@ $(document).ready(function(){
 function download_file()
 {
   var i;
-  var elementlist = document.getElementsByClassName('dropped');
+  var elementlist = document.getElementsByClassName('selected');
 
   if(elementlist.length<6)
   {
