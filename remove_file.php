@@ -3,6 +3,7 @@
     session_start();
     $id = $_SESSION['id'];
     $link = $_SESSION['link'];
+
     
     switch($_GET['mode'])
     {
@@ -17,6 +18,9 @@
             $dir = "/home/samba/userfile/".$id."trash";
             $thumnail_dir = "userfile/thumbnail/$id";
 
+            $arr = array();
+            $i = 0;
+
             //휴지통 비우기
             if (is_dir($dir))
             { 
@@ -27,10 +31,18 @@
                 if ($object != "." && $object != "..")
                 { 
                   if (is_dir($dir."/".$object))
+                  {
+                    $arr[$i] = $object;
                     rmdir($dir."/".$object);
+                    $i++;
+                  }
 
                   else
-                    unlink($dir."/".$object); 
+                  {
+                    $arr[$i] = $object;
+                    unlink($dir."/".$object);
+                    $i++;
+                  }
                 } 
               }
             }
@@ -44,10 +56,25 @@
                 if ($thumnail_file != "." && $thumnail_file != "..")
                 { 
                   if (is_dir($thumnail_dir."/".$thumnail_file))
-                    rmdir($thumnail_dir."/".$thumnail_file);
-
+                  {
+                    for($i = 0; $i < count($arr); $i++)
+                    {
+                      if($arr[$i] === $thumnail_file)
+                      {
+                        rmdir($thumnail_dir."/".$thumnail_file);
+                      }
+                    }
+                  }
                   else
-                    unlink($thumnail_dir."/".$thumnail_file); 
+                  {
+                    for($i = 0; $i < count($arr); $i++)
+                    {
+                      if($arr[$i] === $thumnail_file)
+                      {
+                        unlink($thumnail_dir."/".$thumnail_file);
+                      }
+                    }
+                  }  
                 } 
               }
             }

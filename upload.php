@@ -22,7 +22,7 @@
     <!--CSS-->
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/upload.css?ab">
+    <link rel="stylesheet" href="css/upload.css?ab1">
 
     <!--드래그관련 자바스크립트-->
     <script src="//threedubmedia.com/inc/js/jquery-1.7.2.js"></script>
@@ -32,7 +32,7 @@
     <script src="//threedubmedia.com/inc/js/jquery.event.drop.live-2.2.js"></script>
 
     <!--기본 자바스크립트-->
-    <script type="text/javascript" src="js/upload.js?ver13"></script>
+    <script type="text/javascript" src="js/upload.js?ab1"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
@@ -121,9 +121,9 @@
     
     <!--우클릭 메뉴창-->
     <ul class="contextmenu">
-      <li><a onclick="download_file()">다운로드</a></li>
-      <li><a onclick="remove_file()">삭제</a></li>
-      <li><a href="#">공유하기</a></li>
+      <li onclick="download_file()"><a>다운로드</a></li>
+      <li onclick="remove_file()"><a>삭제</a></li>
+      <li onclick=""><a>공유하기</a></li>
     </ul>
 
   </body>
