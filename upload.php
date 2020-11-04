@@ -22,7 +22,7 @@
     <!--CSS-->
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/upload.css?ab1">
+    <link rel="stylesheet" href="css/upload.css?cd4">
 
     <!--드래그관련 자바스크립트-->
     <script src="//threedubmedia.com/inc/js/jquery-1.7.2.js"></script>
@@ -32,7 +32,7 @@
     <script src="//threedubmedia.com/inc/js/jquery.event.drop.live-2.2.js"></script>
 
     <!--기본 자바스크립트-->
-    <script type="text/javascript" src="js/upload.js?ab1"></script>
+    <script type="text/javascript" src="js/upload.js?cd4"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
@@ -41,13 +41,26 @@
     <nav>
         <ul>
             <li><a class="idinfo"><?=$id?>님 환영합니다.</a></li>
-            <li><a class="logout" href="login.php">로그아웃</a></li>
+            <li class="nav_right_menu">
+              <a class="logout" href="login.php">로그아웃</a>
+              <img src='img/bell.png' id="bell_img" onclick="msg_view()"></img>
+              <?php
+                include 'msgcount.php';
+              ?>
+
+              <ul class="msgmenu">
+                <?php
+                  include 'msgmenu.php';
+                ?>
+              </ul>
+            </li>
         </ul>
         <ul class="top_menu">
             <li class="top_menu_item" onclick="location.href='upload.php'"><a>파일 저장소</a></li>
             <li class="top_menu_item" onclick="location.href='share.php'"><a>공유 저장소</a></li>
             <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
         </ul>
+
     </nav>
 
     <!--좌측 DIV-->
@@ -123,7 +136,7 @@
     <ul class="contextmenu">
       <li onclick="download_file()"><a>다운로드</a></li>
       <li onclick="remove_file()"><a>삭제</a></li>
-      <li onclick=""><a>공유하기</a></li>
+      <li onclick="share_file()"><a>공유하기</a></li>
     </ul>
 
   </body>

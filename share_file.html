@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>파일 공유</title>
+    <link rel="stylesheet" href="css/mkdir.css">
+    <link rel="stylesheet" href="css/default.css">
+  </head>
+  <body>
+      <!--파일 공유-->
+      <div>
+        <form action="./process.php?mode=share_file" method="POST">
+            <a>공유할 사람</a>
+            <input type="text" id="rev_user" name="rev_user">
+            <a>공유폴더 명</a>
+            <input type="text" id="pro_name" name="pro_name">
+            <input type="submit" value="공유">
+        </form>
+      </div>
+  </body>
+</html>

@@ -20,6 +20,24 @@
                 $_SESSION['id']=$check['id'];
                 $_SESSION['pw']=$check['pw'];
                 $_SESSION['grade']=$check['grade'];
+
+                //안 읽은 알림 수
+                $_SESSION['msg_count'] = 0;
+
+                $msg = $dbh->prepare("SELECT * from MSGINFO WHERE MSG_REC_USER = :rec_id and READ_BOOL = :bool");
+                $msg->bindParam(':rec_id',$rec_id);
+                $msg->bindParam(':bool',$bool);
+
+                $rec_id = $_SESSION['id'];
+                $bool = 0;
+
+                $msg->execute();
+                $msgcheck = $msg->fetchAll();
+
+                foreach($msgcheck as $count){
+                    $_SESSION['msg_count'] += 1;
+                }
+
                 header("Location: upload.php"); 
             }
             break;
@@ -103,6 +121,129 @@
             echo "</script>";
             break;
 
+        case 'share_file':
+            $stmt = $dbh->prepare("INSERT INTO MSGINFO (MSG_TIME, MSG_REC_USER, MSG_SEND_USER, MSG_CONTENT, USER_LIST, READ_BOOL) VALUES (:msg_time, :rec_user, :send_user, :content, :user_list, :bool)");
+
+            $stmt->bindParam(':msg_time',$msg_time);
+            $stmt->bindParam(':rec_user',$rec_user);
+            $stmt->bindParam(':send_user',$send_user);
+            $stmt->bindParam(':content',$content);
+            $stmt->bindParam(':user_list',$user_list);
+            $stmt->bindParam(':bool',$bool);
+
+            $msg_time = date("Y-m-d H:i:s", time());
+            $rec_user = $_POST['rev_user'];
+            $send_user = $_SESSION['id'];
+            $content = $_POST['pro_name'];
+            $user_list = $_SESSION['id'];
+            $bool = 0;
+            $stmt->execute();
+
+            $_SESSION['msg_count'] = 0;
+
+            $msg = $dbh->prepare("SELECT * from MSGINFO WHERE MSG_REC_USER = :rec_id and READ_BOOL = :bool");
+            $msg->bindParam(':rec_id',$rec_id);
+            $msg->bindParam(':bool',$bool);
+
+            $rec_id = $_SESSION['id'];
+            $bool = 0;
+
+            $msg->execute();
+            $msgcheck = $msg->fetchAll();
+
+            foreach($msgcheck as $count){
+                $_SESSION['msg_count'] += 1;
+            }
+
+            echo  "<script type='text/javascript'>";
+            echo "opener.parent.location.reload();";
+            echo "window.close();";
+            echo "</script>";
+            break;
+
+        case 'share_ok':
+            $stmt = $dbh->prepare("UPDATE MSGINFO SET USER_LIST=:user_list, READ_BOOL=:bool WHERE MSG_NUM = :msg_num");
+
+            $stmt->bindParam(':msg_num',$msg_num);
+            $stmt->bindParam(':bool',$bool);
+            $stmt->bindParam(':user_list',$user_list);
+
+            $msg_num = $_POST['pk_num'];
+            $bool = 1;
+            $user_list = $_POST['user_list'].'#'.$_SESSION['id'];
+
+            $stmt->execute();
+
+            $_SESSION['msg_count'] = 0;
+
+            $msg = $dbh->prepare("SELECT * from MSGINFO WHERE MSG_REC_USER = :rec_id and READ_BOOL = :bool");
+            $msg->bindParam(':rec_id',$rec_id);
+            $msg->bindParam(':bool',$bool);
+
+            $rec_id = $_SESSION['id'];
+            $bool = 0;
+
+            $msg->execute();
+            $msgcheck = $msg->fetchAll();
+
+            foreach($msgcheck as $count){
+                $_SESSION['msg_count'] += 1;
+            }
+
+            break;
+
+        case 'share_no':
+            $stmt = $dbh->prepare("UPDATE MSGINFO SET READ_BOOL=:bool WHERE MSG_NUM = :msg_num");
+
+            $stmt->bindParam(':msg_num',$msg_num);
+            $stmt->bindParam(':bool',$bool);
+
+            $msg_num = $_POST['pk_num'];
+            $bool = 1;
+
+            $stmt->execute();
+
+            $_SESSION['msg_count'] = 0;
+
+            $msg = $dbh->prepare("SELECT * from MSGINFO WHERE MSG_REC_USER = :rec_id and READ_BOOL = :bool");
+            $msg->bindParam(':rec_id',$rec_id);
+            $msg->bindParam(':bool',$bool);
+
+            $rec_id = $_SESSION['id'];
+            $bool = 0;
+
+            $msg->execute();
+            $msgcheck = $msg->fetchAll();
+
+            foreach($msgcheck as $count){
+                $_SESSION['msg_count'] += 1;
+            }
+
+            break;
+
+        case 'msg_all_clear':
+            $stmt = $dbh->prepare("DELETE FROM MSGINFO WHERE MSG_REC_USER=:rec_user");
+
+            $stmt->bindParam(':rec_user',$rec_user);
+            $rec_user = $_SESSION['id'];
+
+            $stmt->execute();
+
+            $_SESSION['msg_count'] = 0;
             
+            break;
+            
+        case 'msg_read_clear':
+            $stmt = $dbh->prepare("DELETE FROM MSGINFO WHERE MSG_REC_USER=:rec_user and READ_BOOL = :bool");
+
+            $stmt->bindParam(':rec_user',$rec_user);
+            $stmt->bindParam(':bool',$bool);
+            
+            $rec_user = $_SESSION['id'];
+            $bool = 1;
+
+            $stmt->execute();
+                
+            break;
         }
 ?>

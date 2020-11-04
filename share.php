@@ -2,108 +2,142 @@
     //세션
     session_start();
     $id = $_SESSION['id'];
+
+    //URL링크
+    if(!empty($_GET['link'])){
+      $_SESSION['link'] = $_GET['link'];
+    }
+    else{
+      $_SESSION['link'] = '';
+    }
 ?>
+
+
 <!doctype html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>공유 저장소</title>
-  <link rel="stylesheet" href="css/default.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/upload.css">
-  <script src="js/upload.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</head>
-<body>
+  <head>
+    <meta charset="utf-8">
+    <title>파일 저장소</title>
+
+    <!--CSS-->
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/upload.css?cd3">
+
+    <!--드래그관련 자바스크립트-->
+    <script src="//threedubmedia.com/inc/js/jquery-1.7.2.js"></script>
+    <script src="//threedubmedia.com/inc/js/jquery.event.drag-2.2.js"></script>
+    <script src="//threedubmedia.com/inc/js/jquery.event.drag.live-2.2.js"></script>
+    <script src="//threedubmedia.com/inc/js/jquery.event.drop-2.2.js"></script>
+    <script src="//threedubmedia.com/inc/js/jquery.event.drop.live-2.2.js"></script>
+
+    <!--기본 자바스크립트-->
+    <script type="text/javascript" src="js/upload.js?cd3"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <!--상단 메뉴 바-->
     <nav>
         <ul>
             <li><a class="idinfo"><?=$id?>님 환영합니다.</a></li>
-            <li><a class="logout" href="login.php">로그아웃</a></li>
+            <li class="nav_right_menu">
+              <a class="logout" href="login.php">로그아웃</a>
+              <img src='img/bell.png' id="bell_img" onclick="msg_view()"></img>
+              <?php
+                include 'msgcount.php';
+              ?>
+
+              <ul class="msgmenu">
+                <?php
+                  include 'msgmenu.php';
+                ?>
+              </ul>
+            </li>
         </ul>
         <ul class="top_menu">
             <li class="top_menu_item" onclick="location.href='upload.php'"><a>파일 저장소</a></li>
             <li class="top_menu_item" onclick="location.href='share.php'"><a>공유 저장소</a></li>
             <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
         </ul>
+
     </nav>
 
+    <!--좌측 DIV-->
     <div class="leftmenu">
         <ul>
+            <?php
+              include 'leftmenu.php';
+            ?>
+
+            <li class="progessbar"><progress value="<?=$sample?>" max="100"></progress></li>
+
             <li><h1>드라이브</h1></li>
-            <li><a onclick="storage()">모든 파일</a></li>
-            <li><a onclick="trash()">휴지통</a></li>
-            <li><h1>저장소 용량표시할 예정</h1></li>
+
+            <li><a onclick="location.href='?type='">모든 파일</a></li>
+
+            <li><a onclick="location.href='?type=photo'">사진</a></li>
+
+            <li><a onclick="location.href='?type=video'">동영상</a></li>
+
+            <li><a onclick="location.href='?type=document'">문서</a></li>
+
+            <li><a onclick="location.href='?type=trash'">휴지통</a><a id="trash_empty" onclick="trash_clear()">비우기</a></li>
         </ul>
     </div>
 
+
+    <!--우측 DIV-->
     <div class="rightmenu">
 
+      <!--파일 제어 버튼-->
+      <form class="searchform" method="POST" action="">
+        <ul>
+          <li><input type="text" placeholder="검색어" name="value"></li>
+          <li><input type="submit" value="검색"></li>
+        </ul>
+
+        <ul>
+          <li><input type="button" value="파일업로드"></li>
+          <li><input type="button" onClick="popup_open();" value="새 폴더"></li>
+        </ul>
+      </form>
+
+
+      <!--디렉토리 경로-->
+      <?php
+        include 'link.php';
+      ?>
+      
+
+      <!--파일 리스트-->
       <nav class="storage">
         <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
             <div id="drag_upload_file">
-              <ul id="file_list"></ul>
-              <?php
-                $dir = "/home/samba/userfile/";
-                $handle  = opendir($dir);
-                $files = array();
-                while (false !== ($filename = readdir($handle))) {
-                    if($filename == "." || $filename == ".."){
-                        continue;
-                    }
-                    if(is_file($dir . "/" . $filename)){
-                        $files[] = $filename;
-                    }
-                }
-                closedir($handle);
-                sort($files);
-                foreach ($files as $f) {
-                    echo $f;
-                    echo "<br />";
-                } 
-              ?>
+              <ul id="file_list">
+                <?php
+                  include 'filelist.php';
+                ?>
+              </ul>
             </div>
         </div>
       </nav>
-    
-      <nav class="trash">
-        <?php
-          // 폴더명 지정
-          $dir = "/home/samba/userfile/";
-          // 핸들 획득
-          $handle  = opendir($dir);
-          $files = array();
-          // 디렉터리에 포함된 파일을 저장한다.
-          while (false !== ($filename = readdir($handle))) {
-              if($filename == "." || $filename == ".."){
-                  continue;
-              }
-              // 파일인 경우만 목록에 추가한다.
-              if(is_file($dir . "/" . $filename)){
-                  $files[] = $filename;
-              }
-          }
-          // 핸들 해제 
-          closedir($handle);
-          // 정렬, 역순으로 정렬하려면 rsort 사용
-          sort($files);
-          // 파일명을 출력한다.
-          foreach ($files as $f) {
-              echo $f;
-              echo "<br />";
-          } 
-        ?>
-      </nav>      
+
+      
+      <!--사진 뷰어-->
+      <ul class="imgview" id="imgview">
+        <li><a onclick="img_hide()">닫기</a></li>
+      </ul>
+
     </div>
 
-    <script type="text/javascript">
-      function storage(){
-        $('.trash').hide();
-        $('.storage').show();
-      }
-      function trash(){
-        $('.trash').show();
-        $('.storage').hide();
-      }
-    </script>
-</body>
+    
+    <!--우클릭 메뉴창-->
+    <ul class="contextmenu">
+      <li onclick="download_file()"><a>다운로드</a></li>
+      <li onclick="remove_file()"><a>삭제</a></li>
+      <li onclick="share_file()"><a>공유하기</a></li>
+    </ul>
+
+  </body>
 </html>

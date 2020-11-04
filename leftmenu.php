@@ -46,7 +46,8 @@
     $result = 307200000 - $stat['size'];
 
     echo "<li><h1>[ 총 파일 용량 ]</br>".attach($stat['size'])."</h1></li>";
-    echo "<li><h1>[ 남은 용량 ]</br>".attach($result)."</h1></li>";
+    echo "<li><img src='img/light_blue.png'></img></li>";
+    //echo "<li><h1>[ 남은 용량 ]</br>".attach($result)."</h1></li>";
 
     //프로그레스바 퍼센트
     $sample = ($stat['size']/307200000) * 100;

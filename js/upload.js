@@ -82,6 +82,7 @@ function img_open(file){
   $('.imgview').show();
 }
 
+//이미지 닫기
 function img_close(){
   var imgview = document.getElementById('imgview');
   var img = document.getElementById('img_tag');
@@ -91,6 +92,7 @@ function img_close(){
   }
 }
 
+//이미지 숨기기 >> 닫기 기능 사용
 function img_hide(){
   img_close();
   $('.imgview').hide();
@@ -155,6 +157,8 @@ jQuery(function($){
 
 //우클릭 메뉴
 $(document).ready(function(){
+  fadeIO();
+
   $(".drop").contextmenu(function(e)
   {
     if (!$(this).hasClass("selected")) {
@@ -225,10 +229,10 @@ $(document).ready(function(){
         $(".drop").removeClass("dropped");
         $(".drop").removeClass("selected");
         $(".contextmenu").hide();
+        //$(".msgmenu").hide();
       }
     })
   });
-
 });
 
 
@@ -277,6 +281,7 @@ function download_file()
   
 }
 
+//휴지통 비우기
 function trash_clear()
 {
   var confirm_value = confirm("휴지통을 비우시겠습니까?");
@@ -289,4 +294,90 @@ function trash_clear()
       window.location.reload();
     });
   }
+}
+
+//알림 확인 버튼
+function msg_view()
+{
+  if($(".msgmenu").css("display") == 'none')
+  {
+    $(".msgmenu").show();
+  }
+  else
+  {
+    $(".msgmenu").hide();
+  }
+}
+
+//전체 알림 삭제
+function remove_msg_all(){
+  var confirm_value = confirm("전체 알림을 삭제합니다.");
+
+  if( confirm_value == true )
+  {
+    $.ajax({
+      url: 'process.php?mode=msg_all_clear'
+    }).done(function(){
+      window.location.reload();
+    });
+  }
+}
+
+//읽은 알림 삭제
+function remove_msg_read(){
+  var confirm_value = confirm("확인한 알림을 삭제합니다.");
+
+  if( confirm_value == true )
+  {
+    $.ajax({
+      url: 'process.php?mode=msg_read_clear'
+    }).done(function(){
+      window.location.reload();
+    });
+  }
+}
+
+//파일 공유
+function share_file(){
+  var popupWidth = 400;
+  var popupHeight = 200;
+  var popupX = (window.screen.width / 2) - (popupWidth / 2);
+  var popupY= (window.screen.height / 2) - (popupHeight / 2);
+  window.open('share_file.html', '파일공유', 'status=no, height='+popupHeight+',width='+popupWidth+',left='+popupX+',top='+ popupY);
+}
+
+//파일공유 알림 클릭
+function join_share(num,list){
+  var confirm_value = confirm("공유 폴더에 참여하시겠습니까?");
+
+  if( confirm_value == true )
+  {
+    $.ajax({
+      type: 'POST',
+      url: 'process.php?mode=share_ok',
+      data: {'pk_num' : num , 'user_list' : list}
+    }).done(function(){
+      window.location.reload();
+    });
+  }
+  else
+  {
+    $.ajax({
+      type: 'POST',
+      url: 'process.php?mode=share_no',
+      data: {'pk_num' : num}
+    }).done(function(){
+      window.location.reload();
+    });
+  }
+}
+
+//알림메세지 페이드효과
+function fadeIO(){
+  $('.msgcount').fadeOut(1000, function(){
+    $('.msgcount').fadeIn(1000,function()
+    {
+      fadeIO();
+    });
+  });
 }
