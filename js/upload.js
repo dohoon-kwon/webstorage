@@ -21,7 +21,8 @@ function ajax_file_upload(file_obj) {
       contentType: false,
       processData: false,
       data: form_data,
-      success:function() {
+      success:function(a) {
+        alert(a);
         $('#selectfile').val('');
       window.location.reload();
       }
@@ -236,7 +237,7 @@ $(document).ready(function(){
 function download_file()
 {
   var i;
-  var elementlist = document.getElementsByClassName('dropped');
+  var elementlist = document.getElementsByClassName('selected');
 
   if(elementlist.length<6)
   {
@@ -254,7 +255,43 @@ function download_file()
   }
   else  //선택파일이 5개가넘으면 압축해서 다운
   {
+    var dataObject = new Object();
+    dataObject['name'] = 'ari';
+    dataObject['email'] = 'ari@email.com';
+    dataObject['phone'] = '010-1234-5678';
+    dataObject = JSON.stringify( dataObject );
 
+    $.ajax({
+        type : 'POST',
+        url : 'zipdownload.php',
+        cache : false,
+        data : { dataObject: dataObject },
+        success : function( data ){
+            console.log( data );
+        },
+        error : function( jqxhr , status , error ){
+            // console.log( jqxhr , status , error );
+        }
+    });
+
+    /*
+    var form_data = new FormData(); 
+    for (var i=0;i<elementlist.length;i++)
+    {
+      form_data.append('file', elementlist[i].id);
+    }
+
+    alert(JSON.stringify(elementlist));
+    $.ajax({
+      type: 'POST',
+      url: 'zipdownload.php',
+      contentType: false,
+      processData: false,
+      data: { file : elementlist},
+      success:function(va) {
+        console.log(va);
+      }
+    });*/
   }
 
 
@@ -274,6 +311,6 @@ function download_file()
       }
     }
   }, 4000); 
-  
+
 }
 

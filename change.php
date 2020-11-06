@@ -1,5 +1,6 @@
 <?php
-    $dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234',array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+    require_once 'lib/dbinfo.php';
+    
     $stmt = $dbh->prepare('SELECT * FROM USERINFO WHERE id=:id');
     $stmt->bindParam(':id', $cid);
     $cid = $_GET['cid'];

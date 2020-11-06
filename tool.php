@@ -1,6 +1,7 @@
 <?php
     //정보불러오기
-    $dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234',array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+    require_once 'lib/dbinfo.php';
+    
     if(!empty($_POST['option'])){
         $querysample = 'SELECT * FROM USERINFO WHERE '.$_POST['option'].'="'.$_POST['value'].'"';
         $stmt = $dbh->prepare($querysample);

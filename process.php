@@ -88,14 +88,24 @@
         case 'mkdir':
             $dirname = $_POST['dirname'];
             $id = $_SESSION['id'];
-            $link = $_SESSION['link'];
+            $link = $id."/".$_SESSION['link'];
 
             if($link === ''){
                 mkdir("/home/samba/userfile/$id/$dirname", 0777, true);
             }
             else{
-                mkdir("/home/samba/userfile/$id/$link/$dirname", 0777, true);
+                mkdir("/home/samba/userfile/$link/$dirname", 0777, true);
             }
+            $tmp_name=uniqid();
+            $thumbdir ='img/directory.png';
+
+            $stmt = $dbh->prepare("INSERT INTO DATAINFO VALUES (:tmp_name,:name,'dir',0,:path,:id,:thumbdir)");
+            $stmt->bindParam(':tmp_name',$tmp_name);
+            $stmt->bindParam(':name',$dirname);
+            $stmt->bindParam(':path',$link);
+            $stmt->bindParam(':id',$id);
+            $stmt->bindParam(':thumbdir',$thumbdir);
+            $stmt->execute();
             
             echo  "<script type='text/javascript'>";
             echo "opener.parent.location.reload();";

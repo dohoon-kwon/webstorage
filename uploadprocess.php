@@ -1,23 +1,34 @@
 <?php
-    //세션
-    session_start();
-    $id = $_SESSION['id'];
-    $link=$_SESSION['link'];
+    require_once 'lib/dbinfo.php';
 
     ini_set("display_errors", "1");
     $img_filter = array("gif", "png", "jpg", "jpeg", "bmp", "GIF", "PNG", "JPG", "JPEG", "BMP");
     $video_filter = array("ASF", "AVI", "BIK", "FLV", "MKV", "MOV", "MP4", "MPEG", "Ogg", "SKM", "TS", "WebM", "WMV", "asf", "avi", "bik", "flv", "mkv", "mov", "mp4", "mpeg", "ogg", "skm", "ts", "webm", "wmv");
+   
+   
+    $name=$_FILES['file']['name'];
+    $ext =pathinfo($name, PATHINFO_EXTENSION);
+    $tmp_name=uniqid().".".$ext;
+    $size=$_FILES['file']['size'];
 
-    $uploaddir = "/home/samba/userfile/".$id."/".$link."/";
-    $uploadfile = $uploaddir.($_FILES['file']['name']);
-    $thumbdir="userfile/thumbnail/".$id."/".$_FILES['file']['name'];
-    
-    echo count($_FILES['file']['name']);
-    for($i = 0; $i < count($_FILES['file']['name']); $i++){
+    $uploaddir = "/home/samba/userfile/".$link."/";
+    $uploadfile = $uploaddir.($tmp_name);
+    $thumbdir="userfile/thumbnail/".$id."/". $tmp_name.".jpg";
+
+    $stmt = $dbh->prepare("INSERT INTO DATAINFO VALUES (:tmp_name,:name,:ext,:size,:path,:id,:thumbdir) ");
+    $stmt->bindParam(':tmp_name',$tmp_name);
+    $stmt->bindParam(':name',$name);
+    $stmt->bindParam(':ext',$ext);
+    $stmt->bindParam(':size',$size);
+    $stmt->bindParam(':path',$link);
+    $stmt->bindParam(':id',$id);
+    $stmt->bindParam(':thumbdir',$thumbdir);
+
+   // for($i = 0; $i < count($_FILES['file']['name']); $i++){
 
         if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
             //이미지 업로드할때
-            if(in_array(pathinfo($uploadfile, PATHINFO_EXTENSION),$img_filter))
+            if(in_array($ext,$img_filter))
             {
                 $info_image=getimagesize($uploadfile); 
                 switch($info_image['mime']){
@@ -57,22 +68,45 @@
                 }
             }
             //비디오 업로드할때
-            else if(in_array(pathinfo($uploadfile, PATHINFO_EXTENSION),$video_filter))
+            else if(in_array($ext,$video_filter))
             {
-                echo exec("ffmpeg -i $uploadfile -an -ss 00:00:03 -an -r 2 -vframes 1 -y $thumbdir.jpg");
-                $info_image=getimagesize($thumbdir.".jpg");
-                $new_image=imagecreatefromjpeg($thumbdir.".jpg");
+                echo exec("ffmpeg -i $uploadfile -an -ss 00:00:03 -an -r 2 -vframes 1 -y $thumbdir");
+                $info_image=getimagesize($thumbdir);
+                $new_image=imagecreatefromjpeg($thumbdir);
                 $bg = imagecreatefrompng("img/playbutton.png");
 
                 if($new_image){
                     $canvas=imagecreatetruecolor(400,400);
                     imagecopyresampled($canvas, $new_image,0,0,0,0,400,400,$info_image[0],$info_image[1]);
                     imagecopyresampled($canvas,  $bg,125,125,0,0,150,150,512,512);
-                    imagegif($canvas,$thumbdir.".jpg");
+                    imagegif($canvas,$thumbdir);
+                 }
             }
+            else
+            {   
+                //$doc_filter = array("ppt", "doc", "xls", "pptx", "docx", "pdf", "ai","psd", "txt", "hwp");
+                switch($ext)
+                {
+                    case 'pptx':
+                    case 'ppt' : $thumbdir ='img/doc_ppt.png'; break;
+
+                    case 'docx':
+                    case 'doc' : $thumbdir ='img/doc_word.png'; break;
+
+                    case 'txt' : $thumbdir ='img/doc_txt.png'; break;
+                    case 'hwp' : $thumbdir ='img/doc_hwp.png'; break;
+                    
+                    case 'xlsx' : 
+                    case 'xls' : $thumbdir ='img/doc_xls.png'; break;
+
+                    case 'pdf' : $thumbdir ='img/doc_pdf.png'; break;
+                }
             }
+
+            $stmt->execute();
+          
         }
     
-    }  
+   // }  
 ?>
 
