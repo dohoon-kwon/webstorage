@@ -84,7 +84,6 @@
             }
             else
             {   
-                //$doc_filter = array("ppt", "doc", "xls", "pptx", "docx", "pdf", "ai","psd", "txt", "hwp");
                 switch($ext)
                 {
                     case 'pptx':
@@ -103,8 +102,12 @@
                 }
             }
 
-            $stmt->execute();
-          
+            if($stmt->execute())
+            {
+                echo "업로드 성공";
+            }
+            else
+                echo $link;
         }
     
    // }  

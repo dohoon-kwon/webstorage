@@ -1,7 +1,6 @@
 <?php
-    $dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-    session_start();
-    
+    require_once 'lib/dbinfo.php';
+    $oldumask = umask(0);
     switch($_GET['mode']){
 
         case 'login':
@@ -48,9 +47,10 @@
                 $tel = (string)$_POST['tel1']."-".(string)$_POST['tel2']."-".(string)$_POST['tel3'];
                 $name = $_POST['name'];
                 $stmt->execute();
-                mkdir("/home/samba/userfile/".$id);
-                mkdir("/home/samba/userfile/".$id."trash");
-                mkdir("/home/samba/userfile/thumbnail/".$id);
+                mkdir("/home/samba/userfile/".$id , 0777, true);
+                mkdir("/home/samba/userfile/".$id."trash" , 0777, true);
+                mkdir("/home/samba/userfile/thumbnail/".$id , 0777, true);
+                
                 header("Location: login.html");
             }
             break;
@@ -89,14 +89,14 @@
             $dirname = $_POST['dirname'];
             $id = $_SESSION['id'];
             $link = $id."/".$_SESSION['link'];
+            $tmp_name=uniqid();
 
             if($link === ''){
-                mkdir("/home/samba/userfile/$id/$dirname", 0777, true);
+                mkdir("/home/samba/userfile/$id/$tmp_name", 0777, true);
             }
             else{
-                mkdir("/home/samba/userfile/$link/$dirname", 0777, true);
+                mkdir("/home/samba/userfile/$link/$tmp_name", 0777, true);
             }
-            $tmp_name=uniqid();
             $thumbdir ='img/directory.png';
 
             $stmt = $dbh->prepare("INSERT INTO DATAINFO VALUES (:tmp_name,:name,'dir',0,:path,:id,:thumbdir)");
@@ -115,4 +115,5 @@
 
             
         }
+        umask($oldumask);
 ?>
