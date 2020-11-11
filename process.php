@@ -1,6 +1,40 @@
 <?php
     $dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
     session_start();
+
+    //새 알림 체크 함수
+    function msgcount_check()
+    {
+        $dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+
+        //안 읽은 알림 수
+        $_SESSION['msg_count'] = 0;
+
+        $msg = $dbh->prepare("SELECT * from MSGINFO WHERE MSG_REC_USER = :rec_id and READ_BOOL = :bool");
+        $msg->bindParam(':rec_id',$rec_id);
+        $msg->bindParam(':bool',$bool);
+
+        $rec_id = $_SESSION['id'];
+        $bool = 0;
+
+        $msg->execute();
+        $msgcheck = $msg->fetchAll();
+
+        foreach($msgcheck as $count){
+            $_SESSION['msg_count'] += 1;
+        }
+    }
+
+    //공유폴더 유저명 리턴하기
+    function user_list_check($num){
+        $dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+        $stmt = $dbh->prepare("SELECT * from SHAREINFO WHERE SHARE_NUM=:num");
+        $stmt->bindParam(':num',$num);
+        $stmt->execute();
+        $slist = $stmt->fetch();
+
+        return $slist['SHARE_USERS'];
+    }
     
     switch($_GET['mode']){
 
@@ -21,22 +55,7 @@
                 $_SESSION['pw']=$check['pw'];
                 $_SESSION['grade']=$check['grade'];
 
-                //안 읽은 알림 수
-                $_SESSION['msg_count'] = 0;
-
-                $msg = $dbh->prepare("SELECT * from MSGINFO WHERE MSG_REC_USER = :rec_id and READ_BOOL = :bool");
-                $msg->bindParam(':rec_id',$rec_id);
-                $msg->bindParam(':bool',$bool);
-
-                $rec_id = $_SESSION['id'];
-                $bool = 0;
-
-                $msg->execute();
-                $msgcheck = $msg->fetchAll();
-
-                foreach($msgcheck as $count){
-                    $_SESSION['msg_count'] += 1;
-                }
+                msgcount_check();
 
                 header("Location: upload.php"); 
             }
@@ -139,21 +158,20 @@
             $bool = 0;
             $stmt->execute();
 
-            $_SESSION['msg_count'] = 0;
+            $slist = $dbh->prepare("INSERT INTO SHAREINFO (SHARE_CODE, SHARE_NAME, SHARE_USERS ) VALUES (:share_code, :share_name, :share_user)");
 
-            $msg = $dbh->prepare("SELECT * from MSGINFO WHERE MSG_REC_USER = :rec_id and READ_BOOL = :bool");
-            $msg->bindParam(':rec_id',$rec_id);
-            $msg->bindParam(':bool',$bool);
+            $slist->bindParam(':share_code',$share_code);
+            $slist->bindParam(':share_name',$share_name);
+            $slist->bindParam(':share_user',$share_user);
 
-            $rec_id = $_SESSION['id'];
-            $bool = 0;
+            $share_code = uniqid();
+            $share_name = $_POST['pro_name'];
+            $share_user = $_SESSION['id'];
+            $slist->execute();
 
-            $msg->execute();
-            $msgcheck = $msg->fetchAll();
+            mkdir("/home/samba/userfile/share/$share_code", 0777, true);
 
-            foreach($msgcheck as $count){
-                $_SESSION['msg_count'] += 1;
-            }
+            msgcount_check();
 
             echo  "<script type='text/javascript'>";
             echo "opener.parent.location.reload();";
@@ -174,21 +192,19 @@
 
             $stmt->execute();
 
-            $_SESSION['msg_count'] = 0;
+            $user_list = user_list_check($_POST['pk_num']);
 
-            $msg = $dbh->prepare("SELECT * from MSGINFO WHERE MSG_REC_USER = :rec_id and READ_BOOL = :bool");
-            $msg->bindParam(':rec_id',$rec_id);
-            $msg->bindParam(':bool',$bool);
+            $slist = $dbh->prepare("UPDATE SHAREINFO SET SHARE_USERS=:share_user WHERE SHARE_NUM=:share_num");
 
-            $rec_id = $_SESSION['id'];
-            $bool = 0;
+            $slist->bindParam(':share_num',$share_num);
+            $slist->bindParam(':share_user',$share_user);
 
-            $msg->execute();
-            $msgcheck = $msg->fetchAll();
+            $share_num = $_POST['pk_num'];
+            $share_user = $user_list.'/'.$_SESSION['id'];
 
-            foreach($msgcheck as $count){
-                $_SESSION['msg_count'] += 1;
-            }
+            $slist->execute();
+
+            msgcount_check();
 
             break;
 
@@ -203,21 +219,7 @@
 
             $stmt->execute();
 
-            $_SESSION['msg_count'] = 0;
-
-            $msg = $dbh->prepare("SELECT * from MSGINFO WHERE MSG_REC_USER = :rec_id and READ_BOOL = :bool");
-            $msg->bindParam(':rec_id',$rec_id);
-            $msg->bindParam(':bool',$bool);
-
-            $rec_id = $_SESSION['id'];
-            $bool = 0;
-
-            $msg->execute();
-            $msgcheck = $msg->fetchAll();
-
-            foreach($msgcheck as $count){
-                $_SESSION['msg_count'] += 1;
-            }
+            msgcount_check();
 
             break;
 
@@ -245,5 +247,5 @@
             $stmt->execute();
                 
             break;
-        }
+    }
 ?>

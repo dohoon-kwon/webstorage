@@ -101,7 +101,7 @@
   cursor: pointer;
 }
 
-.progessbar{
+.userinfo{
   border-bottom: 1px solid lightgrey;
   padding: 12px 0px;
   margin: 0px 0px 15px 0px;
@@ -340,4 +340,19 @@
   margin: 13px 20px;
   color: red;
   position: fixed;
+}
+
+a, input, h1, img
+{
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.logo
+{
+  position: absolute;
+  cursor: pointer;
 }

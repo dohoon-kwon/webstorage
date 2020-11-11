@@ -325,7 +325,7 @@ function remove_msg_all(){
 
 //읽은 알림 삭제
 function remove_msg_read(){
-  var confirm_value = confirm("확인한 알림을 삭제합니다.");
+  var confirm_value = confirm("읽은 알림을 삭제합니다.");
 
   if( confirm_value == true )
   {
@@ -348,7 +348,7 @@ function share_file(){
 
 //파일공유 알림 클릭
 function join_share(num,list){
-  var confirm_value = confirm("공유 폴더에 참여하시겠습니까?");
+  var confirm_value = confirm("해당 공유 폴더에 참여하시겠습니까?");
 
   if( confirm_value == true )
   {

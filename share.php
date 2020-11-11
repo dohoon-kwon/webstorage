@@ -17,12 +17,12 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>파일 저장소</title>
+    <title>공유 폴더</title>
 
     <!--CSS-->
     <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/upload.css?cd3">
+    <link rel="stylesheet" href="css/main.css?ab2">
+    <link rel="stylesheet" href="css/upload.css?cd7">
 
     <!--드래그관련 자바스크립트-->
     <script src="//threedubmedia.com/inc/js/jquery-1.7.2.js"></script>
@@ -32,7 +32,7 @@
     <script src="//threedubmedia.com/inc/js/jquery.event.drop.live-2.2.js"></script>
 
     <!--기본 자바스크립트-->
-    <script type="text/javascript" src="js/upload.js?cd3"></script>
+    <script type="text/javascript" src="js/upload.js?cd7"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
@@ -40,7 +40,7 @@
     <!--상단 메뉴 바-->
     <nav>
         <ul>
-            <li><a class="idinfo"><?=$id?>님 환영합니다.</a></li>
+            <li class="logo"><img src='img/home_logo.png' onclick="location.href='upload.php'"></img></li>
             <li class="nav_right_menu">
               <a class="logout" href="login.php">로그아웃</a>
               <img src='img/bell.png' id="bell_img" onclick="msg_view()"></img>
@@ -70,19 +70,11 @@
               include 'leftmenu.php';
             ?>
 
-            <li class="progessbar"><progress value="<?=$sample?>" max="100"></progress></li>
-
             <li><h1>드라이브</h1></li>
-
-            <li><a onclick="location.href='?type='">모든 파일</a></li>
-
-            <li><a onclick="location.href='?type=photo'">사진</a></li>
-
-            <li><a onclick="location.href='?type=video'">동영상</a></li>
-
-            <li><a onclick="location.href='?type=document'">문서</a></li>
-
-            <li><a onclick="location.href='?type=trash'">휴지통</a><a id="trash_empty" onclick="trash_clear()">비우기</a></li>
+            
+            <?php
+              include "share_list.php";
+            ?>
         </ul>
     </div>
 
@@ -98,7 +90,7 @@
         </ul>
 
         <ul>
-          <li><input type="button" value="파일업로드"></li>
+          <li><input type="button" onclick="share_file()"value="새 공유폴더"></li>
           <li><input type="button" onClick="popup_open();" value="새 폴더"></li>
         </ul>
       </form>
@@ -116,7 +108,7 @@
             <div id="drag_upload_file">
               <ul id="file_list">
                 <?php
-                  include 'filelist.php';
+                  include 'share_filelist.php';
                 ?>
               </ul>
             </div>

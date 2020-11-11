@@ -36,7 +36,7 @@
     <body>
         <nav>
             <ul>
-                <li><a class="idinfo"><?=$id?>님 환영합니다.</a></li>
+                <li class="logo"><img src='img/home_logo.png' onclick="location.href='upload.php'"></img></li>
                 <li><a class="logout" href="login.php">로그아웃</a></li>
             </ul>
             <ul class="top_menu">

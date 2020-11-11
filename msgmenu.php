@@ -26,12 +26,12 @@
 
             if($msgdata['READ_BOOL'] === '0')
             {
-                $data = "[" . $msgdata["MSG_SEND_USER"] . ']<br>[ 내용 ]' . $msgdata["MSG_CONTENT"];
+                $data = "[ " . $msgdata["MSG_SEND_USER"] . ' 님으로부터 알림 ]<br>' . $msgdata["MSG_CONTENT"] . ' 폴더를 공유';
                 echo ("<li onclick='join_share(\"$pk_num\",\"$user_list\")' class='msg_content'><a>$data</a></li>");
             }
             else
             {
-                $data = "[" . $msgdata["MSG_SEND_USER"] . ']<br>[ 내용 ]' . $msgdata["MSG_CONTENT"];
+                $data = "[ " . $msgdata["MSG_SEND_USER"] . ' 님으로부터 알림 ]<br>' . $msgdata["MSG_CONTENT"] . ' 폴더를 공유';
                 echo "<li onclick='join_share(\"$pk_num\",\"$user_list\")' class='msg_content_read'><a>$data</a></li>";
             }
             
