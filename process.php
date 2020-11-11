@@ -1,8 +1,6 @@
 <?php
     require_once 'lib/dbinfo.php';
     $oldumask = umask(0);
-<<<<<<< HEAD
-=======
 
     //새 알림 체크 함수
     function msgcount_check()
@@ -38,7 +36,6 @@
         return $slist['SHARE_USERS'];
     }
     
->>>>>>> ks
     switch($_GET['mode']){
 
         case 'login':
@@ -247,10 +244,6 @@
 
             $_SESSION['msg_count'] = 0;
             
-<<<<<<< HEAD
-        }
-        umask($oldumask);
-=======
             break;
             
         case 'msg_read_clear':
@@ -268,5 +261,4 @@
     }
     
     umask($oldumask);
->>>>>>> ks
 ?>

@@ -48,18 +48,11 @@ ENGINE = InnoDB;
 ### 파일공유 그룹 DB
 
 
-<<<<<<< HEAD
-'''sql
-=======
 ```sql
->>>>>>> ks
 create table SHAREINFO (
 SHARE_CODE VARCHAR(30) primary key,
 SHARE_NAME VARCHAR(30) not null,
 SHARE_USERS VARCHAR(255) not null );
-<<<<<<< HEAD
-'''
-=======
 ```
 
 ##  4. 기능
@@ -73,4 +66,3 @@ SHARE_USERS VARCHAR(255) not null );
 - 공유 폴더
 
 - 홈페이지 유저 정보 관리
->>>>>>> ks
