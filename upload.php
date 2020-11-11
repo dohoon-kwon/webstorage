@@ -21,8 +21,8 @@
 
     <!--CSS-->
     <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/upload.css?re1">
+    <link rel="stylesheet" href="css/main.css?ab2">
+    <link rel="stylesheet" href="css/upload.css?cd8">
 
     <!--드래그관련 자바스크립트-->
     <script src="//threedubmedia.com/inc/js/jquery-1.7.2.js"></script>
@@ -40,14 +40,27 @@
     <!--상단 메뉴 바-->
     <nav>
         <ul>
-            <li><a class="idinfo"><?=$id?>님 환영합니다.</a></li>
-            <li><a class="logout" href="login.php">로그아웃</a></li>
+            <li class="logo"><img src='img/home_logo.png' onclick="location.href='upload.php'"></img></li>
+            <li class="nav_right_menu">
+              <a class="logout" href="login.php">로그아웃</a>
+              <img src='img/bell.png' id="bell_img" onclick="msg_view()"></img>
+              <?php
+                include 'msgcount.php';
+              ?>
+
+              <ul class="msgmenu">
+                <?php
+                  include 'msgmenu.php';
+                ?>
+              </ul>
+            </li>
         </ul>
         <ul class="top_menu">
             <li class="top_menu_item" onclick="location.href='upload.php'"><a>파일 저장소</a></li>
             <li class="top_menu_item" onclick="location.href='share.php'"><a>공유 저장소</a></li>
             <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
         </ul>
+
     </nav>
 
     <!--좌측 DIV-->
@@ -56,8 +69,6 @@
             <?php
               include 'leftmenu.php';
             ?>
-
-            <li class="progessbar"><progress value="<?=$sample?>" max="100"></progress></li>
 
             <li><h1>드라이브</h1></li>
 
@@ -69,7 +80,7 @@
 
             <li><a onclick="location.href='?type=document'">문서</a></li>
 
-            <li><a onclick="location.href='?type=trash'">휴지통</a><a id="trash_empty" onclick="alert('휴지통을 비우시겠습니까?')">비우기</a></li>
+            <li><a onclick="location.href='?type=trash'">휴지통</a><a id="trash_empty" onclick="trash_clear()">비우기</a></li>
         </ul>
     </div>
 
@@ -121,9 +132,9 @@
     
     <!--우클릭 메뉴창-->
     <ul class="contextmenu">
-      <li><a onclick="download_file()">다운로드</a></li>
-      <li><a onclick="remove_file()">삭제</a></li>
-      <li><a href="#">공유하기</a></li>
+      <li onclick="download_file()"><a>다운로드</a></li>
+      <li onclick="remove_file()"><a>삭제</a></li>
+      <li onclick="share_file()"><a>공유하기</a></li>
     </ul>
 
   </body>
