@@ -8,11 +8,11 @@
 3. PHP
 
 ##  2.라이브러리
-php-gd
+1. php-gd
 
-jquery
+2. jquery
 
-ffmpeg = https://toshi15shkim.github.io/articles/2019-09/etc-ffmpeg-install
+3. ffmpeg = https://toshi15shkim.github.io/articles/2019-09/etc-ffmpeg-install
 
 ## 3.DB
 
@@ -44,3 +44,12 @@ FOREIGN KEY (FILE_USER_ID) REFERENCES USERINFO(id)
 ENGINE = InnoDB;
 ```
 
+### 파일공유 그룹 DB
+
+
+'''sql
+create table SHAREINFO (
+SHARE_CODE VARCHAR(30) primary key,
+SHARE_NAME VARCHAR(30) not null,
+SHARE_USERS VARCHAR(255) not null );
+'''
