@@ -21,7 +21,40 @@ function ajax_file_upload(file_obj) {
       contentType: false,
       processData: false,
       data: form_data,
-      success:function() {
+      success:function(a) {
+        alert(a);
+        $('#selectfile').val('');
+      window.location.reload();
+      }
+    });
+  }
+}
+
+//공유폴더파일 드래그&드롭
+var fileobj;
+function upload_share_file(e) {
+  e.preventDefault();
+  fileobj = e.dataTransfer.files;
+  ajax_share_file_upload(fileobj);
+}
+
+function ajax_share_file_upload(file_obj) {
+  if(file_obj != undefined) {
+    var form_data = new FormData(); 
+    
+    for (var i=0;i<file_obj.length;i++)
+    {
+      form_data.append('file', file_obj[i]);
+    }                 
+
+    $.ajax({
+      type: 'POST',
+      url: 'share_uploadprocess.php',
+      contentType: false,
+      processData: false,
+      data: form_data,
+      success:function(a) {
+        alert(a);
         $('#selectfile').val('');
       window.location.reload();
       }
@@ -82,6 +115,7 @@ function img_open(file){
   $('.imgview').show();
 }
 
+//이미지 닫기
 function img_close(){
   var imgview = document.getElementById('imgview');
   var img = document.getElementById('img_tag');
@@ -91,6 +125,7 @@ function img_close(){
   }
 }
 
+//이미지 숨기기 >> 닫기 기능 사용
 function img_hide(){
   img_close();
   $('.imgview').hide();
@@ -105,13 +140,13 @@ function remove_file(){
   for(i = 0; i <element.length; i++){
     $.ajax({
       type: 'POST',
-      url: 'remove_file.php',
+      url: 'remove_file.php?mode=remove',
       data: {'element' : element[i].id}
-    }).done(function(){
+    }).done(function(a){
+      console.log(a);
       window.location.reload();
     });
   }
-
 }
 
 
@@ -123,7 +158,7 @@ jQuery(function($){
       $( '.drop' ).removeClass("dropped");
 
       return $('<li class="selection" />')
-        .css('opacity', .60 )
+        .css('opacity', .60)
         .appendTo( document.body );
     })
     .drag(function( ev, dd ){
@@ -155,6 +190,8 @@ jQuery(function($){
 
 //우클릭 메뉴
 $(document).ready(function(){
+  fadeIO();
+
   $(".drop").contextmenu(function(e)
   {
     if (!$(this).hasClass("selected")) {
@@ -225,10 +262,10 @@ $(document).ready(function(){
         $(".drop").removeClass("dropped");
         $(".drop").removeClass("selected");
         $(".contextmenu").hide();
+        //$(".msgmenu").hide();
       }
     })
   });
-
 });
 
 
@@ -236,7 +273,7 @@ $(document).ready(function(){
 function download_file()
 {
   var i;
-  var elementlist = document.getElementsByClassName('dropped');
+  var elementlist = document.getElementsByClassName('selected');
 
   if(elementlist.length<6)
   {
@@ -254,7 +291,43 @@ function download_file()
   }
   else  //선택파일이 5개가넘으면 압축해서 다운
   {
+    var dataObject = new Object();
+    dataObject['name'] = 'ari';
+    dataObject['email'] = 'ari@email.com';
+    dataObject['phone'] = '010-1234-5678';
+    dataObject = JSON.stringify( dataObject );
 
+    $.ajax({
+        type : 'POST',
+        url : 'zipdownload.php',
+        cache : false,
+        data : { dataObject: dataObject },
+        success : function( data ){
+            console.log( data );
+        },
+        error : function( jqxhr , status , error ){
+            // console.log( jqxhr , status , error );
+        }
+    });
+
+    /*
+    var form_data = new FormData(); 
+    for (var i=0;i<elementlist.length;i++)
+    {
+      form_data.append('file', elementlist[i].id);
+    }
+
+    alert(JSON.stringify(elementlist));
+    $.ajax({
+      type: 'POST',
+      url: 'zipdownload.php',
+      contentType: false,
+      processData: false,
+      data: { file : elementlist},
+      success:function(va) {
+        console.log(va);
+      }
+    });*/
   }
 
 
@@ -274,6 +347,106 @@ function download_file()
       }
     }
   }, 4000); 
-  
+
 }
 
+//휴지통 비우기
+function trash_clear()
+{
+  var confirm_value = confirm("휴지통을 비우시겠습니까?");
+
+  if( confirm_value == true )
+  {
+    $.ajax({
+      url: 'remove_file.php?mode=clear'
+    }).done(function(){
+      window.location.reload();
+    });
+  }
+}
+
+//알림 확인 버튼
+function msg_view()
+{
+  if($(".msgmenu").css("display") == 'none')
+  {
+    $(".msgmenu").show();
+  }
+  else
+  {
+    $(".msgmenu").hide();
+  }
+}
+
+//전체 알림 삭제
+function remove_msg_all(){
+  var confirm_value = confirm("전체 알림을 삭제합니다.");
+
+  if( confirm_value == true )
+  {
+    $.ajax({
+      url: 'process.php?mode=msg_all_clear'
+    }).done(function(){
+      window.location.reload();
+    });
+  }
+}
+
+//읽은 알림 삭제
+function remove_msg_read(){
+  var confirm_value = confirm("읽은 알림을 삭제합니다.");
+
+  if( confirm_value == true )
+  {
+    $.ajax({
+      url: 'process.php?mode=msg_read_clear'
+    }).done(function(){
+      window.location.reload();
+    });
+  }
+}
+
+//파일 공유
+function share_file(){
+  var popupWidth = 400;
+  var popupHeight = 200;
+  var popupX = (window.screen.width / 2) - (popupWidth / 2);
+  var popupY= (window.screen.height / 2) - (popupHeight / 2);
+  window.open('share_file.html', '파일공유', 'status=no, height='+popupHeight+',width='+popupWidth+',left='+popupX+',top='+ popupY);
+}
+
+//파일공유 알림 클릭
+function join_share(num,list){
+  var confirm_value = confirm("해당 공유 폴더에 참여하시겠습니까?");
+
+  if( confirm_value == true )
+  {
+    $.ajax({
+      type: 'POST',
+      url: 'process.php?mode=share_ok',
+      data: {'pk_num' : num , 'user_list' : list}
+    }).done(function(){
+      window.location.reload();
+    });
+  }
+  else
+  {
+    $.ajax({
+      type: 'POST',
+      url: 'process.php?mode=share_no',
+      data: {'pk_num' : num}
+    }).done(function(){
+      window.location.reload();
+    });
+  }
+}
+
+//알림메세지 페이드효과
+function fadeIO(){
+  $('.msgcount').fadeOut(1000, function(){
+    $('.msgcount').fadeIn(1000,function()
+    {
+      fadeIO();
+    });
+  });
+}

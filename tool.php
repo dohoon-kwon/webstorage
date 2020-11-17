@@ -1,6 +1,7 @@
 <?php
     //정보불러오기
-    $dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234',array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+    require_once 'lib/dbinfo.php';
+    
     if(!empty($_POST['option'])){
         $querysample = 'SELECT * FROM USERINFO WHERE '.$_POST['option'].'="'.$_POST['value'].'"';
         $stmt = $dbh->prepare($querysample);
@@ -36,7 +37,7 @@
     <body>
         <nav>
             <ul>
-                <li><a class="idinfo"><?=$id?>님 환영합니다.</a></li>
+                <li class="logo"><img src='img/home_logo.png' onclick="location.href='upload.php'"></img></li>
                 <li><a class="logout" href="login.php">로그아웃</a></li>
             </ul>
             <ul class="top_menu">
