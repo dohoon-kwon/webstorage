@@ -1,5 +1,6 @@
 <?php
-    require_once 'lib/share_dbinfo.php';
+    include_once 'lib/share_dbinfo.php';
+    $path = "share/".$_SESSION['share_folder'];
 
 
     ini_set("display_errors", "1");

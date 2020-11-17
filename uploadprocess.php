@@ -1,5 +1,6 @@
 <?php
     include_once "lib/dbinfo.php";
+    $link = $id.'/'.$_SESSION['link'];
 
     //필터
     ini_set("display_errors", "1");
