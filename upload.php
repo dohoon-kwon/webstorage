@@ -122,8 +122,8 @@
               </li>
 
               <li>
-                <input type="submit" value="설정">
-                <input type="button" value="취소" onclick="sort_file_cancle()">
+                <input type="submit" value="설정" class="search_condition_submit_btn">
+                <input type="button" value="취소" onclick="sort_file_cancle()" class="search_condition_cancle_btn">
               </li>
 
               <input type="hidden" value="<?=$_GET['type']?>" name="type">
@@ -165,7 +165,7 @@
           <ul>
             <li class="mkdir_li_a"><a>폴더 명</a></li>
             <li><input type="text" id="dirname" name="dirname" required></li>
-            <input type="submit" value="생성"><input type="button" onclick="mkdir_cancle()" value="취소">
+            <li><input type="submit" value="생성" class="mkdir_submit_btn"><input type="button" onclick="mkdir_cancle()" value="취소" class="mkdir_cancle_btn"></li>
           </ul>
         </form>
       </ul>

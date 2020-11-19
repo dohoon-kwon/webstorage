@@ -31,7 +31,7 @@
         <title>홈페이지 관리</title>
         <link rel="stylesheet" href="css/default.css">
         <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/tool.css?ver=1">
+        <link rel="stylesheet" href="css/tool.css">
     </head>
     
     <body>
