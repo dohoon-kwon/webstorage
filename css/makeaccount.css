@@ -1,8 +1,10 @@
-body {
+body 
+{
     padding: 50px;
 }
 
-form {
+form 
+{
     position: absolute;
     top: 30%;
     left: 42%;
@@ -12,11 +14,13 @@ form {
     margin-top: -80px;
 }
 
-.tel{
+.tel
+{
     position: fixed;
 }
 
-input[type="submit"]{
+input[type="submit"]
+{
     background-color: cornflowerblue;
     border: 0px;
     color: white;
@@ -25,11 +29,14 @@ input[type="submit"]{
     width: 100%;
     cursor: pointer;
 }
-input[type="submit"]:hover{
+
+input[type="submit"]:hover
+{
     background-color: turquoise;
 }
 
-h1{
+h1
+{
     font-size: 25px;
     margin: 25px 0px;
 }

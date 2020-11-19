@@ -1,8 +1,11 @@
-body{
+body
+{
     margin: 0;
     overflow: hidden;
 }
-.top_menu{
+
+.top_menu
+{
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -11,20 +14,27 @@ body{
     background-color: cornflowerblue;
     list-style-type: none;
 }
-.top_menu_item{
+
+.top_menu_item
+{
     padding: 15px;
     cursor: pointer;
 }
-.top_menu_item a{
+
+.top_menu_item a
+{
     text-align: center;
     text-decoration: none;
     color: white;
 }
-.top_menu_item:hover{
+
+.top_menu_item:hover
+{
     background-color: turquoise;
 }
 
-.logout{
+.logout
+{
     color: white;
     padding: 10px 15px;
     position: relative;
@@ -35,13 +45,16 @@ body{
     background-color: cornflowerblue;
     margin: 3px;
 }
-.logout:hover{
+
+.logout:hover
+{
     background-color: turquoise;
 }
-.idinfo{
-    display: flex;
+
+.idinfo
+{
     font-weight: bold;
     font-size: 16px;
-    text-align: center; 
+    text-align: center;
     margin: 2px 0px;
 }

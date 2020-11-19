@@ -1,4 +1,5 @@
-#drop_file_zone {
+#drop_file_zone 
+{
   padding: 8px;
   font-size: 18px;
   flex : 1 1 auto;
@@ -6,29 +7,38 @@
   overflow-x: hidden;
 }
 
-#drop_file_zone ul{
+#drop_file_zone ul
+{
   width: fit-content;
   margin: 15px 0px;
   display: flex;
   flex-wrap: wrap;
   user-select: none;
 }
-#drop_file_zone ul li{
+
+#drop_file_zone ul li
+{
   border: 1px solid lightgray;
   padding: 20px;
-  margin: 10px;
+  margin-left: 9px;
+  margin-right: 12px;
+  margin-bottom: 10px;
   cursor: pointer;
   width: 105px;
   height: 105px;
 }
-#drop_file_zone ul li:hover{
+
+#drop_file_zone ul li:hover
+{
   background-color: lightgray;
 }
 #drop_file_zone ul img{
   display: block;
   margin: 0px auto;
 }      
-#drop_file_zone ul li p{
+
+#drop_file_zone ul li p
+{
   text-align: center;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -36,16 +46,19 @@
   user-select: none;
 }
 
-#drag_upload_file #selectfile {
+#drag_upload_file #selectfile 
+{
   display: none;
 }
 
-#drop_file_zone{
+#drop_file_zone
+{
   height: 100%;
   width: 100%;
 }
 
-.leftmenu{
+.leftmenu
+{
   position: absolute;
   z-index: 120;
   top: 94px;
@@ -60,21 +73,25 @@
   box-sizing: border-box;
 }
 
-.leftmenu ul li{
+.drive_option
+{
   display: flex;
 }
 
-.leftmenu ul li a{
+.leftmenu ul li a
+{
   display: inline;
   margin: 6px;
   cursor: pointer;
 }
 
-.leftmenu ul li a:hover{
+.leftmenu ul li a:hover
+{
   color: turquoise;
 }
 
-.rightmenu{
+.rightmenu
+{
   display: flex;
   -moz-flex-direction: column;
   -ms-flex-direction: column;
@@ -91,31 +108,59 @@
 
 }
 
-.storage{
+.storage
+{
   height: 100%;
   overflow: scroll;
   overflow-x: hidden;
-  
 }
-.storage li{
+
+.storage li
+{
   cursor: pointer;
 }
 
-.userinfo{
-  border-bottom: 1px solid lightgrey;
-  padding: 12px 0px;
-  margin: 0px 0px 15px 0px;
+.userinfo
+{
+  margin-top: 3px;
+  text-align: center;
+  border-top: 1px solid lightgray;
+  padding-top: 8px;
 }
 
-.searchform{
+.login_info_div
+{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.mypage_info_div
+{
+  text-align: center;
+}
+
+.all_data_info
+{
+  border-bottom: 1px solid lightgrey;
+  text-align: right;
+  width: 100%;
+  padding-bottom: 8px;
+}
+
+.searchform
+{
   width: 100%;
   border-bottom: 1px solid lightgray;
 }
-.searchform ul{
+
+.searchform ul
+{
   display: flex;
   padding: 14px 0px 0px 17px;
 }
-.searchform ul li input[type="submit"]{
+
+.searchform ul li input[type="submit"]
+{
   background-color: cornflowerblue;
   color: white;
   border: none;
@@ -123,7 +168,9 @@
   padding: 0px 10px;
   cursor: pointer;
 }
-.searchform ul li input[type="button"]{
+
+.searchform ul li input[type="button"]
+{
   background-color: cornflowerblue;
   color: white;
   border: none;
@@ -134,34 +181,45 @@
   cursor: pointer;
   width: 80px;
 }
-.searchform ul li input[type="submit"]:hover{
-  background-color: turquoise;
-}
-.searchform ul li input[type="button"]:hover{
+
+.searchform ul li input[type="submit"]:hover
+{
   background-color: turquoise;
 }
 
-#file_list img{
+.searchform ul li input[type="button"]:hover
+{
+  background-color: turquoise;
+}
+
+#file_list img
+{
   max-width: 100%; 
   max-height: auto;
   overflow: hidden;
 }
 
-.link{
+.link
+{
   display: flex;
   border-bottom: 1px solid lightgray;
   padding: 5px;
 
 }
-.link a{
+
+.link a
+{
   cursor: pointer;
 }
-.link a:hover{
+
+.link a:hover
+{
   color: turquoise;
 }
 
 
-.selection {
+.selection 
+{
   list-style-type: none;
   position: absolute;
   border: 1px solid cornflowerblue;
@@ -169,16 +227,21 @@
   background-color: cornflowerblue;
   border-color: cornflowerblue;
 }
-.dropped {
+
+.dropped
+{
   background-color: cornflowerblue;
   border-color: cornflowerblue;
 }	
-.active {  
+
+.active 
+{  
   background-color: cornflowerblue;
   border-color: cornflowerblue;
 }
 
-.contextmenu {
+.contextmenu 
+{
   display: none;
   position: absolute;
   width: 200px;
@@ -194,13 +257,15 @@
   z-index: 999999;
 }
 
-.contextmenu li {
+.contextmenu li 
+{
   border-left: 3px solid transparent;
   transition: ease .2s;
   cursor: pointer;
 }
 
-.contextmenu li a {
+.contextmenu li a 
+{
   display: block;
   padding: 10px;
   color: black;
@@ -209,16 +274,19 @@
   cursor: pointer;
 }
 
-.contextmenu li:hover {
+.contextmenu li:hover 
+{
   background: cornflowerblue;
   border-left: 3px solid blue;
 }
 
-.contextmenu li:hover a {
+.contextmenu li:hover a 
+{
   color: #FFFFFF;
 }
 
-.imgview{
+.imgview
+{
   display: none;
   position: absolute;
   z-index: 999;
@@ -258,7 +326,7 @@
   margin: 0px 0px 5px;
 }
 
-.mkdir_from input[type="submit"]
+.mkdir_submit_btn
 {
     color: white;
     background: cornflowerblue;
@@ -270,7 +338,7 @@
     cursor: pointer;
 }
 
-.mkdir_from input[type="button"]
+.mkdir_cancle_btn
 {
     color: white;
     background: cornflowerblue;
@@ -297,42 +365,52 @@
     width: 98%;
 }
 
-.imgview a{
+.imgview a
+{
   cursor: pointer;
   right: 30px;
   font-size: 20px;
   position: absolute;
 }
-.imgview a:hover{
+
+.imgview a:hover
+{
   color:turquoise;
 }
-.imgview img{
+
+.imgview img
+{
   position: relative;
 }
-.imgview li{
+
+.imgview li
+{
   padding: 20px 0px 50px 0px;
 }
 
-#trash_empty{
+#trash_empty
+{
   color: lightgray;
   right: 0;
   position: absolute;
-  
 }
 
-.nav_right_menu{
+.nav_right_menu
+{
   float: right;
   width: 260px;
 }
 
-#bell_img{
+#bell_img
+{
   margin: 6px;
   cursor: pointer;
   position: relative;
   float: right;
 }
 
-.msgmenu {
+.msgmenu 
+{
   display: none;
   position: absolute;
   width: 100%;
@@ -348,22 +426,28 @@
   font-size: 30px;
   border: 2px solid lightgrey;
 }
-.msgmenu li{
+
+.msgmenu li
+{
   cursor: pointer;
 }
 
-.msgmenu li a{
+.msgmenu li a
+{
   padding: 0px 15px;
   text-align: center;
 }
 
-.msg_btn_left{
+.msg_btn_left
+{
   display: inline-block;
   border-bottom: 2px solid lightgray;
   border-right: 2px solid lightgray;
   background-color: cornflowerblue;
 }
-.msg_btn_left a{
+
+.msg_btn_left a
+{
   padding: 0px 15px;
   text-align: center;
   color: white;
@@ -373,16 +457,21 @@
   -webkit-user-select: none;
   user-select: none;
 }
-.msg_btn_left:hover{
+
+.msg_btn_left:hover
+{
   background-color:turquoise;
 }
 
-.msg_btn_right{
+.msg_btn_right
+{
   display: inline-block;
   border-bottom: 2px solid lightgray;
   background-color: cornflowerblue;
 }
-.msg_btn_right a{
+
+.msg_btn_right a
+{
   padding: 0px 15px;
   text-align: center;
   color: white;
@@ -392,22 +481,29 @@
   -webkit-user-select: none;
   user-select: none;
 }
-.msg_btn_right:hover{
+
+.msg_btn_right:hover
+{
   background-color:turquoise;
 }
 
-.msg_content:hover{
+.msg_content:hover
+{
   background-color: turquoise;
 }
 
-.msg_content_read{
+.msg_content_read
+{
   background-color: lightgrey;
 }
-.msg_content_read:hover{
+
+.msg_content_read:hover
+{
   background-color: turquoise;
 }
 
-.msgcount{
+.msgcount
+{
   text-align: center;
   margin: 13px 20px;
   color: red;
@@ -444,4 +540,42 @@ a, input, h1, img
   display: block;
   margin: auto;
   margin-top: 20%;
+}
+
+.search_condition
+{
+  border: 1px solid cornflowerblue;
+  border-bottom: none;
+  width: 313px;
+  position: absolute;
+  margin-left: 17px;
+  margin-top: 0%;
+  background: white;
+  display: none;
+}
+
+.search_condition ul
+{
+  display: contents;
+}
+
+.search_condition ul li
+{
+  text-align: center;
+  border-bottom: 1px solid cornflowerblue;
+  padding: 10px;
+}
+
+
+.search_condition_submit_btn, .search_condition_cancle_btn
+{
+  background-color: cornflowerblue;
+  color: white;
+  border: none;
+  height: 40px;
+  padding: 0px 10px;
+  margin-right: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  width: 80px;
 }

@@ -1,8 +1,11 @@
-.info {
+.info 
+{
     border-bottom: 1px solid cornflowerblue;
     display: flow-root;
 }
-.info input[type="button"]{
+
+.info input[type="button"]
+{
     margin: 10px;
     background-color: cornflowerblue;
     color: white;
@@ -11,19 +14,26 @@
     float: right;
     cursor: pointer;
 }
-.info input[type="button"]:hover{
+
+.info input[type="button"]:hover
+{
     background-color: turquoise;
 }
 
-.search {
+.search 
+{
     border-bottom: 1px solid cornflowerblue;
     display: flow-root;
 }
-.search form{
+
+.search form
+{
     float: right;
     margin: 10px;
 }
-.search form input[type="submit"]{
+
+.search form input[type="submit"]
+{
     margin-left: 10px;
     background-color: cornflowerblue;
     color: white;
@@ -32,6 +42,8 @@
     float: right;
     cursor: pointer;
 }
-.search form input[type="submit"]:hover{
+
+.search form input[type="submit"]:hover
+{
     background-color: turquoise;
 }

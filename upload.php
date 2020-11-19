@@ -67,20 +67,20 @@
     <div class="leftmenu">
         <ul>
             <?php
-              include 'leftmenu.php';
+              include 'lib/leftmenu.php';
             ?>
 
-            <li><h1>드라이브</h1></li>
+            <li class="drive_option"><h1>드라이브</h1></li>
 
-            <li><a onclick="location.href='upload.php'">모든 파일</a></li>
+            <li class="drive_option"><a onclick="location.href='upload.php'">모든 파일</a></li>
 
-            <li><a onclick="location.href='?type=photo'">사진</a></li>
+            <li class="drive_option"><a onclick="location.href='?type=photo'">사진</a></li>
 
-            <li><a onclick="location.href='?type=video'">동영상</a></li>
+            <li class="drive_option"><a onclick="location.href='?type=video'">동영상</a></li>
 
-            <li><a onclick="location.href='?type=document'">문서</a></li>
+            <li class="drive_option"><a onclick="location.href='?type=document'">문서</a></li>
 
-            <li><a onclick="location.href='?type=trash'">휴지통</a><a id="trash_empty" onclick="trash_clear()">비우기</a></li>
+            <li class="drive_option"><a onclick="location.href='?type=trash'">휴지통</a><a id="trash_empty" onclick="trash_clear()">비우기</a></li>
         </ul>
     </div>
 
@@ -101,7 +101,36 @@
             include "lib/divmenu.php";
           ?>
         </ul>
+        
       </form>
+
+      
+      <!--파일정렬-->
+      <form method="POST" action="./process.php?mode=search_condition">
+          <div class="search_condition">
+            <ul>
+              <li><a>파일 정렬 조건</a></li>
+
+              <li>
+                <input type="radio" name="sort_value" value="FILE_NAME" checked="checked"/><a>이름</a>
+                <input type="radio" name="sort_value" value="FILE_SIZE"/><a>파일크기</a>
+              </li>
+
+              <li>
+                <input type="radio" name="sort_way" value="DESC" checked="checked"/><a>내림차순</a>
+                <input type="radio" name="sort_way" value="ASC"/><a>오름차순</a>
+              </li>
+
+              <li>
+                <input type="submit" value="설정" class="search_condition_submit_btn">
+                <input type="button" value="취소" onclick="sort_file_cancle()" class="search_condition_cancle_btn">
+              </li>
+
+              <input type="hidden" value="<?=$_GET['type']?>" name="type">
+              <input type="hidden" value="<?=$_GET['value']?>" name="value">
+            </ul>
+          </div>
+        </form>
 
 
       <!--디렉토리 경로-->
@@ -129,12 +158,14 @@
         <li><a onclick="img_hide()">닫기</a></li>
       </ul>
 
+
+      <!--폴더 생성-->
       <ul class="mkdirview">
         <form action="./process.php?mode=mkdir" method="POST" class="mkdir_from">
           <ul>
             <li class="mkdir_li_a"><a>폴더 명</a></li>
             <li><input type="text" id="dirname" name="dirname" required></li>
-            <input type="submit" value="생성"><input type="button" onclick="mkdir_cancle()" value="취소">
+            <li><input type="submit" value="생성" class="mkdir_submit_btn"><input type="button" onclick="mkdir_cancle()" value="취소" class="mkdir_cancle_btn"></li>
           </ul>
         </form>
       </ul>

@@ -1,7 +1,11 @@
 @charset "utf-8";
-body { padding: 50px;}
+body 
+{ 
+    padding: 50px;
+}
 
-form {
+form 
+{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -10,36 +14,94 @@ form {
     margin-left: -150px;
     margin-top: -80px;
 }
-.login .top { 
+
+.login .top 
+{ 
     position: relative;
-     width: 329px;
+    width: 329px;
 }
-.login .top li { 
+
+.login .top li 
+{ 
     padding: 0 0 9px;
 }
-.login .top li label {
-     display:inline-block;
-     width: 63px;
-      font-size: 12px;
-       color: #464646;
-        font-family: dotum; 
-        font-weight: bold;
-    }
-.login .top li input[type="text"], .login .top li input[type="password"]{
-     width: 144px;
-      height: 29px;
-       padding: 0;
-        border-color: #d9d9d9;
-    }
-.login .top li.btn { position: absolute; right: 0; top: 0;}
-.login .top li input[type="submit"] { display: block;width:109px; height:67px;
-     background: cornflowerblue; 
-     border: 1px solid white; font-size: 17px; color: #fff; text-align: center; line-height: 69px; font-weight: bold;}
-.login .top li.save { padding: 0 0 0 59px;}
-.login .top li.save label { width: auto;font-weight: normal;}
-.login .btm { padding: 24px 0 0 59px;}
-.login .btm li { padding: 0 0 0 9px; background: url(../images/bu_list.gif) no-repeat left; color:#383d41; font-size: 12px; font-family: dotum; line-height: 24px;}
-.login .btm li a { margin: 0 0 0 10px; font-size: 12px; font-family: dotum; font-weight: bold; color: cornflowerblue; text-decoration: underline;}
-.login .top li input[type="submit"]:hover{
+
+.login .top li label 
+{
+    display:inline-block;
+    width: 63px;
+    font-size: 12px;
+    color: #464646;
+    font-family: dotum; 
+    font-weight: bold;
+}
+
+.login .top li input[type="text"], .login .top li input[type="password"]
+{
+    width: 144px;
+    height: 29px;
+    padding: 0;
+    border-color: #d9d9d9;
+}
+
+.login .top li.btn 
+{ 
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.login .top li input[type="submit"] 
+{ 
+    display: block;
+    width:109px;
+    height:67px;
+    background: cornflowerblue; 
+    border: 1px solid white;
+    font-size: 17px;
+    color: #fff;
+    text-align: center;
+    line-height: 69px;
+    font-weight: bold;
+}
+
+.login .top li.save 
+{ 
+    padding: 0 0 0 59px;
+}
+
+.login .top li.save label 
+{ 
+    width: auto;
+    font-weight: normal;
+}
+
+.login .btm 
+{ 
+    padding: 24px 0 0 59px;
+}
+
+.login .btm li 
+{ 
+    padding: 0 0 0 9px;
+    background: url(../images/bu_list.gif) no-repeat left;
+    color:#383d41;
+    font-size: 12px;
+    font-family: dotum;
+    line-height: 24px;
+}
+
+.login .btm li a 
+{ 
+    margin: 0 0 0 10px;
+    font-size: 12px;
+    font-family: dotum;
+    font-weight: bold;
+    color: cornflowerblue;
+    text-decoration: underline;
+}
+
+.login .top li input[type="submit"]:hover
+{
     cursor: pointer;
 }
