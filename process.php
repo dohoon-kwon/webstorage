@@ -301,6 +301,34 @@
 
             break;
 
+        case 'search_condition':
+            $type = $_POST['type'];
+            $value = $_POST['value'];
+            $sort_value = $_POST['sort_value'];
+            $sort_way = $_POST['sort_way'];
+            $link = "upload.php?sort=".$sort_value."&way=".$sort_way;
+
+            if($type !== null || $type !== '')
+            {
+                $link = $link."&type=".$type;
+
+                if($value !== null || $value !== '')
+                {
+                    $link = $link."&value=".$value;
+                }
+            }
+            else
+            {
+                if($value !== null || $value !== '')
+                {
+                    $link = $link."&value=".$value;
+                }
+            }
+
+            header("Location: $link");
+
+            break;
+
     }
     
     umask($oldumask);

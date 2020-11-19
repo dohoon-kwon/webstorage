@@ -101,7 +101,36 @@
             include "lib/divmenu.php";
           ?>
         </ul>
+        
       </form>
+
+      
+      <!--파일정렬-->
+      <form method="POST" action="./process.php?mode=search_condition">
+          <div class="search_condition">
+            <ul>
+              <li><a>파일 정렬 조건</a></li>
+
+              <li>
+                <input type="radio" name="sort_value" value="FILE_NAME" checked="checked"/><a>이름</a>
+                <input type="radio" name="sort_value" value="FILE_SIZE"/><a>파일크기</a>
+              </li>
+
+              <li>
+                <input type="radio" name="sort_way" value="DESC" checked="checked"/><a>내림차순</a>
+                <input type="radio" name="sort_way" value="ASC"/><a>오름차순</a>
+              </li>
+
+              <li>
+                <input type="submit" value="설정">
+                <input type="button" value="취소" onclick="sort_file_cancle()">
+              </li>
+
+              <input type="hidden" value="<?=$_GET['type']?>" name="type">
+              <input type="hidden" value="<?=$_GET['value']?>" name="value">
+            </ul>
+          </div>
+        </form>
 
 
       <!--디렉토리 경로-->
@@ -129,6 +158,8 @@
         <li><a onclick="img_hide()">닫기</a></li>
       </ul>
 
+
+      <!--폴더 생성-->
       <ul class="mkdirview">
         <form action="./process.php?mode=mkdir" method="POST" class="mkdir_from">
           <ul>

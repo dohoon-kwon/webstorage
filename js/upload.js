@@ -508,5 +508,19 @@ function zap_file(){
 //파일 정렬
 function sort_file()
 {
-  
+  $('.search_condition').show();
+}
+
+
+//정렬 설정 완료
+function sort_file_set()
+{
+  $('.search_condition').hide();
+}
+
+
+//정렬 설정 취소
+function sort_file_cancle()
+{
+  $('.search_condition').hide();
 }
