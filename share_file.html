@@ -8,12 +8,16 @@
   <body>
       <!--파일 공유-->
       <div>
-        <form action="./process.php?mode=share_file" method="POST">
-            <a>공유할 사람</a>
-            <input type="text" id="rev_user" name="rev_user">
-            <a>공유폴더 명</a>
-            <input type="text" id="pro_name" name="pro_name" maxlength="10">
-            <input type="submit" value="공유">
+        <form action="./process.php?mode=share_file" method="POST" class="share_mkdir">
+          <ul>
+            <li><a>공유할 사람</a></li>
+            <li><input type="text" id="rev_user" name="rev_user"></li>
+            
+            <li><a>공유폴더 명</a></li>
+            <li><input type="text" id="pro_name" name="pro_name" maxlength="10"></li>
+
+            <li><input type="submit" value="공유"></li>
+          </ul>
         </form>
       </div>
   </body>

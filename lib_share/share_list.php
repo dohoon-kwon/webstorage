@@ -15,9 +15,6 @@
             $newstmt->execute();
             $slist = $newstmt->fetch();
 
-            //echo "<li><a>".$slist["SHARE_NAME"]."</a></li>";
-            //echo "<li><a onclick='location.href=\"?type=$slist['SHARE_CODE']\"'>".$slist['SHARE_NAME']</a></li>"
-
             $link = "location.href='?f=".$slist["SHARE_CODE"]."'";
             
             echo "<li><a onclick=".$link.">".$slist["SHARE_NAME"]."</a></li>";

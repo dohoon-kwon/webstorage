@@ -3,5 +3,5 @@
     //세션
     session_start();
     $id = $_SESSION['id'];
-    $link = $id.'/'.$_SESSION['link'];
+    $path = "share/".$_SESSION['share_folder'];
 ?>

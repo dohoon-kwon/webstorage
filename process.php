@@ -145,10 +145,25 @@
             $stmt->bindParam(':thumbdir',$thumbdir);
             $stmt->execute();
             
-            echo  "<script type='text/javascript'>";
-            echo "opener.parent.location.reload();";
-            echo "window.close();";
-            echo "</script>";
+            if($_SESSION['link'] !== '' || $_SESSION['link'] !== null)
+            {
+                $header_link = 'upload.php?link='.$_SESSION['link'];
+            }
+            else
+            {
+                $header_link = 'upload.php';   
+            }
+            $thumbdir ='img/directory.png';
+
+            $stmt = $dbh->prepare("INSERT INTO DATAINFO VALUES (:tmp_name,:name,'dir',0,:path,:id,:thumbdir)");
+            $stmt->bindParam(':tmp_name',$tmp_name);
+            $stmt->bindParam(':name',$dirname);
+            $stmt->bindParam(':path',$link);
+            $stmt->bindParam(':id',$id);
+            $stmt->bindParam(':thumbdir',$thumbdir);
+            $stmt->execute();
+            
+            header("Location: $header_link");
             break;
 
         case 'share_file':
@@ -258,6 +273,43 @@
             $stmt->execute();
                 
             break;
+
+        case 'restore':
+            $element = $_POST['element'];
+
+            $restorestmt = $dbh->prepare("INSERT INTO DATAINFO SELECT * FROM TRASHINFO WHERE FILE_NAME = '".$element."'");
+            $restorestmt->execute();
+
+            $updatestmt = $dbh->prepare("UPDATE DATAINFO SET FILE_PATH=:path WHERE FILE_NAME = '".$element."'");
+            $updatestmt->bindParam(':path', $path);
+            $path = $id."/";
+            $updatestmt->execute();
+  
+            $stmt = $dbh->prepare("DELETE FROM TRASHINFO WHERE FILE_NAME ='".$element."'");
+            $stmt->execute();
+  
+            rename("userfile/".$id."trash/".$element, "userfile/".$id."/".$element);
+
+            break;
+
+
+        case 'filesearch':
+            $type = $_POST['typecode'];
+            $value = $_POST['value'];
+
+            if($type === '' || $type == null)
+            {
+                $result = "upload.php?value=".$value;
+            }
+            else
+            {
+                $result = "upload.php?type=".$type."&value=".$value;
+            }
+            
+            header("Location: $result");
+
+            break;
+
     }
     
     umask($oldumask);

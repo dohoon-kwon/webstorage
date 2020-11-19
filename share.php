@@ -4,11 +4,11 @@
     $id = $_SESSION['id'];
 
     //URL링크
-    if(!empty($_GET['link'])){
-      $_SESSION['link'] = $_GET['link'];
+    if(!empty($_GET['f'])){
+      $_SESSION['share_folder'] = $_GET['f'];
     }
     else{
-      $_SESSION['link'] = '';
+      $_SESSION['share_folder'] = '';
     }
 ?>
 
@@ -21,8 +21,8 @@
 
     <!--CSS-->
     <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/main.css?ab2">
-    <link rel="stylesheet" href="css/upload.css?cd7">
+    <link rel="stylesheet" href="css/main.css?cd9">
+    <link rel="stylesheet" href="css/upload.css?cd9">
 
     <!--드래그관련 자바스크립트-->
     <script src="//threedubmedia.com/inc/js/jquery-1.7.2.js"></script>
@@ -32,7 +32,7 @@
     <script src="//threedubmedia.com/inc/js/jquery.event.drop.live-2.2.js"></script>
 
     <!--기본 자바스크립트-->
-    <script type="text/javascript" src="js/upload.js?cd7"></script>
+    <script type="text/javascript" src="js/upload.js?cd9"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
@@ -73,7 +73,7 @@
             <li><h1>드라이브</h1></li>
             
             <?php
-              include "share_list.php";
+              include "lib_share/share_list.php";
             ?>
         </ul>
     </div>
@@ -90,8 +90,9 @@
         </ul>
 
         <ul>
-          <li><input type="button" onclick="share_file()"value="새 공유폴더"></li>
-          <li><input type="button" onClick="popup_open();" value="새 폴더"></li>
+          <?php
+            include "lib_share/share_divmenu.php";
+          ?>
         </ul>
       </form>
 
@@ -104,11 +105,11 @@
 
       <!--파일 리스트-->
       <nav class="storage">
-        <div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
+        <div id="drop_file_zone" ondrop="upload_share_file(event)" ondragover="return false">
             <div id="drag_upload_file">
               <ul id="file_list">
                 <?php
-                  include 'share_filelist.php';
+                  include 'lib_share/share_filelist.php';
                 ?>
               </ul>
             </div>
@@ -128,7 +129,6 @@
     <ul class="contextmenu">
       <li onclick="download_file()"><a>다운로드</a></li>
       <li onclick="remove_file()"><a>삭제</a></li>
-      <li onclick="share_file()"><a>공유하기</a></li>
     </ul>
 
   </body>
