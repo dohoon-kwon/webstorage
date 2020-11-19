@@ -1,15 +1,33 @@
-form {
+form 
+{
     position: absolute;
-    top: 40%;
-    left: 25%;
-
+    top: 30%;
+    left: 30%;
 }
-form input[type="submit"]{
+
+form input[type="submit"]
+{
     color: white;
     background: cornflowerblue;
     border: none;
     padding: 7px 8px;
+    margin: 10px 0px;
+    width: 100%;
+    cursor: pointer;
 }
+
+input[type="submit"]:hover
+{
+    background-color: turquoise;
+}
+
 form input[type="text"]{
     border: 1px solid cornflowerblue;
+}
+
+.share_mkdir
+{
+    position: absolute;
+    top: 25%;
+    left: 30%;
 }

@@ -4,9 +4,9 @@ body {
 
 form {
     position: absolute;
-    top: 35%;
+    top: 30%;
     left: 42%;
-    width: 300px;
+    width: 525px;
     height: 160px;
     margin-left: -150px;
     margin-top: -80px;
@@ -32,4 +32,14 @@ input[type="submit"]:hover{
 h1{
     font-size: 25px;
     margin: 25px 0px;
+}
+
+.pwinfo, .idinfo, .nameinfo
+{
+    width: 100%;
+}
+
+p
+{
+    margin: 15px 0px;
 }

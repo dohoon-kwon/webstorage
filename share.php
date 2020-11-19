@@ -90,8 +90,9 @@
         </ul>
 
         <ul>
-          <li><input type="button" onclick="share_file()"value="새 공유폴더"></li>
-          <li><input type="button" onClick="popup_open();" value="새 폴더"></li>
+          <?php
+            include "lib_share/share_divmenu.php";
+          ?>
         </ul>
       </form>
 

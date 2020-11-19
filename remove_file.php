@@ -157,5 +157,14 @@
           $stmt->execute();
 
         break;
+
+        case "zap":
+          $element = $_POST['element'];
+
+          $stmt = $dbh->prepare("DELETE FROM TRASHINFO WHERE FILE_NAME ='".$element."'");
+          $stmt->execute();
+
+          unlink("userfile/".$id."trash/".$element);
+        break;
     }    
 ?>

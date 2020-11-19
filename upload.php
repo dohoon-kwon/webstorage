@@ -21,8 +21,8 @@
 
     <!--CSS-->
     <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/main.css?ab2">
-    <link rel="stylesheet" href="css/upload.css?cd8">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/upload.css">
 
     <!--드래그관련 자바스크립트-->
     <script src="//threedubmedia.com/inc/js/jquery-1.7.2.js"></script>
@@ -32,7 +32,7 @@
     <script src="//threedubmedia.com/inc/js/jquery.event.drop.live-2.2.js"></script>
 
     <!--기본 자바스크립트-->
-    <script type="text/javascript" src="js/upload.js?ver1"></script>
+    <script type="text/javascript" src="js/upload.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
@@ -56,9 +56,9 @@
             </li>
         </ul>
         <ul class="top_menu">
-            <li class="top_menu_item" onclick="location.href='upload.php'"><a>파일 저장소</a></li>
-            <li class="top_menu_item" onclick="location.href='share.php'"><a>공유 저장소</a></li>
-            <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
+            <?php
+              include "lib/topmenu.php";
+            ?>
         </ul>
 
     </nav>
@@ -72,7 +72,7 @@
 
             <li><h1>드라이브</h1></li>
 
-            <li><a onclick="location.href='?type='">모든 파일</a></li>
+            <li><a onclick="location.href='upload.php'">모든 파일</a></li>
 
             <li><a onclick="location.href='?type=photo'">사진</a></li>
 
@@ -89,14 +89,17 @@
     <div class="rightmenu">
 
       <!--파일 제어 버튼-->
-      <form class="searchform" method="POST" action="">
+      <form class="searchform" method="POST" action="./process.php?mode=filesearch">
         <ul>
+          <input type="hidden" value="<?=$_GET['type']?>" name="typecode">
           <li><input type="text" placeholder="검색어" name="value"></li>
           <li><input type="submit" value="검색"></li>
         </ul>
 
         <ul>
-          <li><input type="button" onClick="popup_open();" value="새 폴더"></li>
+          <?php
+            include "lib/divmenu.php";
+          ?>
         </ul>
       </form>
 
@@ -126,6 +129,20 @@
         <li><a onclick="img_hide()">닫기</a></li>
       </ul>
 
+      <ul class="mkdirview">
+        <form action="./process.php?mode=mkdir" method="POST" class="mkdir_from">
+          <ul>
+            <li class="mkdir_li_a"><a>폴더 명</a></li>
+            <li><input type="text" id="dirname" name="dirname" required></li>
+            <input type="submit" value="생성"><input type="button" onclick="mkdir_cancle()" value="취소">
+          </ul>
+        </form>
+      </ul>
+    </div>
+
+    <!--로딩 화면-->
+    <div class="loading_div">
+      <img src='img/loading.gif' class="loading_img"></img>
     </div>
 
     

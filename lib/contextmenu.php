@@ -8,8 +8,7 @@
     }
     else
     {
-        echo "<li><a>복원</a></li>";
-        echo "<li><a>영구삭제</a></li>";
+        echo "<li><a onclick='restore_file()'>복원</a></li>";
+        echo "<li><a onclick='zap_file()'>영구삭제</a></li>";
     }
-    
 ?>
