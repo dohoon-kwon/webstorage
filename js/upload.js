@@ -524,3 +524,10 @@ function sort_file_cancle()
 {
   $('.search_condition').hide();
 }
+
+
+//마이페이지 열기
+function mypage_open()
+{
+  confirm("마이페이지 기능 추가예정");
+}

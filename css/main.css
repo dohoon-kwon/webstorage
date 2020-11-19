@@ -39,9 +39,8 @@ body{
     background-color: turquoise;
 }
 .idinfo{
-    display: flex;
     font-weight: bold;
     font-size: 16px;
-    text-align: center; 
+    text-align: center;
     margin: 2px 0px;
 }

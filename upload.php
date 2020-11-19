@@ -67,20 +67,20 @@
     <div class="leftmenu">
         <ul>
             <?php
-              include 'leftmenu.php';
+              include 'lib/leftmenu.php';
             ?>
 
-            <li><h1>드라이브</h1></li>
+            <li class="drive_option"><h1>드라이브</h1></li>
 
-            <li><a onclick="location.href='upload.php'">모든 파일</a></li>
+            <li class="drive_option"><a onclick="location.href='upload.php'">모든 파일</a></li>
 
-            <li><a onclick="location.href='?type=photo'">사진</a></li>
+            <li class="drive_option"><a onclick="location.href='?type=photo'">사진</a></li>
 
-            <li><a onclick="location.href='?type=video'">동영상</a></li>
+            <li class="drive_option"><a onclick="location.href='?type=video'">동영상</a></li>
 
-            <li><a onclick="location.href='?type=document'">문서</a></li>
+            <li class="drive_option"><a onclick="location.href='?type=document'">문서</a></li>
 
-            <li><a onclick="location.href='?type=trash'">휴지통</a><a id="trash_empty" onclick="trash_clear()">비우기</a></li>
+            <li class="drive_option"><a onclick="location.href='?type=trash'">휴지통</a><a id="trash_empty" onclick="trash_clear()">비우기</a></li>
         </ul>
     </div>
 

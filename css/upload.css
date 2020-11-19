@@ -62,11 +62,13 @@
   box-sizing: border-box;
 }
 
-.leftmenu ul li{
+.drive_option
+{
   display: flex;
 }
 
-.leftmenu ul li a{
+.leftmenu ul li a
+{
   display: inline;
   margin: 6px;
   cursor: pointer;
@@ -93,20 +95,43 @@
 
 }
 
-.storage{
+.storage
+{
   height: 100%;
   overflow: scroll;
   overflow-x: hidden;
-  
 }
-.storage li{
+
+.storage li
+{
   cursor: pointer;
 }
 
-.userinfo{
+.userinfo
+{
+  margin-top: 3px;
+  text-align: center;
+  border-top: 1px solid lightgray;
+  padding-top: 8px;
+}
+
+.login_info_div
+{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.mypage_info_div
+{
+  text-align: center;
+}
+
+.all_data_info
+{
   border-bottom: 1px solid lightgrey;
-  padding: 12px 0px;
-  margin: 0px 0px 15px 0px;
+  text-align: right;
+  width: 100%;
+  padding-bottom: 8px;
 }
 
 .searchform{
