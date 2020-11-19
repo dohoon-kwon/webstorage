@@ -13,6 +13,9 @@
             
             rename("/home/samba/userfile/".$id."/".$link."/".$element, "/home/samba/userfile/".$id."trash/".$element);
 
+            $stmt = $dbh->prepare("DELETE FROM DATAINFO WHERE FILE_NAME ='".$element."'");
+            $stmt->execute();
+
         break;
 
         case "clear":
@@ -83,9 +86,6 @@
         break;
     }
     
-    rename("/home/samba/userfile/".$id."/".$link."/".$element, "/home/samba/userfile/".$id."trash/".$element);
 
-    $stmt = $dbh->prepare("DELETE FROM DATAINFO WHERE FILE_NAME ='".$element."'");
-    $stmt->execute();
     
 ?>

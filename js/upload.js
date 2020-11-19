@@ -12,7 +12,7 @@ function ajax_file_upload(file_obj) {
     
     for (var i=0;i<file_obj.length;i++)
     {
-      form_data.append('file', file_obj[i]);
+      form_data.append('file'+i, file_obj[i]);
     }                 
 
     $.ajax({
@@ -21,10 +21,9 @@ function ajax_file_upload(file_obj) {
       contentType: false,
       processData: false,
       data: form_data,
-      success:function(a) {
-        alert(a);
+      success:function() {
         $('#selectfile').val('');
-      window.location.reload();
+        window.location.reload();
       }
     });
   }
@@ -114,9 +113,7 @@ function remove_file(){
       window.location.reload();
     });
   }
-
 }
-
 
 //드래그
 jQuery(function($){
@@ -236,7 +233,6 @@ $(document).ready(function(){
   });
 });
 
-
 //우클릭으로 파일 다운로드
 function download_file()
 {
@@ -255,47 +251,22 @@ function download_file()
 
       document.body.appendChild(aIframe);
     }
-
   }
   else  //선택파일이 5개가넘으면 압축해서 다운
-  {
-    var dataObject = new Object();
-    dataObject['name'] = 'ari';
-    dataObject['email'] = 'ari@email.com';
-    dataObject['phone'] = '010-1234-5678';
-    dataObject = JSON.stringify( dataObject );
+  { 
+    
+    var filelist=[];
 
-    $.ajax({
-        type : 'POST',
-        url : 'zipdownload.php',
-        cache : false,
-        data : { dataObject: dataObject },
-        success : function( data ){
-            console.log( data );
-        },
-        error : function( jqxhr , status , error ){
-            // console.log( jqxhr , status , error );
-        }
-    });
-
-    /*
-    var form_data = new FormData(); 
     for (var i=0;i<elementlist.length;i++)
     {
-      form_data.append('file', elementlist[i].id);
-    }
+      filelist[i]= elementlist[i].id;
+    } 
 
-    alert(JSON.stringify(elementlist));
-    $.ajax({
-      type: 'POST',
-      url: 'zipdownload.php',
-      contentType: false,
-      processData: false,
-      data: { file : elementlist},
-      success:function(va) {
-        console.log(va);
-      }
-    });*/
+    var aIframe = document.createElement("iframe");
+    aIframe.style.display='none';
+    aIframe.src = "lib/zipdownload.php?filelist="+JSON.stringify(filelist);
+    document.body.appendChild(aIframe);
+    
   }
 
 

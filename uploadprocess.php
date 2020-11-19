@@ -1,32 +1,35 @@
 <?php
     require_once 'lib/dbinfo.php';
-
+    $link=$id.'/'.$_SESSION['link'];
     ini_set("display_errors", "1");
     $img_filter = array("gif", "png", "jpg", "jpeg", "bmp", "GIF", "PNG", "JPG", "JPEG", "BMP");
     $video_filter = array("ASF", "AVI", "BIK", "FLV", "MKV", "MOV", "MP4", "MPEG", "Ogg", "SKM", "TS", "WebM", "WMV", "asf", "avi", "bik", "flv", "mkv", "mov", "mp4", "mpeg", "ogg", "skm", "ts", "webm", "wmv");
    
+    
+
    
-    $name=$_FILES['file']['name'];
-    $ext =pathinfo($name, PATHINFO_EXTENSION);
-    $tmp_name=uniqid().".".$ext;
-    $size=$_FILES['file']['size'];
+    for($i = 0; $i < count($_FILES); $i++){
 
-    $uploaddir = "/home/samba/userfile/".$link."/";
-    $uploadfile = $uploaddir.($tmp_name);
-    $thumbdir="userfile/thumbnail/".$id."/". $tmp_name.".jpg";
+        $name=$_FILES['file'.$i]['name'];
+        $ext =pathinfo($name, PATHINFO_EXTENSION);
+        $tmp_name=uniqid().".".$ext;
+        $size=$_FILES['file'.$i]['size'];
 
-    $stmt = $dbh->prepare("INSERT INTO DATAINFO VALUES (:tmp_name,:name,:ext,:size,:path,:id,:thumbdir) ");
-    $stmt->bindParam(':tmp_name',$tmp_name);
-    $stmt->bindParam(':name',$name);
-    $stmt->bindParam(':ext',$ext);
-    $stmt->bindParam(':size',$size);
-    $stmt->bindParam(':path',$link);
-    $stmt->bindParam(':id',$id);
-    $stmt->bindParam(':thumbdir',$thumbdir);
+        $uploaddir = "/home/samba/userfile/".$link."/";
+        $uploadfile = $uploaddir.($tmp_name);
+        $thumbdir="userfile/thumbnail/".$id."/". $tmp_name.".jpg";
 
-   // for($i = 0; $i < count($_FILES['file']['name']); $i++){
 
-        if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
+        $stmt = $dbh->prepare("INSERT INTO DATAINFO VALUES (:tmp_name,:name,:ext,:size,:path,:id,:thumbdir) ");
+        $stmt->bindParam(':tmp_name',$tmp_name);
+        $stmt->bindParam(':name',$name);
+        $stmt->bindParam(':ext',$ext);
+        $stmt->bindParam(':size',$size);
+        $stmt->bindParam(':path',$link);
+        $stmt->bindParam(':id',$id);
+        $stmt->bindParam(':thumbdir',$thumbdir);
+
+        if (move_uploaded_file($_FILES['file'.$i]['tmp_name'], $uploadfile)) {
             //이미지 업로드할때
             if(in_array($ext,$img_filter))
             {
@@ -80,7 +83,7 @@
                     imagecopyresampled($canvas, $new_image,0,0,0,0,400,400,$info_image[0],$info_image[1]);
                     imagecopyresampled($canvas,  $bg,125,125,0,0,150,150,512,512);
                     imagegif($canvas,$thumbdir);
-                 }
+                }
             }
             else
             {   
@@ -102,14 +105,8 @@
                 }
             }
 
-            if($stmt->execute())
-            {
-                echo "업로드 성공";
-            }
-            else
-                echo $link;
-        }
-    
-   // }  
+            $stmt->execute();
+        } 
+   }  
 ?>
 

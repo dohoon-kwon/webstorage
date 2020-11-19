@@ -1,5 +1,6 @@
 <?php
     require_once 'dbinfo.php';
+    $link=$id.'/'.$_SESSION['link'];
 
     $img_filter = array("gif", "png", "jpg", "jpeg", "bmp", "GIF", "PNG", "JPG", "JPEG", "BMP");
     $doc_filter = array("ppt", "doc", "xls", "pptx", "docx", "pdf", "ai","psd", "txt", "hwp","xlsx");
