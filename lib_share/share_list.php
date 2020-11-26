@@ -17,7 +17,7 @@
 
             $link = "location.href='?f=".$slist["SHARE_CODE"]."'";
             
-            echo "<li><a onclick=".$link.">".$slist["SHARE_NAME"]."</a></li>";
+            echo "<li class='sharelist_li'><a onclick=".$link.">".$slist["SHARE_NAME"]."</a></li>";
         }
     }
 ?>

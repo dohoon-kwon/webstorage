@@ -4,11 +4,22 @@
     $id = $_SESSION['id'];
 
     //URL링크
-    if(!empty($_GET['f'])){
+    if(!empty($_GET['f']))
+    {
       $_SESSION['share_folder'] = $_GET['f'];
     }
-    else{
+    else
+    {
       $_SESSION['share_folder'] = '';
+    }
+
+    //URL링크
+    if(!empty($_GET['link']))
+    {
+      $_SESSION['link'] = $_GET['link'];
+    }
+    else{
+      $_SESSION['link'] = '';
     }
 ?>
 
@@ -17,7 +28,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>공유 폴더</title>
+    <title>파일 저장소</title>
 
     <!--CSS-->
     <link rel="stylesheet" href="css/default.css">
@@ -56,9 +67,9 @@
             </li>
         </ul>
         <ul class="top_menu">
-            <li class="top_menu_item" onclick="location.href='upload.php'"><a>파일 저장소</a></li>
-            <li class="top_menu_item" onclick="location.href='share.php'"><a>공유 저장소</a></li>
-            <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
+            <?php
+              include "lib/topmenu.php";
+            ?>
         </ul>
 
     </nav>
@@ -66,15 +77,15 @@
     <!--좌측 DIV-->
     <div class="leftmenu">
         <ul>
-            <?php
-              include 'leftmenu.php';
-            ?>
+          <?php
+            include 'lib_share/leftmenu.php';
+          ?>
 
-            <li><h1>드라이브</h1></li>
-            
-            <?php
-              include "lib_share/share_list.php";
-            ?>
+          <li><h1>드라이브</h1></li>
+          
+          <?php
+            include "lib_share/share_list.php";
+          ?>
         </ul>
     </div>
 
@@ -99,7 +110,7 @@
 
       <!--디렉토리 경로-->
       <?php
-        include 'link.php';
+        include 'lib_share/share_link.php';
       ?>
       
 
@@ -122,6 +133,23 @@
         <li><a onclick="img_hide()">닫기</a></li>
       </ul>
 
+
+      <!--폴더 생성-->
+      <ul class="mkdirview">
+        <form action="./process.php?mode=share_mkdir" method="POST" class="mkdir_from">
+          <ul>
+            <li class="mkdir_li_a"><a>폴더 명</a></li>
+            <li><input type="text" id="dirname" name="dirname" required></li>
+            <li><input type="submit" value="생성" class="mkdir_submit_btn"><input type="button" onclick="mkdir_cancle()" value="취소" class="mkdir_cancle_btn"></li>
+          </ul>
+        </form>
+      </ul>
+      
+    </div>
+
+    <!--로딩 화면-->
+    <div class="loading_div">
+      <img src='img/loading.gif' class="loading_img"></img>
     </div>
 
     

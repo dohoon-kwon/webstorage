@@ -166,6 +166,38 @@
             header("Location: $header_link");
             break;
 
+        case 'share_mkdir':
+            $dirname = $_POST['dirname'];
+            $id = $_SESSION['id'];
+            $link = $_SESSION['link'];
+            $tmp_name = uniqid();
+
+            if($link === '' || $link == null)
+            {
+                $path = "share/".$_SESSION['share_folder'];
+                mkdir("/home/samba/userfile/$path/$tmp_name", 0777, true);
+                $header_link = 'share.php?f='.$_SESSION['share_folder'];
+            }
+            else
+            {
+                $path = "share/".$_SESSION['share_folder']."/".$link;
+                mkdir("/home/samba/userfile/$path/$link/$tmp_name", 0777, true);
+                $header_link = 'share.php?f='.$_SESSION['share_folder'].'&link='.$_SESSION['link'];
+            }
+
+            $thumbdir ='img/directory.png';
+
+            $stmt = $dbh->prepare("INSERT INTO DATAINFO VALUES (:tmp_name,:name,'dir',0,:path,:id,:thumbdir)");
+            $stmt->bindParam(':tmp_name',$tmp_name);
+            $stmt->bindParam(':name',$dirname);
+            $stmt->bindParam(':path',$path);
+            $stmt->bindParam(':id',$id);
+            $stmt->bindParam(':thumbdir',$thumbdir);
+            $stmt->execute();
+            
+            header("Location: $header_link");
+            break;
+
         case 'share_file':
             $stmt = $dbh->prepare("INSERT INTO MSGINFO (MSG_TIME, MSG_REC_USER, MSG_SEND_USER, MSG_CONTENT, USER_LIST, READ_BOOL) VALUES (:msg_time, :rec_user, :send_user, :content, :user_list, :bool)");
 
@@ -196,6 +228,7 @@
             $slist->execute();
 
             mkdir("/home/samba/userfile/share/$share_code", 0777, true);
+            mkdir("/home/samba/userfile/thumbnail/$share_code" , 0777, true);
 
             msgcount_check();
 

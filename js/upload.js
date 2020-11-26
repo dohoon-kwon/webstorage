@@ -57,7 +57,7 @@ function ajax_share_file_upload(file_obj) {
     }
     
     $('.loading_div').show();  
-
+    
     $.ajax({
       type: 'POST',
       url: 'share_uploadprocess.php',

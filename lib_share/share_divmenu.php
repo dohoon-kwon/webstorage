@@ -3,7 +3,7 @@
 
     if($folder === '' || $folder == null)
     {
-        echo "<li><input type='button' onClick='share_file();' value='새 공유폴더'></li>";
+        echo "<li><input type='button' onClick='share_file();' value='새 공유'></li>";
     }
     else
     {
