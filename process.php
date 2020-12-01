@@ -199,6 +199,16 @@
             break;
 
         case 'share_file':
+            if($_POST['rev_user'] === $_SESSION['id'])
+            {
+                echo "<script>";
+                echo "alert('본인에게 공유할 수 없습니다.');";
+                echo "history.back()";
+                echo "</script>";
+
+                break;
+            }
+
             $stmt = $dbh->prepare("INSERT INTO MSGINFO (MSG_TIME, MSG_REC_USER, MSG_SEND_USER, MSG_CONTENT, USER_LIST, READ_BOOL) VALUES (:msg_time, :rec_user, :send_user, :content, :user_list, :bool)");
 
             $stmt->bindParam(':msg_time',$msg_time);
@@ -232,10 +242,8 @@
 
             msgcount_check();
 
-            echo  "<script type='text/javascript'>";
-            echo "opener.parent.location.reload();";
-            echo "window.close();";
-            echo "</script>";
+            header("Location: share.php");
+
             break;
 
         case 'share_ok':

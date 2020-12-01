@@ -49,6 +49,5 @@
 
     echo "<li class='login_info_div'><h1 class='idinfo'>".$_SESSION['id']."님</h1></li>";
     echo "<li class='mypage_info_div'><a onClick='mypage_open();'>마이페이지</a></li>";
-    echo "<li class='userinfo'><h1>넣을게 없는데</li>";
-    echo "<li class='all_data_info'><h1>뭐를 넣어야하나</h1></li>";
+    echo "<li class='share_tool_btn'><input type='button' value='공유폴더관리'></li>";
 ?>

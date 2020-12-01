@@ -136,11 +136,30 @@
 
       <!--폴더 생성-->
       <ul class="mkdirview">
-        <form action="./process.php?mode=share_mkdir" method="POST" class="mkdir_from">
+        <form action="./process.php?mode=share_mkdir" method="POST" class="mkdir_form">
           <ul>
             <li class="mkdir_li_a"><a>폴더 명</a></li>
             <li><input type="text" id="dirname" name="dirname" required></li>
             <li><input type="submit" value="생성" class="mkdir_submit_btn"><input type="button" onclick="mkdir_cancle()" value="취소" class="mkdir_cancle_btn"></li>
+          </ul>
+        </form>
+      </ul>
+
+
+      <!--공유-->
+      <ul class="share_mkdirview">
+        <form action="./process.php?mode=share_file" method="POST" class="share_mkdir">
+          <ul>
+            <li><a>공유할 사람</a></li>
+            <li><input type="text" id="rev_user" name="rev_user" required></li>
+            
+            <li><a>공유폴더 명</a></li>
+            <li><input type="text" id="pro_name" name="pro_name" maxlength="10" required></li>
+
+            <li>
+              <input type="submit" value="공유">
+              <input type="button" onclick="share_file_cancle()" value="취소">
+            </li>
           </ul>
         </form>
       </ul>

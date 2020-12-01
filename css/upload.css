@@ -179,7 +179,7 @@
   margin-right: 12px;
   margin-bottom: 10px;
   cursor: pointer;
-  width: 80px;
+  width: 90px;
 }
 
 .searchform ul li input[type="submit"]:hover
@@ -306,7 +306,18 @@
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.mkdir_from
+.share_mkdirview
+{
+  display: none;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  /*background-color: rgba(100, 149, 237, 0.9);*/
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.mkdir_form
 {
     position: absolute;
     width: 300px;
@@ -316,7 +327,60 @@
     left: 50%;
 }
 
-.mkdir_from a
+.share_mkdir
+{
+  position: absolute;
+  width: 300px;
+  top: 50%;
+  margin-top: -120px;
+  margin-left: -150px;
+  left: 50%;
+}
+
+.share_mkdir a
+{
+  color: white;
+}
+
+.share_mkdir input[type="submit"]
+{
+  color: white;
+  background: cornflowerblue;
+  border: none;
+  padding: 7px 8px;
+  margin-top: 10px;
+  margin-right: 13px;
+  width: 47%;
+  cursor: pointer;
+}
+
+.share_mkdir input[type="button"]
+{
+  color: white;
+  background: cornflowerblue;
+  border: none;
+  padding: 7px 8px;
+  margin-top: 10px;
+  width: 47%;
+  cursor: pointer;
+}
+
+.share_mkdir input[type="button"]:hover
+{
+  background-color: turquoise;
+}
+
+.share_mkdir input[type="submit"]:hover
+{
+    background-color: turquoise;
+}
+
+.share_mkdir input[type="text"]{
+    border: 1px solid cornflowerblue;
+    width: 98%;
+}
+
+.mkdir_form a
 {
   color: white;
 }
@@ -349,17 +413,17 @@
     cursor: pointer;
 }
 
-.mkdir_from input[type="submit"]:hover
+.mkdir_form input[type="submit"]:hover
 {
     background-color: turquoise;
 }
 
-.mkdir_from input[type="button"]:hover
+.mkdir_form input[type="button"]:hover
 {
     background-color: turquoise;
 }
 
-.mkdir_from input[type="text"]
+.mkdir_form input[type="text"]
 {
     border: 1px solid cornflowerblue;
     width: 98%;
@@ -583,4 +647,27 @@ a, input, h1, img
 .sharelist_li
 {
   margin-top: 10px;
+}
+
+.share_tool_btn
+{
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 9px;
+  border-top: 1px solid lightgray;
+  padding-top: 9px;
+  padding-left: 25px;
+}
+
+.share_tool_btn input
+{
+  background: cornflowerblue;
+  padding: 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.share_tool_btn input:hover
+{
+  background: turquoise;
 }

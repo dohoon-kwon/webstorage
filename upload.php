@@ -21,8 +21,8 @@
 
     <!--CSS-->
     <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/main.css?ab2">
-    <link rel="stylesheet" href="css/upload.css?cd8">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/upload.css">
 
     <!--드래그관련 자바스크립트-->
     <script src="//threedubmedia.com/inc/js/jquery-1.7.2.js"></script>
@@ -161,7 +161,7 @@
 
       <!--폴더 생성-->
       <ul class="mkdirview">
-        <form action="./process.php?mode=mkdir" method="POST" class="mkdir_from">
+        <form action="./process.php?mode=mkdir" method="POST" class="mkdir_form">
           <ul>
             <li class="mkdir_li_a"><a>폴더 명</a></li>
             <li><input type="text" id="dirname" name="dirname" required></li>

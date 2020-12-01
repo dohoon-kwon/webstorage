@@ -404,13 +404,15 @@ function remove_msg_read(){
 }
 
 
-//파일 공유 >> 수정해야댐
-function share_file(){
-  var popupWidth = 400;
-  var popupHeight = 200;
-  var popupX = (window.screen.width / 2) - (popupWidth / 2);
-  var popupY= (window.screen.height / 2) - (popupHeight / 2);
-  window.open('share_file.html', '파일공유', 'status=no, height='+popupHeight+',width='+popupWidth+',left='+popupX+',top='+ popupY);
+//파일 공유
+function share_file()
+{
+  $('.share_mkdirview').show();
+}
+
+function share_file_cancle()
+{
+  $('.share_mkdirview').hide();
 }
 
 //파일공유 알림 클릭
