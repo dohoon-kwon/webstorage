@@ -1,6 +1,15 @@
 <?php
     require_once 'lib/dbinfo.php';
-    $link=$id.'/'.$_SESSION['link'];
+
+    if($_SESSION['link']=="")
+    {
+        $link=$id;
+    }
+    else
+    {
+        $link = $id.'/'.$_SESSION['link'];
+    }
+
     ini_set("display_errors", "1");
     $img_filter = array("gif", "png", "jpg", "jpeg", "bmp", "GIF", "PNG", "JPG", "JPEG", "BMP");
     $video_filter = array("ASF", "AVI", "BIK", "FLV", "MKV", "MOV", "MP4", "MPEG", "Ogg", "SKM", "TS", "WebM", "WMV", "asf", "avi", "bik", "flv", "mkv", "mov", "mp4", "mpeg", "ogg", "skm", "ts", "webm", "wmv");

@@ -1,6 +1,15 @@
 <?php
     require_once 'lib/dbinfo.php';
-    $link = $id.'/'.$_SESSION['link'];
+
+    if($_SESSION['link']=="")
+    {
+        $link=$id;
+    }
+    else
+    {
+        $link = $id.'/'.$_SESSION['link'];
+    }
+    
     $search_value = $_GET['value'];
     $sort_option = $_GET['sort'];
     $sort_way = $_GET['way'];

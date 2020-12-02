@@ -126,7 +126,16 @@
         case 'mkdir':
             $dirname = $_POST['dirname'];
             $id = $_SESSION['id'];
-            $link = $id."/".$_SESSION['link'];
+
+            if($_SESSION['link']=="")
+            {
+                $link=$id;
+            }
+            else
+            {
+                $link = $id.'/'.$_SESSION['link'];
+            }
+            
             $tmp_name=uniqid();
 
             if($link === ''){
