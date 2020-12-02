@@ -332,7 +332,7 @@
 
             $updatestmt = $dbh->prepare("UPDATE DATAINFO SET FILE_PATH=:path WHERE FILE_NAME = '".$element."'");
             $updatestmt->bindParam(':path', $path);
-            $path = $id."/";
+            $path = $id;
             $updatestmt->execute();
   
             $stmt = $dbh->prepare("DELETE FROM TRASHINFO WHERE FILE_NAME ='".$element."'");
