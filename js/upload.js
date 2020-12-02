@@ -519,3 +519,28 @@ function mypage_open()
 {
   confirm("마이페이지 기능 추가예정");
 }
+
+
+//공유폴더 리스트 탈퇴
+function share_list_exit(fname)
+{
+  var confirm_value = confirm("해당 공유폴더를 삭제합니다.");
+
+  if( confirm_value == true )
+  {
+    $.ajax({
+      type: 'POST',
+      url: 'process.php?mode=share_exit',
+      data: {'fname' : fname}
+    }).done(function(){
+      window.location = 'share.php';
+    });
+  }
+}
+
+
+//공유폴더 새 초대
+function member_invite()
+{
+  alert("멤버초대");
+}

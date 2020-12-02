@@ -30,19 +30,11 @@
             }
             else if(in_array($row['FILE_EXTENSION'],$img_filter))
             {
-                echo "<li class='img drop' onclick=\"img_open('userfile/".$link."/".$row['FILE_NAME']."')\" id='".$row['FILE_NAME']."'><img src='".$row['FILE_THUM_PATH']."'</img><p>".$row['FILE_ORIGIN_NAME']."</p></li>";
-               // echo "<li class='img drop' onclick=\"img_open('$link/$file_item')\" id='$file_item'><img src='userfile/thumbnail/$id/$file_item'></img><p>$file_item</p></li>";
+                echo "<li class='img drop' onclick=\"img_open('userfile/".$path."/".$row['FILE_NAME']."')\" id='".$row['FILE_NAME']."'><img src='".$row['FILE_THUM_PATH']."'</img><p>".$row['FILE_ORIGIN_NAME']."</p></li>";
             }
             else if(in_array($row['FILE_EXTENSION'],$doc_filter))
             {
-                if($row['FILE_EXTENSION']=='pdf')
-                {
-                    //echo "<li class='doc drop' onclick=\"location.href='pdfview.php?link=$doc_link&name=$file_item'\" id='$file_item'><img src='img/doc_pdf.png'></img><p>".$file_item."</p></li>";
-                }
-                else
-                {
-                    echo "<li class='doc drop' id='".$row['FILE_NAME']."'><img src='".$row['FILE_THUM_PATH']."'</img><p>".$row['FILE_ORIGIN_NAME']."</p></li>";
-                }
+                echo "<li class='doc drop' id='".$row['FILE_NAME']."'><img src='".$row['FILE_THUM_PATH']."'</img><p>".$row['FILE_ORIGIN_NAME']."</p></li>";
             }
             else if ($row['FILE_EXTENSION']=='dir')
             {

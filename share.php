@@ -94,8 +94,10 @@
     <div class="rightmenu">
 
       <!--파일 제어 버튼-->
-      <form class="searchform" method="POST" action="">
+      <form class="searchform" method="POST" action="./process.php?mode=filesearch">
         <ul>
+          <input type="hidden" value="share" name="typecode">
+          <input type="hidden" value="<?=$_GET['f']?>" name="folder">
           <li><input type="text" placeholder="검색어" name="value"></li>
           <li><input type="submit" value="검색"></li>
         </ul>

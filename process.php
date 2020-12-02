@@ -342,6 +342,11 @@
             {
                 $result = "upload.php?value=".$value;
             }
+            else if($type === 'share')
+            {
+                $folder = $_POST['folder'];
+                $result = "share.php?f=".$folder."&type=".$type."&value=".$value;
+            }
             else
             {
                 $result = "upload.php?type=".$type."&value=".$value;
@@ -376,6 +381,27 @@
             }
 
             header("Location: $link");
+
+            break;
+
+        case 'share_exit':
+            $stmt = $dbh->prepare("SELECT * FROM SHAREINFO WHERE SHARE_CODE = :fname");
+
+            $stmt->bindParam(':fname',$fname);
+            $fname = $_POST['fname'];
+
+            $stmt->execute();
+
+            $row = $stmt->fetch();
+            $id = $_SESSION['id'];
+
+            $slist = $dbh->prepare("UPDATE SHAREINFO SET SHARE_USERS=:share_user WHERE SHARE_CODE=:fname");
+
+            $slist->bindParam(':share_user',$str);
+            $slist->bindParam(':fname',$fname);
+
+            $str = str_replace($id,'',$row['SHARE_USERS']);
+            $slist->execute();
 
             break;
 

@@ -8,6 +8,6 @@
     else
     {
         echo "<li><input type='button' onClick='mkdir_open();' value='새 폴더'></li>";
-        echo "<li><input type='button' onClick='member_list_open();' value='참여인원'></li>";
+        echo "<li><input type='button' onClick='member_invite();' value='초대하기'></li>";
     }
 ?>

@@ -16,8 +16,11 @@
             $slist = $newstmt->fetch();
 
             $link = "location.href='?f=".$slist["SHARE_CODE"]."'";
+            $var = 'share_list_exit("'.$slist["SHARE_CODE"].'")';
             
-            echo "<li class='sharelist_li'><a onclick=".$link.">".$slist["SHARE_NAME"]."</a></li>";
+            echo "<li class='sharelist_li'><a onclick=".$link.">".$slist["SHARE_NAME"].'</a>';
+            echo "<a id='share_exit_btn' onclick='".$var."'>X</a>";
+            echo "</li>";
         }
     }
 ?>

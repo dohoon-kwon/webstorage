@@ -671,3 +671,10 @@ a, input, h1, img
 {
   background: turquoise;
 }
+
+#share_exit_btn
+{
+  color: lightgray;
+  position: absolute;
+  right: 0;
+}
