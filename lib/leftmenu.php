@@ -48,7 +48,7 @@
     $result = 307200000 - $stat['size'];
 
     echo "<li class='login_info_div'><h1 class='idinfo'>".$_SESSION['id']."님</h1></li>";
-    echo "<li class='mypage_info_div'><a onClick='mypage_open();'>마이페이지</a></li>";
+    //echo "<li class='mypage_info_div'><a onClick='mypage_open();'>마이페이지</a></li>";
     echo "<li class='userinfo'><h1>[ 총 파일 용량 ]</h1></li>";
     echo "<li class='all_data_info'><h1>".attach($stat['size'])."</h1></li>";
 ?>

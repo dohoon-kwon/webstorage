@@ -130,8 +130,8 @@
 
 .login_info_div
 {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 21px;
+  margin-bottom: 21px;
 }
 
 .mypage_info_div
@@ -741,4 +741,47 @@ a, input, h1, img
   color: lightgray;
   position: absolute;
   right: 0;
+}
+
+.share_greeting
+{
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.share_greeting h1
+{
+  text-align: center;
+}
+
+.share_main_ul li input[type="button"] 
+{
+  background-color: cornflowerblue;
+  color: white;
+  border: none;
+  height: 40px;
+  padding: 0px 10px;
+  margin-right: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  width: 90px;
+}
+
+.share_main_ul li input[type="button"]:hover
+{
+  background-color: turquoise;
+}
+
+.share_main_ul
+{
+  width: 100%;
+  border-bottom: 1px solid lightgray;
+  padding: 14px 0px 0px 17px;
+}
+
+.share_main_ul li img
+{
+  margin-bottom: 6px;
 }

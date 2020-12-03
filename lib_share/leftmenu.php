@@ -48,6 +48,7 @@
     $result = 307200000 - $stat['size'];
 
     echo "<li class='login_info_div'><h1 class='idinfo'>".$_SESSION['id']."님</h1></li>";
-    echo "<li class='mypage_info_div'><a onClick='mypage_open();'>마이페이지</a></li>";
-    echo "<li class='share_tool_btn'><input type='button' value='공유폴더관리'></li>";
+    echo "<li class='share_greeting'><h1>공유폴더에 오신 것을</br>환영합니다.</h1></li>"
+    //echo "<li class='mypage_info_div'><a onClick='mypage_open();'>마이페이지</a></li>";
+    //cho "<li class='share_tool_btn'><input type='button' value='공유폴더관리'></li>";
 ?>

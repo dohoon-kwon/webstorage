@@ -94,20 +94,24 @@
     <div class="rightmenu">
 
       <!--파일 제어 버튼-->
-      <form class="searchform" method="POST" action="./process.php?mode=filesearch">
+      <!--<form class="searchform" method="POST" action="./process.php?mode=filesearch">
         <ul>
           <input type="hidden" value="share" name="typecode">
-          <input type="hidden" value="<?=$_GET['f']?>" name="folder">
+          <input type="hidden" value="<=$_GET['f']?>" name="folder">
           <li><input type="text" placeholder="검색어" name="value"></li>
           <li><input type="submit" value="검색"></li>
         </ul>
 
         <ul>
-          <?php
+          <php
             include "lib_share/share_divmenu.php";
-          ?>
+          >
         </ul>
-      </form>
+      </form>-->
+
+      <?php
+        include 'lib_share/rightdiv_file.php';
+      ?>
 
 
       <!--디렉토리 경로-->
@@ -116,18 +120,21 @@
       ?>
       
 
-      <!--파일 리스트-->
+      <!--파일 리스트
       <nav class="storage">
         <div id="drop_file_zone" ondrop="upload_share_file(event)" ondragover="return false">
             <div id="drag_upload_file">
               <ul id="file_list">
-                <?php
+                <php
                   include 'lib_share/share_filelist.php';
                 ?>
               </ul>
             </div>
         </div>
-      </nav>
+      </nav>-->
+      <?php
+        include 'lib_share/share_item_list.php';
+      ?>
 
       
       <!--사진 뷰어-->
