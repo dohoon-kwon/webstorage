@@ -26,15 +26,16 @@
     }
 
     //공유폴더 유저명 리턴하기
-    function user_list_check($num){
-        $dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-        $stmt = $dbh->prepare("SELECT * from SHAREINFO WHERE SHARE_NUM=:num");
-        $stmt->bindParam(':num',$num);
-        $stmt->execute();
-        $slist = $stmt->fetch();
+    //function user_list_check($code){
+    //    $dbh = new PDO('mysql:host=localhost;dbname=cloud', 'root', '1234', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+    //    $stmt = $dbh->prepare("SELECT * from SHAREINFO WHERE SHARE_CODE=:code");
+    //    $stmt->bindParam(':code',$code);
+    //    $stmt->execute();
+    //    $slist = $stmt->fetch();
 
-        return $slist['SHARE_USERS'];
-    }
+    //    return $slist['SHARE_USERS'];
+    //}
+
     
     switch($_GET['mode']){
 
@@ -218,21 +219,63 @@
                 break;
             }
 
-            $stmt = $dbh->prepare("INSERT INTO MSGINFO (MSG_TIME, MSG_REC_USER, MSG_SEND_USER, MSG_CONTENT, USER_LIST, READ_BOOL) VALUES (:msg_time, :rec_user, :send_user, :content, :user_list, :bool)");
+            $rec_user = $_POST['rev_user'];
+            $share_code = uniqid();
+            $share_name = $_POST['pro_name'];
+            $send_user = $_SESSION['id'];
+
+            //========================================
+            $msgstmt = $dbh->prepare("SELECT * FROM MSGINFO WHERE MSG_CONTENT = :share_name and MSG_REC_USER = :rec_user and MSG_SEND_USER = :send_user");
+
+            $msgstmt->bindParam(':share_name',$share_name);
+            $msgstmt->bindParam(':rec_user',$rec_user);
+            $msgstmt->bindParam(':send_user',$send_user);
+            $msgstmt->execute();
+
+            $row = $msgstmt->fetch();
+
+            if($row['MSG_REC_USER'] === $rec_user)
+            {
+                echo "<script>";
+                echo "alert('이미 보낸 초대입니다.');";
+                echo "history.back()";
+                echo "</script>";
+
+                break;
+            }
+
+            $msgstmt = $dbh->prepare("SELECT * FROM MSGINFO WHERE MSG_CONTENT = :share_name and MSG_SEND_USER = :send_user");
+
+            $msgstmt->bindParam(':share_name',$share_name);
+            $msgstmt->bindParam(':send_user',$send_user);
+            $msgstmt->execute();
+
+            $row = $msgstmt->fetch();
+
+            if($row['MSG_CONTENT'] === $share_name)
+            {
+                echo "<script>";
+                echo "alert('이미 존재하는 폴더명입니다.');";
+                echo "history.back()";
+                echo "</script>";
+
+                break;
+            }
+
+            //========================================
+            $stmt = $dbh->prepare("INSERT INTO MSGINFO (MSG_TIME, MSG_REC_USER, MSG_SEND_USER, MSG_CONTENT, MSG_SHARE_CODE, READ_BOOL) VALUES (:msg_time, :rec_user, :send_user, :content, :share_code, :bool)");
 
             $stmt->bindParam(':msg_time',$msg_time);
             $stmt->bindParam(':rec_user',$rec_user);
             $stmt->bindParam(':send_user',$send_user);
             $stmt->bindParam(':content',$content);
-            $stmt->bindParam(':user_list',$user_list);
+            $stmt->bindParam(':share_code',$share_code);
             $stmt->bindParam(':bool',$bool);
 
             $msg_time = date("Y-m-d H:i:s", time());
-            $rec_user = $_POST['rev_user'];
-            $send_user = $_SESSION['id'];
             $content = $_POST['pro_name'];
-            $user_list = $_SESSION['id'];
             $bool = 0;
+
             $stmt->execute();
 
             $slist = $dbh->prepare("INSERT INTO SHAREINFO (SHARE_CODE, SHARE_NAME, SHARE_USERS ) VALUES (:share_code, :share_name, :share_user)");
@@ -241,9 +284,8 @@
             $slist->bindParam(':share_name',$share_name);
             $slist->bindParam(':share_user',$share_user);
 
-            $share_code = uniqid();
-            $share_name = $_POST['pro_name'];
             $share_user = $_SESSION['id'];
+
             $slist->execute();
 
             mkdir("/home/samba/userfile/share/$share_code", 0777, true);
@@ -256,41 +298,76 @@
             break;
 
         case 'share_ok':
-            $stmt = $dbh->prepare("UPDATE MSGINFO SET USER_LIST=:user_list, READ_BOOL=:bool WHERE MSG_NUM = :msg_num");
+            $share_code = $_POST['share_code'];
+            $id = $_SESSION['id'];
 
-            $stmt->bindParam(':msg_num',$msg_num);
-            $stmt->bindParam(':bool',$bool);
-            $stmt->bindParam(':user_list',$user_list);
+            $stmt = $dbh->prepare("SELECT * FROM SHAREINFO WHERE SHARE_CODE = :share_code");
 
-            $msg_num = $_POST['pk_num'];
-            $bool = 1;
-            $user_list = $_POST['user_list'].'#'.$_SESSION['id'];
+            $stmt->bindParam(':share_code',$share_code);
 
             $stmt->execute();
 
-            $user_list = user_list_check($_POST['pk_num']);
+            $row = $stmt->fetch();
 
-            $slist = $dbh->prepare("UPDATE SHAREINFO SET SHARE_USERS=:share_user WHERE SHARE_NUM=:share_num");
+            $user_list = $row['SHARE_USERS'];
+            $user_arr = explode("/",$user_list);
+            $list_check = true;
 
-            $slist->bindParam(':share_num',$share_num);
-            $slist->bindParam(':share_user',$share_user);
+            foreach($user_arr as $arr)
+            {
+                if($arr === $id)
+                {
+                    $list_check = false;
 
-            $share_num = $_POST['pk_num'];
-            $share_user = $user_list.'/'.$_SESSION['id'];
+                    break;
+                }
+            }
+
+            if($list_check == false)
+            {
+                $result['status'] = false;
+                echo json_encode($result, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
+
+                break;
+            }
+
+            $stmt = $dbh->prepare("UPDATE MSGINFO SET READ_BOOL=:bool WHERE MSG_SHARE_CODE = :share_code and MSG_REC_USER = :rec_id ");
+
+            $stmt->bindParam(':share_code',$share_code);
+            $stmt->bindParam(':rec_id',$id);
+            $stmt->bindParam(':bool',$bool);
+
+            $bool = 1;
+
+            $stmt->execute();
+
+            
+
+            $slist = $dbh->prepare("UPDATE SHAREINFO SET SHARE_USERS=:share_users WHERE SHARE_CODE=:share_code");
+
+            $slist->bindParam(':share_code',$share_code);
+            $slist->bindParam(':share_users',$share_users);
+
+            $share_users = $user_list.'/'.$id;
 
             $slist->execute();
 
             msgcount_check();
 
+            $result['status'] = true;
+            echo json_encode($result, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
+
             break;
 
         case 'share_no':
-            $stmt = $dbh->prepare("UPDATE MSGINFO SET READ_BOOL=:bool WHERE MSG_NUM = :msg_num");
+            $stmt = $dbh->prepare("UPDATE MSGINFO SET READ_BOOL=:bool WHERE MSG_SHARE_CODE = :share_code and MSG_REC_USER = :rec_id");
 
-            $stmt->bindParam(':msg_num',$msg_num);
+            $stmt->bindParam(':share_code',$share_code);
+            $stmt->bindParam(':rec_id',$rec_id);
             $stmt->bindParam(':bool',$bool);
 
-            $msg_num = $_POST['pk_num'];
+            $share_code = $_POST['share_code'];
+            $rec_id = $_SESSION['id'];
             $bool = 1;
 
             $stmt->execute();
@@ -414,6 +491,98 @@
 
             break;
 
+
+        case 'share_file_invite':
+            $stmt = $dbh->prepare("SELECT * FROM SHAREINFO WHERE SHARE_CODE = :fname");
+
+            $stmt->bindParam(':fname',$fname);
+
+            $fname = $_POST['fname'];
+
+            $stmt->execute();
+
+            $row = $stmt->fetch();
+
+            $origin_name = $row['SHARE_NAME'];
+            $rec_user = $_POST['rev_user'];
+
+            $share_user_list = $row['SHARE_USERS'];
+            $user_arr = explode("/",$share_user_list);
+            $list_check = true;
+
+            foreach($user_arr as $arr)
+            {
+                if($arr === $rec_user)
+                {
+                    $list_check = false;
+
+                    break;
+                }
+            }
+
+
+            if($rec_user === $_SESSION['id'])
+            {
+                echo "<script>";
+                echo "alert('본인에게 공유할 수 없습니다.');";
+                echo "history.back()";
+                echo "</script>";
+
+                break;
+            }
+            else if($list_check == false)
+            {
+                echo "<script>";
+                echo "alert('이미 참여한 인원은 초대할 수 없습니다.');";
+                echo "history.back()";
+                echo "</script>";
+
+                break;
+            }
+
+
+            //=================================
+            $msgstmt = $dbh->prepare("SELECT * FROM MSGINFO WHERE MSG_CONTENT = :share_name and MSG_REC_USER = :rec_user");
+
+            $msgstmt->bindParam(':share_name',$origin_name);
+            $msgstmt->bindParam(':rec_user',$rec_user);
+            $msgstmt->execute();
+
+            $row = $msgstmt->fetch();
+
+            if($row['MSG_CONTENT'] === $origin_name && $row['MSG_REC_USER'] === $rec_user)
+            {
+                echo "<script>";
+                echo "alert('이미 보낸 초대입니다.');";
+                echo "history.back()";
+                echo "</script>";
+
+                break;
+            }
+
+            //=================================
+
+            $stmt = $dbh->prepare("INSERT INTO MSGINFO (MSG_TIME, MSG_REC_USER, MSG_SEND_USER, MSG_CONTENT, MSG_SHARE_CODE, READ_BOOL) VALUES (:msg_time, :rec_user, :send_user, :content, :share_code, :bool)");
+
+            $stmt->bindParam(':msg_time',$msg_time);
+            $stmt->bindParam(':rec_user',$rec_user);
+            $stmt->bindParam(':send_user',$send_user);
+            $stmt->bindParam(':content',$content);
+            $stmt->bindParam(':share_code',$share_code);
+            $stmt->bindParam(':bool',$bool);
+
+            $msg_time = date("Y-m-d H:i:s", time());
+            $send_user = $_SESSION['id'];
+            $content = $origin_name;
+            $share_code = $fname;
+            $bool = 0;
+            $stmt->execute();
+
+            $result = 'share.php?f='.$fname;
+
+            header("Location: $result");
+
+            break;
     }
     
     umask($oldumask);

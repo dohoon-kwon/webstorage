@@ -152,6 +152,7 @@
       <ul class="share_mkdirview">
         <form action="./process.php?mode=share_file" method="POST" class="share_mkdir">
           <ul>
+            <input type="hidden" value="<?=$_GET['f']?>" name="fname">
             <li><a>공유할 사람</a></li>
             <li><input type="text" id="rev_user" name="rev_user" required></li>
             
@@ -161,6 +162,22 @@
             <li>
               <input type="submit" value="공유">
               <input type="button" onclick="share_file_cancle()" value="취소">
+            </li>
+          </ul>
+        </form>
+      </ul>
+
+
+      <!--공유-->
+      <ul class="share_inviteview">
+        <form action="./process.php?mode=share_file_invite" method="POST" class="share_invite">
+          <ul>
+            <input type="hidden" value="<?=$_GET['f']?>" name="fname">
+            <li><a>초대할 사람</a></li>
+            <li><input type="text" id="rev_user" name="rev_user" required></li>
+            <li>
+              <input type="submit" value="초대">
+              <input type="button" onclick="share_invite_cancle()" value="취소">
             </li>
           </ul>
         </form>
