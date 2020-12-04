@@ -4,11 +4,22 @@
     $id = $_SESSION['id'];
 
     //URL링크
-    if(!empty($_GET['f'])){
+    if(!empty($_GET['f']))
+    {
       $_SESSION['share_folder'] = $_GET['f'];
     }
-    else{
+    else
+    {
       $_SESSION['share_folder'] = '';
+    }
+
+    //URL링크
+    if(!empty($_GET['link']))
+    {
+      $_SESSION['link'] = $_GET['link'];
+    }
+    else{
+      $_SESSION['link'] = '';
     }
 ?>
 
@@ -17,7 +28,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>공유 폴더</title>
+    <title>파일 저장소</title>
 
     <!--CSS-->
     <link rel="stylesheet" href="css/default.css">
@@ -56,9 +67,9 @@
             </li>
         </ul>
         <ul class="top_menu">
-            <li class="top_menu_item" onclick="location.href='upload.php'"><a>파일 저장소</a></li>
-            <li class="top_menu_item" onclick="location.href='share.php'"><a>공유 저장소</a></li>
-            <li class="top_menu_item" onclick="location.href='tool.php'"><a>홈페이지 관리</a></li>
+            <?php
+              include "lib/topmenu.php";
+            ?>
         </ul>
 
     </nav>
@@ -66,15 +77,15 @@
     <!--좌측 DIV-->
     <div class="leftmenu">
         <ul>
-            <?php
-              include 'leftmenu.php';
-            ?>
+          <?php
+            include 'lib_share/leftmenu.php';
+          ?>
 
-            <li><h1>드라이브</h1></li>
-            
-            <?php
-              include "lib_share/share_list.php";
-            ?>
+          <li><h1>드라이브</h1></li>
+          
+          <?php
+            include "lib_share/share_list.php";
+          ?>
         </ul>
     </div>
 
@@ -83,38 +94,47 @@
     <div class="rightmenu">
 
       <!--파일 제어 버튼-->
-      <form class="searchform" method="POST" action="">
+      <!--<form class="searchform" method="POST" action="./process.php?mode=filesearch">
         <ul>
+          <input type="hidden" value="share" name="typecode">
+          <input type="hidden" value="<=$_GET['f']?>" name="folder">
           <li><input type="text" placeholder="검색어" name="value"></li>
           <li><input type="submit" value="검색"></li>
         </ul>
 
         <ul>
-          <?php
+          <php
             include "lib_share/share_divmenu.php";
-          ?>
+          >
         </ul>
-      </form>
+      </form>-->
+
+      <?php
+        include 'lib_share/rightdiv_file.php';
+      ?>
 
 
       <!--디렉토리 경로-->
       <?php
-        include 'link.php';
+        include 'lib_share/share_link.php';
       ?>
       
 
-      <!--파일 리스트-->
+      <!--파일 리스트
       <nav class="storage">
         <div id="drop_file_zone" ondrop="upload_share_file(event)" ondragover="return false">
             <div id="drag_upload_file">
               <ul id="file_list">
-                <?php
+                <php
                   include 'lib_share/share_filelist.php';
                 ?>
               </ul>
             </div>
         </div>
-      </nav>
+      </nav>-->
+      <?php
+        include 'lib_share/share_item_list.php';
+      ?>
 
       
       <!--사진 뷰어-->
@@ -122,6 +142,59 @@
         <li><a onclick="img_hide()">닫기</a></li>
       </ul>
 
+
+      <!--폴더 생성-->
+      <ul class="mkdirview">
+        <form action="./process.php?mode=share_mkdir" method="POST" class="mkdir_form">
+          <ul>
+            <li class="mkdir_li_a"><a>폴더 명</a></li>
+            <li><input type="text" id="dirname" name="dirname" required></li>
+            <li><input type="submit" value="생성" class="mkdir_submit_btn"><input type="button" onclick="mkdir_cancle()" value="취소" class="mkdir_cancle_btn"></li>
+          </ul>
+        </form>
+      </ul>
+
+
+      <!--공유-->
+      <ul class="share_mkdirview">
+        <form action="./process.php?mode=share_file" method="POST" class="share_mkdir">
+          <ul>
+            <input type="hidden" value="<?=$_GET['f']?>" name="fname">
+            <li><a>공유할 사람</a></li>
+            <li><input type="text" id="rev_user" name="rev_user" required></li>
+            
+            <li><a>공유폴더 명</a></li>
+            <li><input type="text" id="pro_name" name="pro_name" maxlength="10" required></li>
+
+            <li>
+              <input type="submit" value="공유">
+              <input type="button" onclick="share_file_cancle()" value="취소">
+            </li>
+          </ul>
+        </form>
+      </ul>
+
+
+      <!--공유-->
+      <ul class="share_inviteview">
+        <form action="./process.php?mode=share_file_invite" method="POST" class="share_invite">
+          <ul>
+            <input type="hidden" value="<?=$_GET['f']?>" name="fname">
+            <li><a>초대할 사람</a></li>
+            <li><input type="text" id="rev_user" name="rev_user" required></li>
+            <li>
+              <input type="submit" value="초대">
+              <input type="button" onclick="share_invite_cancle()" value="취소">
+            </li>
+          </ul>
+        </form>
+      </ul>
+      
+    </div>
+
+    <!--로딩 화면-->
+    <div class="loading_div">
+      <img src='img/loading.gif' class="loading_img"></img>
     </div>
 
     

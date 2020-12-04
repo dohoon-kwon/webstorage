@@ -47,3 +47,8 @@
 {
     background-color: turquoise;
 }
+
+.logo
+{
+    position: absolute;
+}

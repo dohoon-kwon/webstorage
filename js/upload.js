@@ -57,7 +57,7 @@ function ajax_share_file_upload(file_obj) {
     }
     
     $('.loading_div').show();  
-
+    
     $.ajax({
       type: 'POST',
       url: 'share_uploadprocess.php',
@@ -404,17 +404,19 @@ function remove_msg_read(){
 }
 
 
-//파일 공유 >> 수정해야댐
-function share_file(){
-  var popupWidth = 400;
-  var popupHeight = 200;
-  var popupX = (window.screen.width / 2) - (popupWidth / 2);
-  var popupY= (window.screen.height / 2) - (popupHeight / 2);
-  window.open('share_file.html', '파일공유', 'status=no, height='+popupHeight+',width='+popupWidth+',left='+popupX+',top='+ popupY);
+//파일 공유
+function share_file()
+{
+  $('.share_mkdirview').show();
+}
+
+function share_file_cancle()
+{
+  $('.share_mkdirview').hide();
 }
 
 //파일공유 알림 클릭
-function join_share(num,list){
+function join_share(code,list){
   var confirm_value = confirm("해당 공유 폴더에 참여하시겠습니까?");
 
   if( confirm_value == true )
@@ -422,9 +424,22 @@ function join_share(num,list){
     $.ajax({
       type: 'POST',
       url: 'process.php?mode=share_ok',
-      data: {'pk_num' : num , 'user_list' : list}
-    }).done(function(){
-      window.location.reload();
+      data: {'share_code' : code , 'user_list' : list},
+      dataType: 'json'
+    }).done(function(result){
+      if(result.status == true)
+      {
+        window.location.reload();
+      }
+      else if(result.status == false)
+      {
+        alert("이미 참여한 폴더입니다.");
+        window.location.reload();
+      }
+      else
+      {
+        alert('다시 시도해주세요.');
+      }
     });
   }
   else
@@ -432,7 +447,7 @@ function join_share(num,list){
     $.ajax({
       type: 'POST',
       url: 'process.php?mode=share_no',
-      data: {'pk_num' : num}
+      data: {'share_code' : code}
     }).done(function(){
       window.location.reload();
     });
@@ -516,4 +531,36 @@ function sort_file_cancle()
 function mypage_open()
 {
   confirm("마이페이지 기능 추가예정");
+}
+
+
+//공유폴더 리스트 탈퇴
+function share_list_exit(fname)
+{
+  var confirm_value = confirm("해당 공유폴더를 삭제합니다.");
+
+  if( confirm_value == true )
+  {
+    $.ajax({
+      type: 'POST',
+      url: 'process.php?mode=share_exit',
+      data: {'fname' : fname}
+    }).done(function(){
+      window.location = 'share.php';
+    });
+  }
+}
+
+
+//공유폴더 새 초대
+function member_invite()
+{
+  $('.share_inviteview').show();
+}
+
+
+//공유폴더 초대 취소
+function share_invite_cancle()
+{
+  $('.share_inviteview').hide();
 }

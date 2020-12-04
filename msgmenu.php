@@ -21,18 +21,18 @@
 
         foreach($msgcheck as $msgdata)
         {
-            $pk_num = $msgdata['MSG_NUM'];
+            $share_code = $msgdata['MSG_SHARE_CODE'];
             $user_list = $msgdata['USER_LIST'];
 
             if($msgdata['READ_BOOL'] === '0')
             {
                 $data = "[ " . $msgdata["MSG_SEND_USER"] . ' 님으로부터 알림 ]<br>' . $msgdata["MSG_CONTENT"] . ' 폴더를 공유';
-                echo ("<li onclick='join_share(\"$pk_num\",\"$user_list\")' class='msg_content'><a>$data</a></li>");
+                echo ("<li onclick='join_share(\"$share_code\",\"$user_list\")' class='msg_content'><a>$data</a></li>");
             }
             else
             {
                 $data = "[ " . $msgdata["MSG_SEND_USER"] . ' 님으로부터 알림 ]<br>' . $msgdata["MSG_CONTENT"] . ' 폴더를 공유';
-                echo "<li onclick='join_share(\"$pk_num\",\"$user_list\")' class='msg_content_read'><a>$data</a></li>";
+                echo "<li onclick='join_share(\"$share_code\",\"$user_list\")' class='msg_content_read'><a>$data</a></li>";
             }
             
         }

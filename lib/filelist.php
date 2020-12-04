@@ -71,12 +71,12 @@
                 {
                     if($sort_way === 'DESC')
                     {
-                        $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH,FILE_PATH from DATAINFO WHERE FILE_USER_ID = :id ORDER BY FILE_NAME DESC");   
+                        $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH,FILE_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_PATH LIKE :userid ORDER BY FILE_NAME DESC");   
                     }
 
                     else
                     {
-                        $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH,FILE_PATH from DATAINFO WHERE FILE_USER_ID = :id ORDER BY FILE_NAME ASC"); 
+                        $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH,FILE_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_PATH LIKE :userid ORDER BY FILE_NAME ASC"); 
                     }
         
                     return $stmt;
@@ -85,12 +85,12 @@
                 {
                     if($sort_way === 'DESC')
                     {
-                        $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH,FILE_PATH from DATAINFO WHERE FILE_USER_ID = :id ORDER BY FILE_SIZE DESC");
+                        $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH,FILE_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_PATH LIKE :userid ORDER BY FILE_SIZE DESC");
                     }
 
                     else
                     {
-                        $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH,FILE_PATH from DATAINFO WHERE FILE_USER_ID = :id ORDER BY FILE_SIZE ASC");
+                        $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH,FILE_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_PATH LIKE :userid ORDER BY FILE_SIZE ASC");
                     }
         
                     return $stmt;
@@ -104,12 +104,12 @@
             {
                 if($sort_way === 'DESC')
                 {
-                    $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_ORIGIN_NAME LIKE :search ORDER BY FILE_NAME DESC");
+                    $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_ORIGIN_NAME LIKE :search and FILE_PATH LIKE :userid ORDER BY FILE_NAME DESC");
                 } 
 
                 else
                 {
-                    $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_ORIGIN_NAME LIKE :search ORDER BY FILE_NAME ASC");
+                    $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_ORIGIN_NAME LIKE :search and FILE_PATH LIKE :userid ORDER BY FILE_NAME ASC");
                 }
     
                 return $stmt;
@@ -119,11 +119,11 @@
             {
                 if($sort_way === 'DESC')
                 {
-                    $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_ORIGIN_NAME LIKE :search ORDER BY FILE_SIZE DESC");
+                    $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_ORIGIN_NAME LIKE :search and FILE_PATH LIKE :userid ORDER BY FILE_SIZE DESC");
                 }
                 else
                 {
-                    $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_ORIGIN_NAME LIKE :search ORDER BY FILE_SIZE ASC");
+                    $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_ORIGIN_NAME LIKE :search and FILE_PATH LIKE :userid ORDER BY FILE_SIZE ASC");
                 }
     
                 return $stmt;
@@ -168,8 +168,10 @@
         {
             if($sort_option === '' || $sort_option == null)
             {
-                $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH,FILE_PATH from DATAINFO WHERE FILE_USER_ID = :id ORDER BY FIELD(FILE_EXTENSION,'dir') DESC");
+                $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH,FILE_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_PATH LIKE :userid ORDER BY FIELD(FILE_EXTENSION,'dir') DESC");
                 $stmt->bindParam(':id',$id);
+                $stmt->bindParam(':userid',$userid);
+                $userid = '%'.$id.'%';
                 $stmt->execute();
             }
 
@@ -177,6 +179,8 @@
             {
                 $stmt = sort_set(true, $sort_option, $sort_way, $dbh);
                 $stmt->bindParam(':id',$id);
+                $stmt->bindParam(':userid',$userid);
+                $userid = '%'.$id.'%';
                 $stmt->execute();
             }
         }
@@ -279,9 +283,11 @@
         //쿼리
         if($sort_option === '' || $sort_option == null)
         {
-            $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_ORIGIN_NAME LIKE :search ORDER BY FIELD(FILE_EXTENSION,'dir') DESC");
+            $stmt = $dbh->prepare("SELECT FILE_NAME,FILE_ORIGIN_NAME,FILE_EXTENSION,FILE_THUM_PATH from DATAINFO WHERE FILE_USER_ID = :id and FILE_ORIGIN_NAME LIKE :search and FILE_PATH LIKE :userid ORDER BY FIELD(FILE_EXTENSION,'dir') DESC");
             $stmt->bindParam(':id',$id);
             $stmt->bindParam(':search', $search_result);
+            $stmt->bindParam(':userid',$userid);
+            $userid = '%'.$id.'%';
             $search_result = '%'.$search_value.'%';
             $stmt->execute();
         }
@@ -291,6 +297,8 @@
             $stmt = sort_set(false, $sort_option, $sort_way, $dbh);
             $stmt->bindParam(':id',$id);
             $stmt->bindParam(':search', $search_result);
+            $stmt->bindParam(':userid',$userid);
+            $userid = '%'.$id.'%';
             $search_result = '%'.$search_value.'%';
             $stmt->execute();
         }
